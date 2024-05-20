@@ -3,6 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ulid } from 'ulid';
 import { Credential } from '@security/model';
 import { Stock } from '@stock/data';
+import { ConsumptionStatus } from '@consumption/data';
 
 @Entity()
 export class Consumption {
@@ -10,7 +11,7 @@ export class Consumption {
   consumption_id: string;
   @Column({ nullable: true })
   order_date: Date;
-  @Column({  nullable: true })
+  @Column({ nullable: true })
   delivery_date: Date;
   @Column({ nullable: false })
   quantity: number;
@@ -20,21 +21,23 @@ export class Consumption {
   is_delivered: boolean;
   @Column({ nullable: false })
   type: ProductType;
+  @Column({ nullable: false, default: 'ACTIVE' })
+  status: ConsumptionStatus;
   @ManyToOne(() => Product, (p: Product) => p.consumptions,
     { cascade: false, eager: false })
-  @JoinColumn({name:'product_id_fk', referencedColumnName:'product_id'})
-  product:Product;
+  @JoinColumn({ name: 'product_id_fk', referencedColumnName: 'product_id' })
+  product: Product;
 
 
   //1-1 donc dans le payload c'est obligatoire @IsNotEmpty()
   @ManyToOne(() => Credential, (c: Credential) => c.consumptions,
     { cascade: false, eager: true })
-  @JoinColumn({name:'credential_id_fk', referencedColumnName:'credential_id'})
-  author:Credential;
+  @JoinColumn({ name: 'credential_id_fk', referencedColumnName: 'credential_id' })
+  author: Credential;
 
   //1-1 donc dans le payload c'est obligatoire @IsNotEmpty()
   @ManyToOne(() => Stock, (s: Stock) => s.consumptions,
     { cascade: false, eager: true })
-  @JoinColumn({name:'stock_id_fk', referencedColumnName:'stock_id'})
-  stock:Stock;
+  @JoinColumn({ name: 'stock_id_fk', referencedColumnName: 'stock_id' })
+  stock: Stock;
 }

@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const ulid_1 = require("ulid");
 const model_1 = require("../../../../security/model");
 const data_2 = require("../../../stock/data");
+const data_3 = require("..");
 let Consumption = class Consumption {
 };
 exports.Consumption = Consumption;
@@ -46,6 +47,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Consumption.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: 'ACTIVE' }),
+    __metadata("design:type", String)
+], Consumption.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => data_1.Product, (p) => p.consumptions, { cascade: false, eager: false }),
     (0, typeorm_1.JoinColumn)({ name: 'product_id_fk', referencedColumnName: 'product_id' }),
