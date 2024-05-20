@@ -1,0 +1,30 @@
+<header></header>
+<section id="wrapper" [formGroup]="formGroup">
+  <div id="logo">
+    <!--<img src="assets/logo.jpg" alt="IND icon">>-->
+    <h1>{{ title | translate }}</h1>
+  </div>
+  <div class="error-area" *ngIf="errors().length >0 ||apiError()">
+    <p *ngIf="apiError()">{{ apiError()! | labelWithParam }}</p>
+    <p *ngFor="let error of errors()">
+      {{ 'security-feature.sign-in-page.error.' + error.control + '-' + error.error | labelWithParam:{count: errors().length} }}
+    </p>
+  </div>
+  <div class="form-area">
+    <ng-container *ngFor="let item of formGroupControls;let last=last">
+
+      <div class="input">
+        <app-floating-label-input [label]="item.label" [control]="get(item.input)"
+                                  [type]="item.inputType"></app-floating-label-input>
+        <div class="icon" *ngIf="last" (click)="signIn()" [class.un-clickable]="!formGroup.valid">
+          <i [class]="iconBtn"></i>
+        </div>
+      </div>
+      <div class="separator" *ngIf="!last"></div>
+    </ng-container>
+  </div>
+</section>
+<footer>
+  <p>Copyright © 2023 Institut Notre-Dame de Malmedy Tous droits réservés.</p>
+</footer>
+

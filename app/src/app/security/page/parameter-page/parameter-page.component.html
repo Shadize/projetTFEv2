@@ -1,0 +1,34 @@
+<app-card>
+  <app-card-header [title]="'security-feature.parameter-page.title'"
+                   [params]="securityService.account$()"></app-card-header>
+  <!-- start table of user data content -->
+  <div class="table" *ngIf="securityService.account$() as account">
+    <div class="row">
+      <div class="cell cell-label">{{'security-feature.parameter-page.label.id' | labelWithParam}}</div>
+      <div class="cell cell-value">{{account.id}}</div>
+    </div>
+    <div class="row">
+      <div class="cell cell-label">{{'security-feature.parameter-page.label.username' | labelWithParam}}</div>
+      <div class="cell cell-value">{{account.username}}</div>
+    </div>
+    <div class="row">
+      <div class="cell cell-label">{{'security-feature.parameter-page.label.mail' | labelWithParam}}</div>
+      <div class="cell cell-value">{{account.mail}}</div>
+    </div>
+    <div class="row">
+      <div class="cell cell-label">{{'security-feature.parameter-page.label.facebook-hash' | labelWithParam}}</div>
+      <div
+        class="cell cell-value">{{(account.facebookHash ? 'security-feature.parameter-page.label.social-connected' : 'security-feature.parameter-page.label.facebook-hash-empty') | labelWithParam}}</div>
+    </div>
+    <div class="row">
+      <div class="cell cell-label">{{'security-feature.parameter-page.label.google-hash' | labelWithParam}}</div>
+      <div
+        class="cell cell-value">{{(account.googleHash ? 'security-feature.parameter-page.label.social-connected' : 'security-feature.parameter-page.label.google-hash-empty') | labelWithParam}}</div>
+    </div>
+  </div>
+  <!-- end table of user data content -->
+  <div class="button-area">
+    <button (click)="securityService.logOut()"
+            class="simple-btn-default">{{'security-feature.parameter-page.btn.log-out' | labelWithParam}}</button>
+  </div>
+</app-card>

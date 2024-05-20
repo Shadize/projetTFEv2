@@ -1,0 +1,115 @@
+:host {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+header {
+flex:1;
+}
+
+section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  #logo{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;align-items: center;
+    padding-bottom:25px;
+    img{
+      width:80%;
+      max-width:120px;
+    }
+    h1{
+      text-transform: uppercase;
+      font-family: 'Figtree';
+      font-size:20px;
+      color:var(--theme--input-text);
+    }
+  }
+  .error-area {
+    width: 400px;
+    padding: 1rem;
+    background: var(--theme-error-clear-opacity);
+    color: var(--theme-error-dark);
+    border-radius:3px;
+  }
+
+  .form-area {
+    width: 400px;
+    border: 1px solid var(--theme-dark-clear);
+    border-radius: 12px;
+    overflow: hidden;
+
+    .input {
+      display: flex;
+      flex-direction: row;
+
+      app-floating-label-input {
+        flex: 2
+      }
+    }
+
+    .separator {
+      border-top: 1px solid var(--theme-dark-clear);
+    }
+    .icon {
+       min-width: 56px;
+       width: 56px;
+       height: 56px;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       color: var(--theme-label-text);
+       cursor: pointer;
+
+       i {
+         width: 30px;
+         height: 30px;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         font-size: 13px;
+
+       }
+
+
+       transition: all ease .3s;
+
+       &:hover {
+         background: var(--theme-standard-bg-hover);
+         color: var(--theme-dark-bg-pan);
+       }
+     }
+    .un-clickable{
+      cursor:default;
+      color: var(--theme-standard-grey-1);
+      &:hover{
+        background: var(--theme-white);
+        color: var(--theme-standard-grey-1);
+      }
+    }
+  }
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-transform: uppercase;
+  padding: 1rem;
+  height: 80px;
+  background: var(--theme-standard-bg);
+  color: var(--theme-label-text);
+  font-weight: 600;
+  font-size: 10px;
+}

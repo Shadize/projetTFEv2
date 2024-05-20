@@ -1,0 +1,41 @@
+.table {
+  display: flex;
+  flex-direction: column;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--theme-eee);
+
+    .cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}
+
+.cell-label {
+  width: 200px;
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--theme-primary);
+  letter-spacing: 1.3px;
+  padding: 10px;
+  padding-left: 0;
+}
+
+.cell-value {
+  flex: 2;
+  color: var(--theme--input-text);
+}
+.button-area{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-top:30px;
+  button{
+    width:250px;
+  }
+}
