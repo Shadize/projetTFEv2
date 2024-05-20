@@ -20,17 +20,19 @@ export class Consumption {
   is_delivered: boolean;
   @Column({ nullable: false })
   type: ProductType;
-
   @ManyToOne(() => Product, (p: Product) => p.consumptions,
     { cascade: false, eager: false })
   @JoinColumn({name:'product_id_fk', referencedColumnName:'product_id'})
   product:Product;
 
+
+  //1-1 donc dans le payload c'est obligatoire @IsNotEmpty()
   @ManyToOne(() => Credential, (c: Credential) => c.consumptions,
     { cascade: false, eager: true })
   @JoinColumn({name:'credential_id_fk', referencedColumnName:'credential_id'})
   author:Credential;
 
+  //1-1 donc dans le payload c'est obligatoire @IsNotEmpty()
   @ManyToOne(() => Stock, (s: Stock) => s.consumptions,
     { cascade: false, eager: true })
   @JoinColumn({name:'stock_id_fk', referencedColumnName:'stock_id'})
