@@ -41,10 +41,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
-], Stock.prototype, "type", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
-    __metadata("design:type", String)
 ], Stock.prototype, "section", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => data_3.Consumption, (c) => c.product, { cascade: false, eager: false }),

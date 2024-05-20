@@ -10,11 +10,14 @@ exports.ConsumptionModule = void 0;
 const common_1 = require("@nestjs/common");
 const consumption_controller_1 = require("./consumption.controller");
 const consumption_service_1 = require("./consumption.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const data_1 = require("./data");
 let ConsumptionModule = class ConsumptionModule {
 };
 exports.ConsumptionModule = ConsumptionModule;
 exports.ConsumptionModule = ConsumptionModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([data_1.Consumption])],
         controllers: [consumption_controller_1.ConsumptionController],
         providers: [consumption_service_1.ConsumptionService]
     })

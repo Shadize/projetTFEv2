@@ -10,11 +10,14 @@ exports.StockModule = void 0;
 const common_1 = require("@nestjs/common");
 const stock_controller_1 = require("./stock.controller");
 const stock_service_1 = require("./stock.service");
+const typeorm_1 = require("@nestjs/typeorm");
+const data_1 = require("./data");
 let StockModule = class StockModule {
 };
 exports.StockModule = StockModule;
 exports.StockModule = StockModule = __decorate([
     (0, common_1.Module)({
+        imports: [typeorm_1.TypeOrmModule.forFeature([data_1.Stock])],
         controllers: [stock_controller_1.StockController],
         providers: [stock_service_1.StockService]
     })

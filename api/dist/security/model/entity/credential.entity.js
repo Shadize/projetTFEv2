@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const ulid_1 = require("ulid");
 const data_1 = require("../../../feature/consumption/data");
+const data_2 = require("../../../common/data");
 let Credential = class Credential {
 };
 exports.Credential = Credential;

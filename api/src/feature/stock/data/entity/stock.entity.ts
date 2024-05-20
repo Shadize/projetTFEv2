@@ -17,8 +17,6 @@ export class Stock {
   @Column({ nullable: true })
   nb_items_max: number;
   @Column({ nullable: false })
-  type: ProductType;
-  @Column({ nullable: false })
   section: Section;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
     { cascade: false, eager: false })

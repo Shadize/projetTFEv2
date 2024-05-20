@@ -15,6 +15,7 @@ const config_1 = require("../common/config");
 const core_1 = require("@nestjs/core");
 const jwt_1 = require("../security/jwt");
 const security_module_1 = require("../security/security.module");
+const stock_module_1 = require("../feature/stock/stock.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,12 +23,13 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forRoot(config_1.configManager.getTypeOrmConfig()),
-            security_module_1.SecurityModule
+            security_module_1.SecurityModule,
+            stock_module_1.StockModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, {
                 provide: core_1.APP_GUARD, useClass: jwt_1.JwtGuard
-            }],
+            }]
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

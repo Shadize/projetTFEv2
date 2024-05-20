@@ -1,4 +1,4 @@
-import { Product, ProductType } from '@product/data';
+import { Product } from '@product/data';
 import { Section } from '@common/data';
 import { Consumption } from '@consumption/data';
 export declare class Stock {
@@ -7,7 +7,6 @@ export declare class Stock {
     rack: string;
     floor: string;
     nb_items_max: number;
-    type: ProductType;
     section: Section;
     consumptions: Consumption[];
     product: Product;

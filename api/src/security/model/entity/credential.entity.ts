@@ -2,6 +2,7 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGene
 import { Exclude } from 'class-transformer';
 import { ulid } from 'ulid';
 import { Consumption } from '../../../feature/consumption/data';
+import { Section } from '@common/data';
 
 
 @Entity()
@@ -26,7 +27,7 @@ export class Credential {
   active: boolean;
 
   @Column({ nullable: true })
-  section: string;
+  section: Section;
 
   @Column({ nullable: true })
   firstname: string;

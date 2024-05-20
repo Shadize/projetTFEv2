@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { Cursus } from "../model";
-import { CursusCreatePayload, CursusUpdatePayload } from "../model/payload";
+import { CursusCreatePayload, CursusUpdatePayload } from '../model';
 export declare class CursusService {
     private readonly repository;
     constructor(repository: Repository<Cursus>);
