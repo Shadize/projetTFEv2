@@ -55,3 +55,6 @@ body {
   background: var(--theme-white);
   color: var(--theme-dark-bg-pan);
 }
+.transition{
+  transition: all ease .3s;
+}

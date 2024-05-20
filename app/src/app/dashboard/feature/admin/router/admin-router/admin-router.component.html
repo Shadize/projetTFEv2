@@ -1,1 +1,13 @@
-<p>admin-router works!</p>
+<app-card>
+  <app-card-header [title]="title"></app-card-header>
+  <nav>
+    <ul>
+      <li class="li" *ngFor="let item of menu" (click)="navigate(item)" [class.is-active]="item.isActive">
+        <i [class]="item.icon" [class.is-active]="item.isActive"></i>
+      </li>
+    </ul>
+  </nav>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+</app-card>

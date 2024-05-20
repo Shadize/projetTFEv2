@@ -21,5 +21,9 @@
   "security-feature.parameter-page.label.social-connected": "Compte lié",
   "security-feature.parameter-page.label.facebook-hash-empty": "Aucun compte facebook associé",
   "security-feature.parameter-page.label.google-hash-empty": "Aucun compte google associe",
-  "security-feature.parameter-page.btn.log-out": "Se déconnecter"
+  "security-feature.parameter-page.btn.log-out": "Se déconnecter",
+  "admin-feature.title": "Zone d'administration",
+  "admin-feature.title.product": "Gestion des produits",
+  "admin-feature.title.member": "Gestion des membres",
+  "admin-feature.title.shelves": "Gestion des zones de stockage"
 }

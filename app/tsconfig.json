@@ -10,6 +10,9 @@
       "@dashboard": [
         "./app/dashboard/index.ts"
       ],
+      "@admin-feature": [
+        "./app/dashboard/feature/admin/index.ts"
+      ],
       "@member-feature": [
         "./app/dashboard/feature/member/index.ts"
       ],

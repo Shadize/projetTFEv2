@@ -17,11 +17,16 @@ export const dashboardRoutes: Routes = [
                 loadComponent: () =>
                     import('../security/page/parameter-page/parameter-page.component').then(c => c.ParameterPageComponent),
             },
-            {
-                path: AppNode.MEMBER,
-                loadChildren: () => import('./feature/member/member.routes')
-                    .then(r => r.memberRoutes)
-            }
+          {
+            path: AppNode.MEMBER,
+            loadChildren: () => import('./feature/member/member.routes')
+              .then(r => r.memberRoutes)
+          },
+          {
+            path: AppNode.ADMIN,
+            loadChildren: () => import('./feature/admin/admin.routes')
+              .then(r => r.adminRoutes)
+          }
         ]
     }
 ]
