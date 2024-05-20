@@ -52,5 +52,6 @@ var ApiCodeResponse;
     ApiCodeResponse["LESSON_LIST_ERROR"] = "api.error.lesson-list";
     ApiCodeResponse["LESSON_CREATE_ERROR"] = "api.error.lesson-create";
     ApiCodeResponse["LESSON_UPDATE_ERROR"] = "api.error.lesson-update";
+    ApiCodeResponse["CONSUMPTION_IS_MISSING"] = "api.error-consumption-payload-stock-is-missing";
 })(ApiCodeResponse || (exports.ApiCodeResponse = ApiCodeResponse = {}));
 //# sourceMappingURL=api-code.response.js.map

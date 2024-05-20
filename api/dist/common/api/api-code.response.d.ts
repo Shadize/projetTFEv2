@@ -47,5 +47,6 @@ export declare enum ApiCodeResponse {
     LESSON_DELETE_ERROR = "api.error.lesson-delete",
     LESSON_LIST_ERROR = "api.error.lesson-list",
     LESSON_CREATE_ERROR = "api.error.lesson-create",
-    LESSON_UPDATE_ERROR = "api.error.lesson-update"
+    LESSON_UPDATE_ERROR = "api.error.lesson-update",
+    CONSUMPTION_IS_MISSING = "api.error-consumption-payload-stock-is-missing"
 }
