@@ -2,13 +2,16 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {DestroyRef, WritableSignal} from '@angular/core';
 export enum InputType{
   TEXT='text',
-  PASSWORD='password'
+  PASSWORD='password',
+  COLOR='color'
 }
 export interface FormControlSimpleConfig {
-  label: string;
+  label?: string;
   formControl: FormControl,
   input: string;
   inputType:InputType;
+  placeholder?:string;
+  readonly?:boolean;
 }
 
 export interface FormError {

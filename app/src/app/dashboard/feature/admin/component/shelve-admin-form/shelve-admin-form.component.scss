@@ -1,0 +1,161 @@
+
+.first-step {
+  margin-bottom: 30px;
+}
+
+.table {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--theme-eee);
+
+  .row {
+    display: flex;
+    flex-direction: row;
+
+    .cell {
+      flex: 1 0 auto;
+      height: auto;
+      border: 1px solid var(--theme-white);
+
+    }
+
+    .cell::before {
+      content: '';
+      float: left;
+      padding-top: 100%;
+    }
+
+    .selected {
+      background: var(--theme-eee);
+    }
+  }
+}
+
+.first-step {
+  display: flex;
+  flex-direction: row;
+
+  gap: 20px;
+
+  .form, .explanation {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+
+.form {
+  border-top: 1px solid var(--theme-eee);
+}
+
+.rack {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 15px;
+  border: 1px solid var(--theme-eee);
+  border-top: none;
+
+  label {
+    flex: 1;
+    padding: 10px;
+    border-right: 1px solid var(--theme-eee);
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  input {
+    flex: 1;
+  }
+}
+
+.explanation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .data {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .title {
+      text-transform: uppercase;
+    }
+
+    .error {
+      color: var(--theme-error-dark)
+    }
+  }
+}
+
+.disabled {
+  background: var(--theme-white);
+  border: 1px solid var(--theme-aaa);
+  color: var(--theme-aaa);
+  cursor: default;
+}
+
+.plan {
+  margin-bottom: 30px;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap:20px;
+
+  button {
+    width: 240px;
+  }
+
+  margin-top: 10px;
+}
+
+.edition-mode {
+  border: 0.5px solid var(--theme-eee);
+
+  .row {
+    .cell {
+      border: 0.5px solid var(--theme-eee);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--theme-eee);
+      }
+    }
+  }
+}
+
+.band {
+  background: var(--theme-standard-bg);
+  margin: 20px -18px;
+  border-top: 1px solid var(--theme-eee);
+  border-bottom: 1px solid var(--theme-eee);
+  height: 20px;
+}
+
+.help {
+  margin-bottom: 10px;
+
+  i {
+    color: var(--theme-secondary);
+    font-size: 18px;
+    margin-right: 10px;
+  }
+}
+input{border:none;}

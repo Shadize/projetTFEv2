@@ -26,7 +26,7 @@
 
     .is-minimal {
       flex: 0;
-      min-width:120px;
+      min-width: 120px;
     }
 
     &:hover:not(.header) {
@@ -55,9 +55,20 @@
   }
 }
 
+.no-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: var(--theme-standard-bg);
+  text-transform: uppercase;
+  font-size:13px;
+}
+
 // small screen
 @media all and (max-width: 600px) {
-  .row{
+  .row {
     .medium, .large, .x-large {
       display: block;
       visibility: hidden;

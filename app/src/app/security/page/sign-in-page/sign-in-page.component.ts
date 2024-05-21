@@ -9,7 +9,6 @@ import {
 } from '@shared';
 import {SecurityFormComponent} from '../../component';
 import {getSignInFormControlsConfig} from '../../utils';
-import {SecurityService} from '../../service';
 
 @Component({
   selector: 'app-sign-in-page',

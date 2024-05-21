@@ -1,8 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, ShelveDto, Stock, StockDto} from '@shelve-feature';
+import {Shelve, ShelveDto} from '@shelve-feature';
 import {ProductUtilsService} from '../../product/service';
 import {Product} from '@product-feature';
+import {DataTableConfig, FormControlSimpleConfig, MinimalVisibilityWidth} from '@shared';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       id: dto.shelve_id,
       isEmpty: false,
       location: dto.location,
-      nb_items_max: dto.nb_items_max,
+      nbItemsMax: dto.nb_items_max,
       product,
       rack: dto.rack,
       section: dto.section,
@@ -28,6 +29,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
   fromDTOS(dtos: ShelveDto[]): Shelve[] {
     return dtos.map(d => this.fromDTO(d));
   }
+
   toDTOS(business: Shelve[]): ShelveDto[] {
     return business.map(b => this.toDTO(b));
   }
@@ -38,7 +40,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       id: '',
       isEmpty: true,
       location: '',
-      nb_items_max: 0,
+      nbItemsMax: 0,
       rack: '',
       section: Section.WOOD,
       str: 'api.common.empty'
@@ -51,10 +53,38 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       floor: business.floor,
       shelve_id: business.id,
       location: business.location,
-      nb_items_max: business.nb_items_max,
+      nb_items_max: business.nbItemsMax,
       product: business.product ? this.productUtilsService.toDTO(business.product) : undefined,
       rack: business.rack,
       section: business.section,
     }
+  }
+
+  getAdminDataTableConfig(data: Shelve[]): DataTableConfig {
+    return {
+      data,
+      translateKey: 'admin-feature-shelve.table.label.',
+      cellDefinitions: [
+        {
+          targetData: 'rack',
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: 'floor',
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: 'nbItemsMax',
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        }
+      ],
+    }
+  }
+
+  public getCreateFormConfig(): FormControlSimpleConfig[] {
+    return []
   }
 }

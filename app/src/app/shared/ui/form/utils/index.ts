@@ -44,16 +44,16 @@ export const getFormValidationErrors: GetAllFormErrorsFn = (form: FormGroup): Fo
   return result;
 }
 
-export const getConfigToFormGroup: ConfigToFormGroupFn = (configs:FormControlSimpleConfig[]):FormGroup=>{
+export const getConfigToFormGroup: ConfigToFormGroupFn = (configs: FormControlSimpleConfig[]): FormGroup => {
   const dynGroup: any = {};
   configs.forEach((config: FormControlSimpleConfig) => {
     dynGroup[config.input] = config.formControl;
   })
   console.log('formgroup', dynGroup);
- return new FormGroup<any>(dynGroup);
+  return new FormGroup<any>(dynGroup);
 }
 
-export const matchValidator = (matchTo: string,reverse?: boolean) => {
+export const matchValidator = (matchTo: string, reverse?: boolean) => {
   return (control: AbstractControl): ValidationErrors | null => {
     if (control.parent && reverse) {
       const c = (control.parent?.controls as any)[matchTo] as AbstractControl;
@@ -62,11 +62,14 @@ export const matchValidator = (matchTo: string,reverse?: boolean) => {
       }
       return null;
     }
-    return !!control.parent &&
-    !!control.parent.value &&
-    control.value ===
-    (control.parent?.controls as any)[matchTo].value
-      ? null
-      : { matching: true };
+    return !!control.parent && !!control.parent.value && control.value === (control.parent?.controls as any)[matchTo].value ? null : {matching: true};
   };
+}
+
+export const positiveNumberValidator = () => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value =  Number(control.value);
+    const isNotOK = isNaN(value) || value < 0;
+    return isNotOK ? {nonPositive: true} : null;
+  }
 }

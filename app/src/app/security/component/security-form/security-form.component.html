@@ -14,7 +14,7 @@
     <ng-container *ngFor="let item of formGroupControls;let last=last">
 
       <div class="input">
-        <app-floating-label-input [label]="item.label" [control]="get(item.input)"
+        <app-floating-label-input [label]="item.label!" [control]="get(item.input)"
                                   [type]="item.inputType"></app-floating-label-input>
         <div class="icon" *ngIf="last" (click)="signIn()" [class.un-clickable]="!formGroup.valid">
           <i [class]="iconBtn"></i>
