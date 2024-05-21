@@ -15,7 +15,6 @@ export class StockService {
   public list(): void {
     this.api.get(ApiURI.STOCK_LIST)
       .pipe(tap((response: ApiResponse) => {
-        console.log('response', response);
         if (response.result) {
           this.list$.set(this.stockUtilsService.fromDTOS(response.data));
         } else {

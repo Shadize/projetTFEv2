@@ -1,6 +1,7 @@
 {
   "api.error.user-not-found": "L'utilisateur n'a pas été trouvé",
   "common.loader.message": "Chargement en cours",
+  "app.common.add-element": "Ajouter un élément",
   "security-feature.sign-up-page.title": "Créez votre identifiant",
   "security-feature.sign-in-page.title": "Connectez-vous à la plateforme",
   "security-feature.sign-in-page.label.username": "Identifiant",

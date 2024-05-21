@@ -10,6 +10,7 @@ export interface CellDefinition {
   targetData: string;
   actions?: CellActionDefinition[],
   minimalWidthVisibility:MinimalVisibilityWidth;
+  isMinimalWidth:boolean;
 }
 
 export interface CellActionDefinition {

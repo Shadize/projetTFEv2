@@ -14,19 +14,54 @@
 
     .cell {
       flex: 1;
-      padding: 8px;
+      display: flex;
+      flex-direction: column;
+
+      .clickable {
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
     }
 
-    &:hover {
+    .is-minimal {
+      flex: 0;
+      min-width:120px;
+    }
+
+    &:hover:not(.header) {
       background: var(--theme-secondary);
+    }
+  }
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--theme-primary);
+
+    &:hover {
+      background: var(--theme-primary);
+      color: var(--theme-white);
     }
   }
 }
 
 // small screen
 @media all and (max-width: 600px) {
-  .medium, .large, .x-large {
-    display: none;
+  .row{
+    .medium, .large, .x-large {
+      display: block;
+      visibility: hidden;
+    }
   }
 
 }

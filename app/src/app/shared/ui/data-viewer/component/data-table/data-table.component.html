@@ -1,22 +1,25 @@
 <div class="table">
-  <div class="row">
-    <div *ngFor="let item of config.cellDefinitions" class="cell header {{item.minimalWidthVisibility}}">
+  <div class="row header">
+    <div *ngFor="let item of config.cellDefinitions" class="cell  {{item.minimalWidthVisibility}}" [class.is-minimal]="item.isMinimalWidth">
       <ng-container *ngIf="item.actions; else title"></ng-container>
       <ng-template #title> {{ config.translateKey + item.targetData | translate }}</ng-template>
     </div>
 
   </div>
   <div class="row" *ngFor="let item of config.data">
-    <div *ngFor="let cell of config.cellDefinitions" class="cell line  {{cell.minimalWidthVisibility}}">
-
-      <ng-container *ngIf="cell.actions; else data">
+    <div *ngFor="let cell of config.cellDefinitions" class="cell line  {{cell.minimalWidthVisibility}}"
+         [class.is-minimal]="cell.isMinimalWidth">
+      @if (cell.actions) {
         <div class="action">
-          <div class="icon" *ngFor="let action of cell.actions">
+          <div class="icon" *ngFor="let action of cell.actions" (click)="actionClicked.emit(action)">
             <i class="{{action.icon}}"></i>
           </div>
         </div>
-      </ng-container>
-      <ng-template #data> {{ item[cell.targetData] }}</ng-template>
+      } @else {
+        <div class="clickable" (click)="rowClicked.emit(item)">
+          {{ item[cell.targetData] }}
+        </div>
+      }
     </div>
   </div>
 </div>

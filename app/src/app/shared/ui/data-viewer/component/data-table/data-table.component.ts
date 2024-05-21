@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {DataTableConfig} from '../../config';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CellActionDefinition, DataTableConfig} from '../../config';
 import {NgForOf, NgIf} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 
@@ -16,4 +16,6 @@ import {TranslateModule} from '@ngx-translate/core';
 })
 export class DataTableComponent {
   @Input({required: true}) config!: DataTableConfig;
+  @Output() actionClicked = new EventEmitter<CellActionDefinition>();
+  @Output() rowClicked = new EventEmitter<any>();
 }

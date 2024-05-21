@@ -1,0 +1,23 @@
+<div class="first-step" [formGroup]="formGroup">
+  <input type="text" [formControl]="widthControl"/>
+  <input type="text" [formControl]="heightControl"/>
+  <input type="text" [formControl]="scaleControl"/>
+  <button (click)="generateSurface()">Generer plan</button>
+</div>
+
+@if (data$().rows.length) {
+  <div class="plan">
+    <div class="table">
+      <div class="rack-1">Rack 1</div>
+      @for (row of data$().rows; track row.index) {
+        <div class="row" >
+          @for (cell of row.cells; track cell.index) {
+            <div class="cell" #table (click)="cellClick()">
+            </div>
+          }
+        </div>
+      }
+    </div>
+    <button (click)="fakeData()"> add fake data</button>
+  </div>
+}

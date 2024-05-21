@@ -2,8 +2,8 @@ import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
 import {Stock, StockDto} from '@shelve-feature';
 import {ShelveUtilsService} from './shelve-utils.service';
-import {DataTableConfig, MinimalVisibilityWidth} from '@shared';
-import {StockKey} from '../data/enum/stock-key.enum';
+import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
+import {StockAction, StockKey} from '../data/enum';
 
 @Injectable({
   providedIn: 'root'
@@ -47,14 +47,42 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
     }
   }
 
-  public getDataTableConfig(stocks: Stock[], b: boolean): DataTableConfig {
+  public getDataTableConfig(stocks: Stock[], isAdmin: boolean): DataTableConfig {
+    let actions: CellActionDefinition[] = [
+      {
+        icon: 'fa-solid fa-eye',
+        action: StockAction.DETAIL
+      }
+    ]
+    if (isAdmin) {
+      actions.push({
+        icon: 'fa-solid fa-pencil',
+        action: StockAction.EDIT
+      });
+      actions.push({
+        icon: 'fa-solid fa-trash',
+        action: StockAction.DELETE
+      });
+    }
     return {
       translateKey: 'admin-feature-shelve.table.label.',
-      data:stocks,
-      cellDefinitions:[
+      data: stocks,
+      cellDefinitions: [
         {
-          targetData:StockKey.TITLE,
-          minimalWidthVisibility:MinimalVisibilityWidth.SMALL
+          targetData: StockKey.TITLE,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        },
+        {
+          targetData: StockKey.TITLE,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: '',
+          actions,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: true
         }
       ]
     }

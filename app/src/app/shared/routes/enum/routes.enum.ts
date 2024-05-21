@@ -6,6 +6,7 @@ export enum AppRoutes {
   MEMBER = `${AppRoutes.AUTHENTICATED}/${AppNode.MEMBER}`,
   ADMIN = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}`,
   ADMIN_SHELVES = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.SHELVES}`,
+  ADMIN_SHELVE_CREATE = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.SHELVE_ADD}`,
   ADMIN_MEMBER = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.MEMBER}`,
   ADMIN_PRODUCT = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.PRODUCT}`,
   MEMBER_DETAIL = `${AppRoutes.MEMBER}/detail/`
