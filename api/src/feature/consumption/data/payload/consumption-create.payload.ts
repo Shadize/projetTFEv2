@@ -1,5 +1,4 @@
 import { ProductType } from '@product/data';
-import { Stock } from '@stock/data';
 import { IsNotEmpty } from 'class-validator';
 import { ApiCodeResponse } from '@common/api';
 
@@ -14,8 +13,8 @@ export class ConsumptionCreatePayload {
 
   @IsNotEmpty({ message: ApiCodeResponse.CONSUMPTION_IS_MISSING })
     // on stock l'emplacement sous forme de chaine de caractère
-  shelve:string;
+  shelve: string;
   @IsNotEmpty({ message: ApiCodeResponse.CONSUMPTION_IS_MISSING })
-  // on stock l'id comme ca on peut y retourner.
-  shelve_reference:string;
+    // on stock l'id comme ca on peut y retourner.
+  shelve_reference: string;
 }
