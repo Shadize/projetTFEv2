@@ -53,5 +53,16 @@ var ApiCodeResponse;
     ApiCodeResponse["LESSON_CREATE_ERROR"] = "api.error.lesson-create";
     ApiCodeResponse["LESSON_UPDATE_ERROR"] = "api.error.lesson-update";
     ApiCodeResponse["CONSUMPTION_IS_MISSING"] = "api.error-consumption-payload-stock-is-missing";
+    ApiCodeResponse["PRODUCT_ID_MISSING_ERROR"] = "api.error.product-payload-id-mission";
+    ApiCodeResponse["PRODUCT_TITLE_MISSING_ERROR"] = "api.error.product-payload-title-mission";
+    ApiCodeResponse["PRODUCT_HEIGHT_MISSING_ERROR"] = "api.error.product-payload-height-mission";
+    ApiCodeResponse["PRODUCT_WIDTH_MISSING_ERROR"] = "api.error.product-payload-width-mission";
+    ApiCodeResponse["PRODUCT_THICKNESS_MISSING_ERROR"] = "api.error.product-payload-thickness-mission";
+    ApiCodeResponse["PRODUCT_TYPE_MISSING_ERROR"] = "api.error.product-payload-type-mission";
+    ApiCodeResponse["PRODUCT_NOT_FOUND"] = "api.error.product-not-found-delete";
+    ApiCodeResponse["PRODUCT_DELETE_ERROR"] = "api.error.product-delete";
+    ApiCodeResponse["PRODUCT_LIST_ERROR"] = "api.error.product-list";
+    ApiCodeResponse["PRODUCT_CREATE_ERROR"] = "api.error.product-create";
+    ApiCodeResponse["PRODUCT_UPDATE_ERROR"] = "api.error.product-update";
 })(ApiCodeResponse || (exports.ApiCodeResponse = ApiCodeResponse = {}));
 //# sourceMappingURL=api-code.response.js.map

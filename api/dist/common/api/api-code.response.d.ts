@@ -48,5 +48,16 @@ export declare enum ApiCodeResponse {
     LESSON_LIST_ERROR = "api.error.lesson-list",
     LESSON_CREATE_ERROR = "api.error.lesson-create",
     LESSON_UPDATE_ERROR = "api.error.lesson-update",
-    CONSUMPTION_IS_MISSING = "api.error-consumption-payload-stock-is-missing"
+    CONSUMPTION_IS_MISSING = "api.error-consumption-payload-stock-is-missing",
+    PRODUCT_ID_MISSING_ERROR = "api.error.product-payload-id-mission",
+    PRODUCT_TITLE_MISSING_ERROR = "api.error.product-payload-title-mission",
+    PRODUCT_HEIGHT_MISSING_ERROR = "api.error.product-payload-height-mission",
+    PRODUCT_WIDTH_MISSING_ERROR = "api.error.product-payload-width-mission",
+    PRODUCT_THICKNESS_MISSING_ERROR = "api.error.product-payload-thickness-mission",
+    PRODUCT_TYPE_MISSING_ERROR = "api.error.product-payload-type-mission",
+    PRODUCT_NOT_FOUND = "api.error.product-not-found-delete",
+    PRODUCT_DELETE_ERROR = "api.error.product-delete",
+    PRODUCT_LIST_ERROR = "api.error.product-list",
+    PRODUCT_CREATE_ERROR = "api.error.product-create",
+    PRODUCT_UPDATE_ERROR = "api.error.product-update"
 }
