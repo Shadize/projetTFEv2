@@ -2,7 +2,6 @@ import { Product, ProductType } from '@product/data';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { ulid } from 'ulid';
 import { Credential } from '@security/model';
-import { Stock } from '@stock/data';
 import { ConsumptionStatus } from '@consumption/data';
 
 @Entity()

@@ -1,7 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import { ulid } from 'ulid';
 import { Section } from '@common/data';
-import { Consumption } from '@consumption/data';
 import { Shelve } from '@stock/data';
 
 @Entity()
