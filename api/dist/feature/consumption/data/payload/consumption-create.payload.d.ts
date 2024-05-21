@@ -1,6 +1,5 @@
 import { ProductType } from '@product/data';
 export declare class ConsumptionCreatePayload {
-    consumption_id: string;
     order_date: Date;
     delivery_date: Date;
     quantity: number;

@@ -64,5 +64,10 @@ var ApiCodeResponse;
     ApiCodeResponse["PRODUCT_LIST_ERROR"] = "api.error.product-list";
     ApiCodeResponse["PRODUCT_CREATE_ERROR"] = "api.error.product-create";
     ApiCodeResponse["PRODUCT_UPDATE_ERROR"] = "api.error.product-update";
+    ApiCodeResponse["CONSUMPTION_NOT_FOUND"] = "api.error.consumption-not-found-delete";
+    ApiCodeResponse["CONSUMPTION_DELETE_ERROR"] = "api.error.consumption-delete";
+    ApiCodeResponse["CONSUMPTION_LIST_ERROR"] = "api.error.consumption-list";
+    ApiCodeResponse["CONSUMPTION_CREATE_ERROR"] = "api.error.consumption-create";
+    ApiCodeResponse["CONSUMPTION_UPDATE_ERROR"] = "api.error.consumption-update";
 })(ApiCodeResponse || (exports.ApiCodeResponse = ApiCodeResponse = {}));
 //# sourceMappingURL=api-code.response.js.map

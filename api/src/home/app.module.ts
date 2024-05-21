@@ -8,13 +8,15 @@ import { JwtGuard } from '@security/jwt';
 import { SecurityModule } from '@security/security.module';
 import { StockModule } from '@stock/stock.module';
 import { ProductModule } from '@product/product.module';
+import { ConsumptionModule } from '@consumption/consumption.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configManager.getTypeOrmConfig()),
     SecurityModule,
     StockModule,
-    ProductModule],
+    ProductModule,
+    ConsumptionModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD, useClass: JwtGuard

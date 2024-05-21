@@ -14,11 +14,26 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConsumptionController = void 0;
 const common_1 = require("@nestjs/common");
-const data_1 = require("./data");
-const model_1 = require("../../security/model");
-const config_1 = require("../../common/config");
+const data_1 = require("../data");
+const model_1 = require("../../../security/model");
+const config_1 = require("../../../common/config");
+const swagger_1 = require("@nestjs/swagger");
+const service_1 = require("../service");
 let ConsumptionController = class ConsumptionController {
+    constructor(service) {
+        this.service = service;
+    }
     create(payload, user) {
+        return this.service.create(payload);
+    }
+    delete(id) {
+        return this.service.delete(id);
+    }
+    detail(id) {
+        return this.service.detail(id);
+    }
+    getAll() {
+        return this.service.list();
     }
 };
 exports.ConsumptionController = ConsumptionController;
@@ -30,7 +45,30 @@ __decorate([
     __metadata("design:paramtypes", [data_1.ConsumptionCreatePayload, model_1.Credential]),
     __metadata("design:returntype", void 0)
 ], ConsumptionController.prototype, "create", null);
+__decorate([
+    (0, common_1.Delete)('delete/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Get)('detail/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "detail", null);
+__decorate([
+    (0, common_1.Get)('list'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "getAll", null);
 exports.ConsumptionController = ConsumptionController = __decorate([
-    (0, common_1.Controller)('consumption')
+    (0, swagger_1.ApiBearerAuth)('access-token'),
+    (0, swagger_1.ApiTags)('Consumption'),
+    (0, common_1.Controller)('consumption'),
+    __metadata("design:paramtypes", [service_1.ConsumptionService])
 ], ConsumptionController);
 //# sourceMappingURL=consumption.controller.js.map

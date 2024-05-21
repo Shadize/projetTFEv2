@@ -72,4 +72,13 @@ export enum ApiCodeResponse {
   PRODUCT_CREATE_ERROR = 'api.error.product-create',
   PRODUCT_UPDATE_ERROR = 'api.error.product-update',
 
+
+
+
+  CONSUMPTION_NOT_FOUND = 'api.error.consumption-not-found-delete',
+  CONSUMPTION_DELETE_ERROR = 'api.error.consumption-delete',
+  CONSUMPTION_LIST_ERROR = 'api.error.consumption-list',
+  CONSUMPTION_CREATE_ERROR = 'api.error.consumption-create',
+  CONSUMPTION_UPDATE_ERROR = 'api.error.consumption-update',
+
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConsumptionController } from './consumption.controller';
-import { ConsumptionService } from './consumption.service';
+import { ConsumptionController } from './controller/consumption.controller';
+import { ConsumptionService } from './service/consumption.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Consumption } from '@consumption/data';
 

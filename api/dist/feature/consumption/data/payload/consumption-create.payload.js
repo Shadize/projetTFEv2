@@ -10,16 +10,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConsumptionCreatePayload = void 0;
+const swagger_1 = require("@nestjs/swagger");
+const data_1 = require("../../../product/data");
 const class_validator_1 = require("class-validator");
 const api_1 = require("../../../../common/api");
 class ConsumptionCreatePayload {
 }
 exports.ConsumptionCreatePayload = ConsumptionCreatePayload;
 __decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], ConsumptionCreatePayload.prototype, "order_date", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], ConsumptionCreatePayload.prototype, "delivery_date", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], ConsumptionCreatePayload.prototype, "quantity", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], ConsumptionCreatePayload.prototype, "is_reserved", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], ConsumptionCreatePayload.prototype, "is_delivered", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], ConsumptionCreatePayload.prototype, "type", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CONSUMPTION_IS_MISSING }),
     __metadata("design:type", String)
 ], ConsumptionCreatePayload.prototype, "shelve", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CONSUMPTION_IS_MISSING }),
     __metadata("design:type", String)
 ], ConsumptionCreatePayload.prototype, "shelve_reference", void 0);
