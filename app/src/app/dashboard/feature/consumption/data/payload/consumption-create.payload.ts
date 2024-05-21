@@ -13,9 +13,5 @@ export class ConsumptionCreatePayload {
   type: ProductType;
 
   @IsNotEmpty({ message: ApiCodeResponse.CONSUMPTION_IS_MISSING })
-    // on stock l'emplacement sous forme de chaine de caractère
-  shelve:string;
-  @IsNotEmpty({ message: ApiCodeResponse.CONSUMPTION_IS_MISSING })
-  // on stock l'id comme ca on peut y retourner.
-  shelve_reference:string;
+  stock: Stock;
 }

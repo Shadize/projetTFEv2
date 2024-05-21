@@ -34,10 +34,8 @@ export class Consumption {
     { cascade: false, eager: true })
   @JoinColumn({ name: 'credential_id_fk', referencedColumnName: 'credential_id' })
   author: Credential;
-
-  //1-1 donc dans le payload c'est obligatoire @IsNotEmpty()
-  @ManyToOne(() => Stock, (s: Stock) => s.consumptions,
-    { cascade: false, eager: true })
-  @JoinColumn({ name: 'stock_id_fk', referencedColumnName: 'stock_id' })
-  stock: Stock;
+  // on stock l'emplacement sous forme de chaine de caractère
+  shelve:string;
+  // on stock l'id comme ca on peut y retourner.
+  shelve_reference:string;
 }

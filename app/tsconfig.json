@@ -13,6 +13,15 @@
       "@admin-feature": [
         "./app/dashboard/feature/admin/index.ts"
       ],
+      "@shelve-feature": [
+        "./app/dashboard/feature/shelve/index.ts"
+      ],
+      "@product-feature": [
+        "./app/dashboard/feature/product/index.ts"
+      ],
+      "@consumption-feature": [
+        "./app/dashboard/feature/consumption/index.ts"
+      ],
       "@member-feature": [
         "./app/dashboard/feature/member/index.ts"
       ],
