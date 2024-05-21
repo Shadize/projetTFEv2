@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { StockController } from './stock.controller';
-import { StockService } from './stock.service';
+import { StockController } from './controller/stock.controller';
+import { StockService } from './service/stock.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Stock } from '@stock/data';
 

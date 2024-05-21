@@ -23,6 +23,10 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "product_id", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ length: 50, nullable: false }),
+    __metadata("design:type", String)
+], Product.prototype, "title", void 0);
+__decorate([
     (0, typeorm_1.Column)({ length: 50, nullable: true }),
     __metadata("design:type", String)
 ], Product.prototype, "materials", void 0);
@@ -55,10 +59,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Product.prototype, "consumptions", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => data_2.Stock, (s) => s.product, { cascade: false, eager: false }),
-    (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
-    __metadata("design:type", data_2.Stock)
-], Product.prototype, "stock", void 0);
+    (0, typeorm_1.OneToOne)(() => data_2.Shelve, (s) => s.product, { cascade: false, eager: false }),
+    (0, typeorm_1.JoinColumn)({ name: 'shelve_id_fk', referencedColumnName: 'shelve_id' }),
+    __metadata("design:type", data_2.Shelve)
+], Product.prototype, "shelve", void 0);
 exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);

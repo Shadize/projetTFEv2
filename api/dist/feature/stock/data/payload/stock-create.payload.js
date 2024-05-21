@@ -19,23 +19,6 @@ class StockCreatePayload {
 exports.StockCreatePayload = StockCreatePayload;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_LOCATION_IS_EMPTY }),
-    __metadata("design:type", String)
-], StockCreatePayload.prototype, "location", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], StockCreatePayload.prototype, "rack", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], StockCreatePayload.prototype, "floor", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", Number)
-], StockCreatePayload.prototype, "nb_items_max", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_SECTION_IS_EMPTY }),
     __metadata("design:type", String)
 ], StockCreatePayload.prototype, "section", void 0);

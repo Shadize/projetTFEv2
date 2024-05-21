@@ -19,8 +19,4 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_ID_MISSING_ERROR }),
     __metadata("design:type", String)
 ], StockUpdatePayload.prototype, "stock_id", void 0);
-__decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_LOCATION_IS_EMPTY }),
-    __metadata("design:type", String)
-], StockUpdatePayload.prototype, "location", void 0);
 //# sourceMappingURL=stock-update.payload.js.map

@@ -16,9 +16,9 @@ exports.StockService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const data_1 = require("./data");
+const data_1 = require("../data");
 const lodash_1 = require("lodash");
-const stock_exception_1 = require("./stock.exception");
+const stock_exception_1 = require("../stock.exception");
 const builder_pattern_1 = require("builder-pattern");
 const ulid_1 = require("ulid");
 let StockService = class StockService {
@@ -37,7 +37,7 @@ let StockService = class StockService {
         }
     }
     async detail(id) {
-        const result = await this.repository.findOne({ where: { stock_id: id }, relations: { product: true } });
+        const result = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true } });
         if (!((0, lodash_1.isNil)(result))) {
             return result;
         }
@@ -56,11 +56,6 @@ let StockService = class StockService {
         try {
             const newStock = (0, builder_pattern_1.Builder)()
                 .stock_id((0, ulid_1.ulid)())
-                .location(payload.location)
-                .rack(payload.rack)
-                .floor(payload.floor)
-                .nb_items_max(payload.nb_items_max)
-                .section(payload.section)
                 .build();
             return await this.repository.save(newStock);
         }
@@ -71,11 +66,6 @@ let StockService = class StockService {
     async update(payload) {
         try {
             let detail = await this.detail(payload.stock_id);
-            detail.location = payload.location;
-            detail.rack = payload.rack;
-            detail.floor = payload.floor;
-            detail.nb_items_max = payload.nb_items_max;
-            detail.product = payload.product;
             return await this.repository.save(detail);
         }
         catch (e) {

@@ -2,7 +2,6 @@ import {Business} from '@core';
 import {ProductType} from '@product-feature';
 import {ConsumptionStatus} from '@consumption-feature';
 import {Credential} from '@security';
-import {Stock} from '@shelve-feature';
 
 export interface Consumption extends Business {
   order_date: Date;
@@ -13,5 +12,6 @@ export interface Consumption extends Business {
   type: ProductType;
   status: ConsumptionStatus;
   author: Credential;
-  stock: Stock;
+  shelve: string;
+  shelve_reference: string;
 }

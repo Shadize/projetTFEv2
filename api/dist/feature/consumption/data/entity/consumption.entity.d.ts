@@ -1,6 +1,5 @@
 import { Product, ProductType } from '@product/data';
 import { Credential } from '@security/model';
-import { Stock } from '@stock/data';
 import { ConsumptionStatus } from '@consumption/data';
 export declare class Consumption {
     consumption_id: string;
@@ -13,5 +12,6 @@ export declare class Consumption {
     status: ConsumptionStatus;
     product: Product;
     author: Credential;
-    stock: Stock;
+    shelve: string;
+    shelve_reference: string;
 }

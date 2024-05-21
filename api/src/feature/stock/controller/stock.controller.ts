@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { StockService } from '@stock/stock.service';
+import { StockService } from '@stock/service/stock.service';
 import { Stock, StockCreatePayload, StockUpdatePayload } from '@stock/data';
 import { User } from '@common/config';
 import { Credential } from '@security/model';

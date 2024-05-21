@@ -16,4 +16,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./stock-update.payload"), exports);
 __exportStar(require("./stock-create.payload"), exports);
+__exportStar(require("./shelve-create.payload"), exports);
+__exportStar(require("./shelve-update.payload"), exports);
 //# sourceMappingURL=index.js.map

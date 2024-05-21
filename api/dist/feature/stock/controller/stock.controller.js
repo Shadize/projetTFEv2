@@ -15,10 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StockController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
-const stock_service_1 = require("./stock.service");
-const data_1 = require("./data");
-const config_1 = require("../../common/config");
-const model_1 = require("../../security/model");
+const stock_service_1 = require("../service/stock.service");
+const data_1 = require("../data");
+const config_1 = require("../../../common/config");
+const model_1 = require("../../../security/model");
 let StockController = class StockController {
     constructor(service) {
         this.service = service;

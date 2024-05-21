@@ -1,3 +1,3 @@
-export * from './stock.dto';
+export * from './shelve.dto';
 export * from './payload';
-export * from './stock.business';
+export * from './shelve.business';

@@ -14,8 +14,7 @@ const data_1 = require("../../../product/data");
 const typeorm_1 = require("typeorm");
 const ulid_1 = require("ulid");
 const model_1 = require("../../../../security/model");
-const data_2 = require("../../../stock/data");
-const data_3 = require("..");
+const data_2 = require("..");
 let Consumption = class Consumption {
 };
 exports.Consumption = Consumption;
@@ -61,11 +60,6 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'credential_id_fk', referencedColumnName: 'credential_id' }),
     __metadata("design:type", model_1.Credential)
 ], Consumption.prototype, "author", void 0);
-__decorate([
-    (0, typeorm_1.ManyToOne)(() => data_2.Stock, (s) => s.consumptions, { cascade: false, eager: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
-    __metadata("design:type", data_2.Stock)
-], Consumption.prototype, "stock", void 0);
 exports.Consumption = Consumption = __decorate([
     (0, typeorm_1.Entity)()
 ], Consumption);

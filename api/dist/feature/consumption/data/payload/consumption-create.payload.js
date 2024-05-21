@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConsumptionCreatePayload = void 0;
-const data_1 = require("../../../stock/data");
 const class_validator_1 = require("class-validator");
 const api_1 = require("../../../../common/api");
 class ConsumptionCreatePayload {
@@ -18,6 +17,10 @@ class ConsumptionCreatePayload {
 exports.ConsumptionCreatePayload = ConsumptionCreatePayload;
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CONSUMPTION_IS_MISSING }),
-    __metadata("design:type", data_1.Stock)
-], ConsumptionCreatePayload.prototype, "stock", void 0);
+    __metadata("design:type", String)
+], ConsumptionCreatePayload.prototype, "shelve", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CONSUMPTION_IS_MISSING }),
+    __metadata("design:type", String)
+], ConsumptionCreatePayload.prototype, "shelve_reference", void 0);
 //# sourceMappingURL=consumption-create.payload.js.map

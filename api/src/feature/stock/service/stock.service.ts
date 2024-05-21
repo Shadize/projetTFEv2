@@ -30,7 +30,7 @@ export class StockService {
   }
 
   async detail(id: string): Promise<Stock> {
-    const result: Stock = await this.repository.findOne({ where: { stock_id: id }, relations: { product: true } });
+    const result: Stock = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true } });
     if (!(isNil(result))) {
       return result;
     }
@@ -50,11 +50,6 @@ export class StockService {
     try {
       const newStock: Stock = Builder<Stock>()
         .stock_id(ulid())
-        .location(payload.location)
-        .rack(payload.rack)
-        .floor(payload.floor)
-        .nb_items_max(payload.nb_items_max)
-        .section(payload.section)
         .build();
       return await this.repository.save(newStock);
     } catch (e) {
@@ -66,11 +61,6 @@ export class StockService {
   async update(payload: StockUpdatePayload): Promise<Stock> {
     try {
       let detail: Stock = await this.detail(payload.stock_id);
-      detail.location = payload.location;
-      detail.rack = payload.rack;
-      detail.floor = payload.floor;
-      detail.nb_items_max = payload.nb_items_max;
-      detail.product = payload.product;
       return await this.repository.save(detail);
     } catch (e) {
       throw new StockUpdateException();

@@ -1,4 +1,2 @@
-export enum Language {
-  FR = 'fr',
-  EN = 'en'
-}
+export * from './lang.enum';
+export * from './section.enum';

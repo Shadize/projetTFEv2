@@ -1,4 +1,4 @@
-import { StockService } from '@stock/stock.service';
+import { StockService } from '@stock/service/stock.service';
 import { Stock, StockCreatePayload, StockUpdatePayload } from '@stock/data';
 import { Credential } from '@security/model';
 export declare class StockController {

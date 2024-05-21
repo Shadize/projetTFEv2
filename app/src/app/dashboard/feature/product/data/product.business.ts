@@ -6,6 +6,7 @@ export interface Product extends Business{
   materials: string;
   treatment: string;
   thickness: number;
+  title: string;
   width: number;
   height: number;
   price: number;

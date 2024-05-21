@@ -1,14 +1,14 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {ApiResponse, ApiService, ApiURI} from '@api';
 import {tap} from 'rxjs';
-import {Stock} from '../data';
+import {Shelve} from '../data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelveService {
   private readonly api: ApiService = inject(ApiService);
-  public list$: WritableSignal<Stock[]> = signal([]);
+  public list$: WritableSignal<Shelve[]> = signal([]);
 
   list(): void {
     this.api.get(ApiURI.SHELVE_LIST)
