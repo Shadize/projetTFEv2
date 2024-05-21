@@ -9,7 +9,6 @@ export class Stock {
   stock_id: string;
   @Column({ nullable: false })
   section: Section;
-
   @OneToMany(() => Shelve, (s: Shelve) => s.location,
     { cascade: false, eager: true })
   @JoinColumn({ name: 'stock_id_fk', referencedColumnName: 'stock_id' })
