@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, computed, inject, OnInit, Signal} from '@angular/core';
 import {DataTableComponent, DataTableConfig, MinimalVisibilityWidth} from '@shared';
+import {StockService, StockUtilsService} from '../../../shelve/service';
+import {Stock} from '@shelve-feature';
 
 @Component({
   selector: 'app-shelve-management-page',
@@ -10,24 +12,16 @@ import {DataTableComponent, DataTableConfig, MinimalVisibilityWidth} from '@shar
   templateUrl: './shelve-management-page.component.html',
   styleUrl: './shelve-management-page.component.scss'
 })
-export class ShelveManagementPageComponent {
-  protected data: any[] = [
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'},
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'},
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'},
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'},
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'},
-    {a: 'val 1a', b: 'valb', c: 'valc', d: 'vald', e: 'vale'}
-  ]
-  protected config: DataTableConfig = {
-    data: this.data,
-    translateKey: '',
-    cellDefinitions: [
-      {targetData: 'a', minimalWidthVisibility:MinimalVisibilityWidth.SMALL},
-      {targetData: 'b', minimalWidthVisibility:MinimalVisibilityWidth.SMALL},
-      {targetData: 'c', minimalWidthVisibility:MinimalVisibilityWidth.SMALL},
-      {targetData: 'd', minimalWidthVisibility:MinimalVisibilityWidth.MEDIUM},
-      {targetData: 'e',minimalWidthVisibility:MinimalVisibilityWidth.LARGE},
-    ]
+export class ShelveManagementPageComponent implements OnInit {
+  private stockService: StockService = inject(StockService);
+  private stockUtils: StockUtilsService = inject(StockUtilsService);
+  protected config$:Signal<DataTableConfig> = computed(()=> this.genConfigs(this.stockService.list$()));
+
+  ngOnInit(): void {
+    this.stockService.list();
+  }
+
+  private genConfigs(stocks: Stock[]):DataTableConfig {
+    return this.stockUtils.getDataTableConfig(stocks, true);
   }
 }

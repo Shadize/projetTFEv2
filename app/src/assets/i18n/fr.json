@@ -25,5 +25,6 @@
   "admin-feature.title": "Zone d'administration",
   "admin-feature.title.product": "Gestion des produits",
   "admin-feature.title.member": "Gestion des membres",
-  "admin-feature.title.shelves": "Gestion des zones de stockage"
+  "admin-feature.title.shelves": "Gestion des zones de stockage",
+  "admin-feature-shelve.table.label.title": "Emplacement"
 }

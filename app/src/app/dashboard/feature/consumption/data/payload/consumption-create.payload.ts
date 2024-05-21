@@ -1,9 +1,8 @@
-import { ProductType } from '@product/data';
-import { Stock } from '@stock/data';
-import { IsNotEmpty } from 'class-validator';
-import { ApiCodeResponse } from '@common/api';
+import {Payload} from '@core';
+import {Stock} from '@shelve-feature';
+import {ProductType} from '@product-feature';
 
-export class ConsumptionCreatePayload {
+export interface ConsumptionCreatePayload extends Payload {
   consumption_id: string;
   order_date: Date;
   delivery_date: Date;
@@ -11,7 +10,5 @@ export class ConsumptionCreatePayload {
   is_reserved: boolean;
   is_delivered: boolean;
   type: ProductType;
-
-  @IsNotEmpty({ message: ApiCodeResponse.CONSUMPTION_IS_MISSING })
   stock: Stock;
 }

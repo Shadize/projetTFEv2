@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, ShelveDto} from '@shelve-feature';
+import {Shelve, ShelveDto, Stock, StockDto} from '@shelve-feature';
 import {ProductUtilsService} from '../../product/service';
 import {Product} from '@product-feature';
 
@@ -23,6 +23,13 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       section: dto.section,
       str: product?.title || 'app.common.empty'
     }
+  }
+
+  fromDTOS(dtos: ShelveDto[]): Shelve[] {
+    return dtos.map(d => this.fromDTO(d));
+  }
+  toDTOS(business: Shelve[]): ShelveDto[] {
+    return business.map(b => this.toDTO(b));
   }
 
   getEmpty(): Shelve {

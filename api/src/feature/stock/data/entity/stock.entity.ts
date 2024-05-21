@@ -7,6 +7,8 @@ import { Shelve } from '@stock/data';
 export class Stock {
   @PrimaryColumn('varchar', { length: 26, default: () => `'${ulid()}'` })
   stock_id: string;
+  @Column({ nullable: false , default:'Unknown'})
+  title: String;
   @Column({ nullable: false })
   section: Section;
   @OneToMany(() => Shelve, (s: Shelve) => s.location,

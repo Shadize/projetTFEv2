@@ -2,14 +2,20 @@
   <div class="row">
     <div *ngFor="let item of config.cellDefinitions" class="cell header {{item.minimalWidthVisibility}}">
       <ng-container *ngIf="item.actions; else title"></ng-container>
-      <ng-template #title> {{ config.translateKey + item.targetData }}</ng-template>
+      <ng-template #title> {{ config.translateKey + item.targetData | translate }}</ng-template>
     </div>
 
   </div>
   <div class="row" *ngFor="let item of config.data">
-    <div  *ngFor="let cell of config.cellDefinitions" class="cell line  {{cell.minimalWidthVisibility}}">
+    <div *ngFor="let cell of config.cellDefinitions" class="cell line  {{cell.minimalWidthVisibility}}">
 
-      <ng-container *ngIf="cell.actions; else data"></ng-container>
+      <ng-container *ngIf="cell.actions; else data">
+        <div class="action">
+          <div class="icon" *ngFor="let action of cell.actions">
+            <i class="{{action.icon}}"></i>
+          </div>
+        </div>
+      </ng-container>
       <ng-template #data> {{ item[cell.targetData] }}</ng-template>
     </div>
   </div>
