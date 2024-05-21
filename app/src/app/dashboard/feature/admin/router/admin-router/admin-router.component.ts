@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AppRoutes, CardComponent, CardHeaderComponent} from '@shared';
+import {AppNode, AppRoutes, CardComponent, CardHeaderComponent} from '@shared';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {IconMenu} from '../../../../../shared/ui/interface';
 
@@ -27,10 +27,12 @@ export class AdminRouterComponent implements OnInit {
   }
 
   private initMenu(): void {
+    const path = this.router.url.split('/');
+    const section: string = path[path.length - 1]
     this.menu = [
-      {icon: 'fa-light fa-grid-horizontal', isActive: true, link: AppRoutes.ADMIN_PRODUCT},
-      {icon: 'fa-light fa-shelves', isActive: false, link: AppRoutes.ADMIN_SHELVES},
-      {icon: 'fa-light fa-users', isActive: false, link: AppRoutes.ADMIN_MEMBER}
+      {icon: 'fa-light fa-grid-horizontal', isActive: (section === AppNode.PRODUCT), link: AppRoutes.ADMIN_PRODUCT},
+      {icon: 'fa-light fa-shelves', isActive: (section === AppNode.SHELVES), link: AppRoutes.ADMIN_SHELVES},
+      {icon: 'fa-light fa-users', isActive: (section === AppNode.MEMBER), link: AppRoutes.ADMIN_MEMBER}
     ]
   }
 

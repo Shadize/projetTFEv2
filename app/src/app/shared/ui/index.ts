@@ -3,3 +3,4 @@ export * from './button';
 export * from './loader';
 export * from './text';
 export * from './card';
+export * from './data-viewer';

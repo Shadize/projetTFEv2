@@ -1,0 +1,47 @@
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+
+  .row:nth-child(odd) {
+    background: var(--theme-standard-bg-hover);
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+
+    .cell {
+      flex: 1;
+      padding: 8px;
+    }
+
+    &:hover {
+      background: var(--theme-secondary);
+    }
+  }
+}
+
+// small screen
+@media all and (max-width: 600px) {
+  .medium, .large, .x-large {
+    display: none;
+  }
+
+}
+
+// medium screen
+@media all and (min-width: 600px) and (max-width: 800px) {
+
+  .large, .x-large {
+    display: none;
+  }
+}
+
+// large screen
+@media all and (min-width: 800px) and (max-width: 1200px) {
+  .x-large {
+    display: none;
+  }
+}
