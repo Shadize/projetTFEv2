@@ -51,7 +51,7 @@ export class ShelveAdminFormComponent implements OnInit {
   public shelveDataTableConfig: DataTableConfig = this.shelveUtils.getAdminDataTableConfig(this.stock?.shelves);
   public shelveFormGroup!: FormGroup;
   public shelveFormConfig: FormControlSimpleConfig[] = [];
-  public data$: WritableSignal<Surface> = signal({rows: []});
+  public data$: WritableSignal<Surface> = signal({nbRows: 0, nbCells: 0, rows: []});
   public errors$: WritableSignal<FormError[]> = signal([]);
   public shelveErrors$: WritableSignal<FormError[]> = signal([]);
   public editionMode$: WritableSignal<boolean> = signal(true);
@@ -78,6 +78,8 @@ export class ShelveAdminFormComponent implements OnInit {
       return;
     }
     this.data$.set({
+      nbRows: Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[2].formControl.value),
+      nbCells: Math.ceil(this.formConfigs[0].formControl.value / this.formConfigs[2].formControl.value),
       rows: [...Array(Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[2].formControl.value)).keys()].map((row) => (
         {
           index: row,
@@ -96,15 +98,14 @@ export class ShelveAdminFormComponent implements OnInit {
 
   public onResize(): void {
     this.widthCell = this.cell.nativeElement.offsetWidth;
+    const data: Surface = this.data$();
     this.shelveAreas$.set(
       this.shelveAreas$().map((item) => {
-
         const minimalItem = document.getElementById(item.startY + '-' + item.startX);
-        const maximalItem = document.getElementById((1 + item.endY) + '-' + (1 + item.endX));
         return {
           ...item,
-          width: maximalItem!.offsetLeft - minimalItem!.offsetLeft + 'px',
-          height: maximalItem!.offsetTop - minimalItem!.offsetTop + 'px',
+          width: (minimalItem!.offsetWidth * (item.endX + 1 - item.startX)) + 'px',
+          height: (minimalItem!.offsetWidth * (item.endY + 1 - item.startY)) + 'px',
           top: minimalItem!.offsetTop + 'px',
           left: minimalItem!.offsetLeft + 'px'
         }
@@ -118,8 +119,11 @@ export class ShelveAdminFormComponent implements OnInit {
 
   public validate(): void {
     const coordinate = this.surfaceCoordinate$();
+    console.log('coordinate', this.widthCell);
+    console.log('largeur', coordinate.maximalCell + 1 - coordinate.minimalCell);
+    console.log('hauteur', coordinate.maximalRow + 1 - coordinate.minimalRow);
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
-    const maximalItem = document.getElementById((1 + coordinate.maximalRow) + '-' + (1 + coordinate.maximalCell));
+    console.log('width', minimalItem!.offsetWidth );
     let newArea: ShelveArea = {
       background: this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value,
       color: this.invertHex(this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value.replace('#', '')),
@@ -128,8 +132,8 @@ export class ShelveAdminFormComponent implements OnInit {
       startY: coordinate.minimalRow,
       endX: coordinate.maximalCell,
       endY: coordinate.maximalRow,
-      width: maximalItem!.offsetLeft - minimalItem!.offsetLeft + 'px',
-      height: maximalItem!.offsetTop - minimalItem!.offsetTop + 'px',
+      width:(minimalItem!.offsetWidth * (coordinate.maximalCell + 1 - coordinate.minimalCell)) + 'px',
+      height:(minimalItem!.offsetHeight * (coordinate.maximalRow + 1 - coordinate.minimalRow)) + 'px',
       top: minimalItem!.offsetTop + 'px',
       left: minimalItem!.offsetLeft + 'px',
     }
