@@ -18,3 +18,14 @@ button{
     color: var(--theme-standard-footer-bg);
   }
 }
+.btn-error{
+  background:var(--theme-error-dark);
+  border:1px solid var(--theme-error-dark);
+  color:var(--theme-standard-footer-bg);
+
+  &:hover {
+    background: var(--theme-error-clear);
+    border: 1px solid var(--theme-error-clear);
+    color: var(--theme-standard-footer-bg);
+  }
+}

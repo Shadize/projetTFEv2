@@ -14,6 +14,16 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
   fromDTO(dto: ShelveDto): Shelve {
     const product: Product | undefined = dto.product ? this.productUtilsService.fromDTO(dto.product) : undefined
     return {
+      background: dto.background,
+      color: dto.color,
+      endX: dto.endX,
+      endY: dto.endY,
+      height: dto.height,
+      left: dto.left,
+      startX: dto.startX,
+      startY: dto.startY,
+      top: dto.top,
+      width: dto.width,
       floor: dto.floor,
       id: dto.shelve_id,
       isEmpty: false,
@@ -36,6 +46,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
 
   getEmpty(): Shelve {
     return {
+      background: '', color: '', endX: 0, endY: 0, height: '', left: '', startX: 0, startY: 0, top: '', width: '',
       floor: '',
       id: '',
       isEmpty: true,
@@ -50,6 +61,17 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
 
   toDTO(business: Shelve): ShelveDto {
     return {
+
+      background: business.background,
+      color: business.color,
+      endX: business.endX,
+      endY: business.endY,
+      height: business.height,
+      left: business.left,
+      startX: business.startX,
+      startY: business.startY,
+      top: business.top,
+      width: business.width,
       floor: business.floor,
       shelve_id: business.id,
       location: business.location,

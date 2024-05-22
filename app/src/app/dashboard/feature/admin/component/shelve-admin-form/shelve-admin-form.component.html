@@ -1,46 +1,60 @@
-<div class="first-step" [formGroup]="formGroup">
-  <div class="form">
-    @for (config of formConfigs; track config.input) {
-      <div class="input">
-        <label>{{ translateKey + config.input | translate }}</label>
-        <input type="text" [formControl]="config.formControl" [placeholder]="config.placeholder"/>
-      </div>
-    }
-  </div>
-  <div class="explanation">
-    <div class="data">
-      @if (errors$().length > 0) {
-        <span class="title error">{{ 'admin-feature-shelve-add.error-title'| translate }}</span>
-        <span class="content error">
-      @for (error of errors$(); let index = $index; track index) {
-        <p>{{ translateKey + 'error.' + error.control + '.' + error.error | translate }}</p>
+@if (stock.isEmpty) {
+  <div class="first-step" [formGroup]="formGroup">
+    <div class="form">
+      @for (config of formConfigs; track config.input) {
+        <div class="input">
+          <label>{{ translateKey + config.input | translate }}</label>
+          <input type="text" [formControl]="config.formControl" [placeholder]="config.placeholder! | translate"
+                 [readOnly]="shelveAreas$().length>0"/>
+        </div>
       }
 
-      </span>
-      } @else {
-        <span class="title">{{ 'admin-feature-shelve-add.explanation-title'| translate }}</span>
-        <span class="content">{{ 'admin-feature-shelve-add.explanation'| translate }}</span>
-      }
+      <button (click)="generateSurface()"
+              [class.disabled]="formGroup.invalid"
+              [disabled]="formGroup.invalid">{{ 'admin-feature-shelve-add.generate'| translate }}
+      </button>
     </div>
-    <button (click)="generateSurface()"
-            [class.disabled]="formGroup.invalid"
-            [disabled]="formGroup.invalid">{{ 'admin-feature-shelve-add.generate'| translate }}
-    </button>
+    <div class="explanation">
+      <div class="data">
+        @if (errors$().length > 0) {
+          <span class="title error">{{ 'admin-feature-shelve-add.error-title'| translate }}</span>
+          <span class="content error">
+            @for (error of errors$(); let index = $index; track index) {
+              <p>{{ translateKey + 'error.' + error.control + '.' + error.error | translate }}</p>
+            }
+          </span>
+        } @else {
+          <span class="title">{{ 'admin-feature-shelve-add.explanation-title'| translate }}</span>
+          <span class="content">{{ 'admin-feature-shelve-add.explanation'| translate }}</span>
+          <span class="content">{{ 'admin-feature-shelve-add.explanation-2'| translate }}</span>
+          <span class="content">{{ 'admin-feature-shelve-add.explanation-3'| translate }}</span>
+        }
+      </div>
+      <div class="actions">
+        <button (click)="cancel()" class="btn-error">{{ 'app.common.cancel'| translate }}
+        </button>
+        <button (click)="save()"
+                [class.disabled]="formGroup.invalid"
+                [disabled]="formGroup.invalid">{{ (stock.isEmpty ? 'admin-feature-shelve-add.btn-title' : 'admin-feature-shelve-update.btn-title') | translate }}
+        </button>
+      </div>
+    </div>
   </div>
-</div>
-
+}
 @if (data$().rows.length || !stock.isEmpty) {
   <div class="plan" (window:resize)="onResize()">
     <div class="table" #table [class.edition-mode]="editionMode$()">
-      @for(item of shelveAreas$(); let index=$index;track index){
-       <div class="rack"
-       [style]="'background-color:' +item.background+';color:'+item.color+';top:'+item.top+';left:'+item.left+';width:'+item.width+';height:'+item.height+';'">
-         {{item.title}}</div>
+      @for (item of shelveAreas$(); let index = $index; track index) {
+        <div class="rack"
+             [style]="'background-color:' +item.background+';color:'+item.color+';top:'+item.top+';left:'+item.left+';width:'+item.width+';height:'+item.height+';'">
+          {{ item.rack }}
+        </div>
       }
       @for (row of data$().rows; track row.index) {
         <div class="row">
           @for (cell of row.cells; track cell.index) {
-            <div class="cell"  [id]="cell.rowIndex +'-'+cell.index" #cell (click)="cellClick(cell)" [class.selected]="cell.selected">
+            <div class="cell" [id]="cell.rowIndex +'-'+cell.index" #cell (click)="cellClick(cell)"
+                 [class.selected]="cell.selected">
             </div>
           }
         </div>
@@ -51,27 +65,36 @@
   @if (editionMode$()) {
     <div class="band"></div>
     <app-card-header [title]="'admin-feature-shelve-add.add-item-title'"></app-card-header>
-    <div class="help"><i class="fa-light fa-circle-info"></i>
-      <span>{{ 'admin-feature-shelve-add.add-item-help' | translate }}</span>
-    </div>
+
     <div class="form" [formGroup]="shelveFormGroup">
       @for (config of shelveFormConfig; track config.input) {
         <div class="input">
           <label>{{ translateKey + config.input | translate }}</label>
-          <input [type]="config.inputType" [formControl]="config.formControl" [placeholder]="config.placeholder! | translate"
+          <input [type]="config.inputType" [formControl]="config.formControl"
+                 [placeholder]="config.placeholder! | translate"
                  [readOnly]="config.readonly!"/>
         </div>
       }
     </div>
     <div class="action">
-      <button (click)="validate()"> {{ 'app.common.validate' |translate }}</button>
-      <button (click)="goEditionMode(false)">{{ 'app.common.cancel' |translate }}
+      @if (surfaceCoordinate$().minimalCell === -1) {
+
+        <div class="help"><i class="fa-light fa-circle-info"></i>
+          <span>{{ 'admin-feature-shelve-add.add-item-help' | translate }}</span>
+        </div>
+      }
+      <button (click)="validate()"
+              [class.disabled]="shelveFormGroup.invalid || surfaceCoordinate$().minimalCell === -1"
+              [disabled]="shelveFormGroup.invalid || surfaceCoordinate$().minimalCell === -1"> {{ 'app.common.validate' |translate }}
+      </button>
+      <button class="btn-error" (click)="goEditionMode(false)">{{ 'app.common.cancel' |translate }}
       </button>
     </div>
   } @else {
-    <app-data-table [config]="shelveDataTableConfig"></app-data-table>
+    <app-data-table [config]="shelveDataTableConfig$()"></app-data-table>
     <div class="action">
-      <button (click)="goEditionMode(true)"><i class="fa-solid fa-plus"></i> {{ 'app.common.add-element' |translate }}</button>
+      <button (click)="goEditionMode(true)"><i class="fa-solid fa-plus"></i> {{ 'app.common.add-element' |translate }}
+      </button>
     </div>
   }
 }

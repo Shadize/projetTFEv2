@@ -3,7 +3,7 @@ import {
   ConfigToFormGroupFn,
   FormControlSimpleConfig,
   FormError,
-  GetAllFormErrorsFn,
+  GetAllFormErrorsFn, HandleFormErrorFn,
   HandleValueChangeFn
 } from '../type';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -12,7 +12,7 @@ import {map, tap} from 'rxjs';
 
 // !!!!!! YOU NEED TO CALL THIS IN CONSTRUCTOR COMPONENT !!!!!!!!! BECAUSE OF TAKEUNTILDESTROYED
 // https://indepth.dev/posts/1518/takeuntildestroy-in-angular-v16
-export const handleFormError: HandleValueChangeFn = (form: FormGroup, signal: WritableSignal<FormError[]>, destroyRef?: DestroyRef): void => {
+export const handleFormError: HandleFormErrorFn = (form: FormGroup, signal: WritableSignal<FormError[]>, destroyRef?: DestroyRef): void => {
   form.valueChanges
     .pipe(
       // that's mean kill this observer when component is destroyed
@@ -21,6 +21,15 @@ export const handleFormError: HandleValueChangeFn = (form: FormGroup, signal: Wr
       map(() => getFormValidationErrors(form)),
       // send signal with new errors
       tap((errors: FormError[]) => signal.set(errors)))
+    .subscribe();
+}
+export const handleFormChange: HandleValueChangeFn = (form: FormGroup, callback: Function, destroyRef?: DestroyRef): void => {
+  form.valueChanges
+    .pipe(
+      // that's mean kill this observer when component is destroyed
+      takeUntilDestroyed(destroyRef),
+      // send signal with new errors
+      tap((errors: FormError[]) => callback(form.value)))
     .subscribe();
 }
 
@@ -68,7 +77,7 @@ export const matchValidator = (matchTo: string, reverse?: boolean) => {
 
 export const positiveNumberValidator = () => {
   return (control: AbstractControl): ValidationErrors | null => {
-    const value =  Number(control.value);
+    const value = Number(control.value);
     const isNotOK = isNaN(value) || value < 0;
     return isNotOK ? {nonPositive: true} : null;
   }

@@ -1,12 +1,20 @@
-import {Payload} from '@core';
+import {Payload, Section} from '@core';
 import {Stock} from '@shelve-feature';
+import {Product} from '@product-feature';
 
 export interface ShelveCreatePayload extends Payload {
-  location: Stock;
   rack: string;
   floor: string;
-  nb_items_max: number;
-  surface: number;
-  width: number;
-  height: number;
+  nbItemsMax: number;
+  product?: Product;
+  background:string;
+  color:string;
+  startX:number;
+  startY:number;
+  endX:number;
+  endY:number;
+  top:string;
+  left:string;
+  width:string;
+  height:string;
 }

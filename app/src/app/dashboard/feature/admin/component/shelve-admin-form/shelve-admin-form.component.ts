@@ -1,31 +1,42 @@
 import {
-  Component,
+  Component, computed,
   DestroyRef,
   ElementRef,
   inject,
   Input,
-  OnInit,
+  OnInit, Signal,
   signal,
   ViewChild,
   WritableSignal
 } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import {ShelveArea, Surface, SurfaceCell, SurfaceCoordinate, SurfaceFormKey} from '../../data';
+import {Surface, SurfaceCell, SurfaceCoordinate, SurfaceDefinition, SurfaceFormKey} from '../../data';
 import {
-  CardHeaderComponent, CellDefinition,
-  DataTableComponent, DataTableConfig,
+  AppRoutes,
+  CardHeaderComponent,
+  DataTableComponent,
+  DataTableConfig,
   FormControlSimpleConfig,
-  FormError,
+  FormError, handleFormChange,
   handleFormError,
   InputType,
   LabelWithParamPipe,
   positiveNumberValidator
 } from '@shared';
-import {Stock} from '@shelve-feature';
-import {ShelveUtilsService} from '../../../shelve/service';
-import {ShelveKey} from '../../../shelve/data/enum';
-import {Element} from '@angular/compiler';
+import {
+  Stock,
+  ShelveUtilsService,
+  ShelveKey,
+  Shelve,
+  StockKey,
+  StockCreatePayload,
+  StockUtilsService
+} from '@shelve-feature';
+import {Section} from '@core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {tap} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-shelve-admin-form',
@@ -46,22 +57,24 @@ export class ShelveAdminFormComponent implements OnInit {
   public table!: ElementRef;
   @ViewChild('cell')
   public cell!: ElementRef;
+  public router: Router = inject(Router);
   public widthCell: number = 0;
   public shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
-  public shelveDataTableConfig: DataTableConfig = this.shelveUtils.getAdminDataTableConfig(this.stock?.shelves);
+  public stockUtils: StockUtilsService = inject(StockUtilsService);
   public shelveFormGroup!: FormGroup;
   public shelveFormConfig: FormControlSimpleConfig[] = [];
   public data$: WritableSignal<Surface> = signal({nbRows: 0, nbCells: 0, rows: []});
   public errors$: WritableSignal<FormError[]> = signal([]);
   public shelveErrors$: WritableSignal<FormError[]> = signal([]);
-  public editionMode$: WritableSignal<boolean> = signal(true);
-  public shelveAreas$: WritableSignal<ShelveArea[]> = signal([]);
+  public editionMode$: WritableSignal<boolean> = signal(false);
+  public shelveAreas$: WritableSignal<Shelve[]> = signal(this.stock?.shelves ?? []);
   public surfaceCoordinate$: WritableSignal<SurfaceCoordinate> = signal({
     maximalRow: -1,
     minimalRow: -1,
     minimalCell: -1,
     maximalCell: -1
   });
+  public shelveDataTableConfig$: Signal<DataTableConfig> = computed(() => this.shelveUtils.getAdminDataTableConfig(this.shelveAreas$()))
   public formGroup!: FormGroup;
   public formConfigs: FormControlSimpleConfig[] = [];
   public destroyRef: DestroyRef = inject(DestroyRef);
@@ -70,7 +83,18 @@ export class ShelveAdminFormComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.initShelveCreateFormGroup();
-    this.generateSurface();
+  }
+
+  public cancel(): void {
+    this.router.navigate([AppRoutes.ADMIN_SHELVES]).then();
+  }
+
+  public save(): void {
+    const payload: StockCreatePayload = this.stockUtils.genCreatePayload({
+      ...this.formGroup.value,
+      shelves: this.shelveAreas$()
+    });
+    console.log('payload', payload);
   }
 
   public generateSurface(): void {
@@ -98,7 +122,6 @@ export class ShelveAdminFormComponent implements OnInit {
 
   public onResize(): void {
     this.widthCell = this.cell.nativeElement.offsetWidth;
-    const data: Surface = this.data$();
     this.shelveAreas$.set(
       this.shelveAreas$().map((item) => {
         const minimalItem = document.getElementById(item.startY + '-' + item.startX);
@@ -115,34 +138,37 @@ export class ShelveAdminFormComponent implements OnInit {
 
   public goEditionMode(go: boolean): void {
     this.editionMode$.set(go);
+    if (!go) {
+      this.resetForm();
+    }
   }
 
   public validate(): void {
     const coordinate = this.surfaceCoordinate$();
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
 
-    let newArea: ShelveArea = {
+    let newArea: Shelve = {
+      floor: this.shelveFormGroup.get(ShelveKey.FLOOR)!.value,
+      nbItemsMax: this.shelveFormGroup.get(ShelveKey.NB_ITEM_MAX)!.value,
+      id: '',
+      isEmpty: false,
+      location: '',
+      rack: this.shelveFormGroup.get(ShelveKey.RACK)!.value,
+      section: Section.WOOD,
+      str: this.shelveFormGroup.get(ShelveKey.RACK)!.value,
       background: this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value,
       color: this.invertHex(this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value.replace('#', '')),
-      title: this.shelveFormGroup.get(ShelveKey.RACK)!.value,
       startX: coordinate.minimalCell,
       startY: coordinate.minimalRow,
       endX: coordinate.maximalCell,
       endY: coordinate.maximalRow,
-      width:(minimalItem!.offsetWidth * (coordinate.maximalCell + 1 - coordinate.minimalCell)) + 'px',
-      height:(minimalItem!.offsetHeight * (coordinate.maximalRow + 1 - coordinate.minimalRow)) + 'px',
+      width: (minimalItem!.offsetWidth * (coordinate.maximalCell + 1 - coordinate.minimalCell)) + 'px',
+      height: (minimalItem!.offsetHeight * (coordinate.maximalRow + 1 - coordinate.minimalRow)) + 'px',
       top: minimalItem!.offsetTop + 'px',
-      left: minimalItem!.offsetLeft + 'px',
+      left: minimalItem!.offsetLeft + 'px'
     }
-    this.shelveAreas$.set([newArea].concat(this.shelveAreas$()))
-    this.surfaceCoordinate$.set({
-      maximalRow: -1,
-      minimalRow: -1,
-      minimalCell: -1,
-      maximalCell: -1
-    });
-    this.shelveFormGroup.reset();
-    this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.patchValue('#f5f5f7');
+    this.shelveAreas$.set([newArea].concat(this.shelveAreas$()));
+    this.goEditionMode(false);
   }
 
   public cellClick(cell: SurfaceCell): void {
@@ -173,6 +199,49 @@ export class ShelveAdminFormComponent implements OnInit {
     }
   }
 
+  public formGroupChangeHandle(definition: SurfaceDefinition): void {
+    if (!this.editionMode$()) {
+      this.data$.set({
+        nbRows: Math.ceil(definition.height / definition.scale),
+        nbCells: Math.ceil(definition.width / definition.scale),
+        rows: [...Array(Math.ceil(definition.height / definition.scale)).keys()].map((row) => (
+          {
+            index: row,
+            cells: [...Array(Math.ceil(definition.width / definition.scale)).keys()].map((cell) => (
+              {
+                rowIndex: row,
+                index: cell,
+                str: `${row}-${cell}`,
+                selected: false
+              }
+            ))
+          }))
+      });
+      this.shelveAreas$.set(this.stock.shelves);
+    }
+  }
+
+  private resetForm(): void {
+    this.surfaceCoordinate$.set({
+      maximalRow: -1,
+      minimalRow: -1,
+      minimalCell: -1,
+      maximalCell: -1
+    });
+    this.shelveFormGroup.reset();
+    this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.patchValue('#f5f5f7');
+    const data: Surface = this.data$();
+    this.data$.set({
+      ...data,
+      rows: data.rows.map(r => ({
+        ...r,
+        cells: r.cells.map(c => {
+          return {...c, selected: false}
+        })
+      }))
+    })
+  }
+
   private defineNewSurfaceCoordinate(cell: SurfaceCell): SurfaceCoordinate {
     const coordinate = this.surfaceCoordinate$();
     let newCoordinate!: SurfaceCoordinate;
@@ -198,37 +267,43 @@ export class ShelveAdminFormComponent implements OnInit {
 
   private initFormGroup(): void {
     this.formGroup = new FormGroup<any>({
-      [SurfaceFormKey.WIDTH]: new FormControl('1000', [positiveNumberValidator()]),
-      [SurfaceFormKey.HEIGHT]: new FormControl('500', [positiveNumberValidator()]),
-      [SurfaceFormKey.SCALE]: new FormControl('50', [positiveNumberValidator()])
+      [StockKey.TITLE]: new FormControl('Emplacement #1', [Validators.required]),
+      [StockKey.WIDTH]: new FormControl('1000', [positiveNumberValidator()]),
+      [StockKey.HEIGHT]: new FormControl('500', [positiveNumberValidator()]),
+      [StockKey.SCALE]: new FormControl('50', [positiveNumberValidator()])
     });
     this.formConfigs = [
-      SurfaceFormKey.WIDTH,
-      SurfaceFormKey.HEIGHT,
-      SurfaceFormKey.SCALE].map((key: string) => (
+      StockKey.TITLE,
+      StockKey.WIDTH,
+      StockKey.HEIGHT,
+      StockKey.SCALE].map((key: string) => (
       {
         label: key,
         formControl: this.formGroup.get(key) as FormControl,
         input: key,
-        inputType: InputType.TEXT
+        inputType: InputType.TEXT,
+        placeholder: `${this.translateKey}placeholder.${key}`
       }
     ));
     // handle the error , with unsubscribe
     handleFormError(this.formGroup, this.errors$, this.destroyRef);
+
   }
 
   private initShelveCreateFormGroup(): void {
     this.shelveFormGroup = new FormGroup<any>({
       [ShelveKey.RACK]: new FormControl('', [Validators.required]),
-      [ShelveKey.FLOOR]: new FormControl('', [positiveNumberValidator()]),
+      [ShelveKey.FLOOR]: new FormControl('', [Validators.required, positiveNumberValidator()]),
       [ShelveKey.WIDTH]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.HEIGHT]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.SURFACE]: new FormControl('', [positiveNumberValidator()]),
+      [ShelveKey.NB_ITEM_MAX]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.BACKGROUND_COLOR]: new FormControl('#f5f5f7', [Validators.required])
     });
     this.shelveFormConfig = [
       ShelveKey.RACK,
       ShelveKey.FLOOR,
+      ShelveKey.NB_ITEM_MAX,
       ShelveKey.WIDTH,
       ShelveKey.HEIGHT,
       ShelveKey.SURFACE, ShelveKey.BACKGROUND_COLOR].map((key: string, index: number) => (
@@ -238,14 +313,14 @@ export class ShelveAdminFormComponent implements OnInit {
         input: key,
         inputType: key === ShelveKey.BACKGROUND_COLOR ? InputType.COLOR : InputType.TEXT,
         placeholder: `${this.translateKey}placeholder.${key}`,
-        readonly: (index > 1)
+        readonly: (index > 2)
       }
     ));
     // handle the error , with unsubscribe
     handleFormError(this.formGroup, this.shelveErrors$, this.destroyRef);
   }
 
-  invertHex(hex: string): string {
+  private invertHex(hex: string): string {
     return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
   }
 }

@@ -1,9 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Stock, StockDto} from '@shelve-feature';
+import {Shelve, Stock, StockCreatePayload, StockDto} from '@shelve-feature';
 import {ShelveUtilsService} from './shelve-utils.service';
 import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
 import {StockAction, StockKey} from '../data/enum';
+import {flatten} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       section: dto.section,
       shelves: this.shelveUtils.fromDTOS(dto.shelves),
       title: dto.title,
-      str: dto.title
+      str: dto.title,
+      height: dto.height,
+      scale: dto.scale,
+      width: dto.width,
     }
   }
 
@@ -28,6 +32,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
 
   public getEmpty(): Stock {
     return {
+      height: 0, scale: 0, width: 0,
       id: '',
       isEmpty: true,
       title: '',
@@ -43,7 +48,11 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       stock_id: business.id,
       section: business.section,
       shelves: this.shelveUtils.toDTOS(business.shelves),
-      title: business.title
+      title: business.title,
+
+      height: business.height,
+      scale: business.scale,
+      width: business.width,
     }
   }
 
@@ -85,6 +94,21 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
           isMinimalWidth: true
         }
       ]
+    }
+  }
+
+  genCreatePayload(stock: Stock): StockCreatePayload {
+    return {
+      title:stock.title,
+      width:stock.width,
+      height:stock.height,
+      scale:stock.scale!,
+      shelves: flatten(stock.shelves.map((shelve:Shelve)=>(
+        [...Array(shelve.floor).keys()].map((key)=>({
+          ...shelve,
+          floor:key.toString()
+        }))
+      )))
     }
   }
 }

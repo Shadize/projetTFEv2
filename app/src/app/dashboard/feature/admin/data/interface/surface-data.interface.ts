@@ -3,6 +3,11 @@ export interface Surface {
   nbCells:number;
   rows: SurfaceRow[];
 }
+export interface SurfaceDefinition{
+  width:number;
+  height:number;
+  scale:number;
+}
 
 export interface SurfaceRow {
   index: number;
@@ -20,17 +25,4 @@ export interface SurfaceCoordinate{
   maximalRow:number;
   minimalCell:number;
   maximalCell:number;
-}
-export interface ShelveArea{
-  background:string;
-  color:string;
-  title:string;
-  startX:number;
-  startY:number;
-  endX:number;
-  endY:number;
-  top:string;
-  left:string;
-  width:string;
-  height:string;
 }

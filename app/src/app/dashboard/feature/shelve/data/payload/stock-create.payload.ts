@@ -1,5 +1,10 @@
 import {Payload, Section} from '@core';
+import {Shelve} from '../business';
 
 export interface StockCreatePayload extends Payload{
-  section: Section;
+  title:string;
+  width:number;
+  height:number;
+  scale:number;
+  shelves: Shelve[];
 }
