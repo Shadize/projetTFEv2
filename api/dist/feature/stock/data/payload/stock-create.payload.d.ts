@@ -1,4 +1,8 @@
-import { Section } from '@common/data';
+import { Shelve } from '@stock/data';
 export declare class StockCreatePayload {
-    section: Section;
+    title: string;
+    width: number;
+    height: number;
+    scale: number;
+    shelves: Shelve[];
 }

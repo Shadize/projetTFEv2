@@ -26,6 +26,18 @@ __decorate([
     __metadata("design:type", String)
 ], Stock.prototype, "title", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: 0 }),
+    __metadata("design:type", Number)
+], Stock.prototype, "width", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: 0 }),
+    __metadata("design:type", Number)
+], Stock.prototype, "height", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: 0 }),
+    __metadata("design:type", Number)
+], Stock.prototype, "scale", void 0);
+__decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Stock.prototype, "section", void 0);

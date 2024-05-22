@@ -23,8 +23,8 @@ let StockController = class StockController {
     constructor(service) {
         this.service = service;
     }
-    create(payload) {
-        return this.service.create(payload);
+    create(user, payload) {
+        return this.service.create(user, payload);
     }
     delete(id) {
         return this.service.delete(id);
@@ -42,9 +42,10 @@ let StockController = class StockController {
 exports.StockController = StockController;
 __decorate([
     (0, common_1.Post)('create'),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, config_1.User)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [data_1.StockCreatePayload]),
+    __metadata("design:paramtypes", [model_1.Credential, data_1.StockCreatePayload]),
     __metadata("design:returntype", Promise)
 ], StockController.prototype, "create", null);
 __decorate([

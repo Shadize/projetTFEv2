@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ShelveAdminFormComponent} from '../../component';
-import {StockUtilsService} from '../../../shelve/service';
+import {StockUtilsService} from '@shelve-feature';
 import {Stock} from '@shelve-feature';
 
 

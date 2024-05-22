@@ -1,10 +1,10 @@
-import {Payload, Section} from '@core';
-import {Shelve} from '../business';
+import {Payload} from '@core';
+import {ShelveDto} from '../dto';
 
-export interface StockCreatePayload extends Payload{
-  title:string;
-  width:number;
-  height:number;
-  scale:number;
-  shelves: Shelve[];
+export interface StockCreatePayload extends Payload {
+  title: string;
+  width: number;
+  height: number;
+  scale: number;
+  shelves: ShelveDto[];
 }

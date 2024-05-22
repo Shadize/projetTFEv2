@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var StockService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StockService = void 0;
 const common_1 = require("@nestjs/common");
@@ -21,9 +22,10 @@ const lodash_1 = require("lodash");
 const stock_exception_1 = require("../stock.exception");
 const builder_pattern_1 = require("builder-pattern");
 const ulid_1 = require("ulid");
-let StockService = class StockService {
+let StockService = StockService_1 = class StockService {
     constructor(repository) {
         this.repository = repository;
+        this.logger = new common_1.Logger(StockService_1.name);
     }
     async list(user) {
         try {
@@ -52,14 +54,22 @@ let StockService = class StockService {
             throw new stock_exception_1.StockDeleteException();
         }
     }
-    async create(payload) {
+    async create(user, payload) {
         try {
+            console.log(user);
             const newStock = (0, builder_pattern_1.Builder)()
                 .stock_id((0, ulid_1.ulid)())
+                .section(user.section)
+                .width(payload.width)
+                .height(payload.height)
+                .title(payload.title)
+                .scale(payload.scale)
+                .shelves(payload.shelves)
                 .build();
             return await this.repository.save(newStock);
         }
         catch (e) {
+            this.logger.error(e);
             throw new stock_exception_1.StockCreateException();
         }
     }
@@ -74,7 +84,7 @@ let StockService = class StockService {
     }
 };
 exports.StockService = StockService;
-exports.StockService = StockService = __decorate([
+exports.StockService = StockService = StockService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(data_1.Stock)),
     __metadata("design:paramtypes", [typeorm_2.Repository])

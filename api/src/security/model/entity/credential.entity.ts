@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { ulid } from 'ulid';
-import { Consumption } from '../../../feature/consumption/data';
+import { Consumption } from '@consumption/data';
 import { Section } from '@common/data';
 
 

@@ -10,7 +10,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StockCreatePayload = void 0;
-const data_1 = require("../../../../common/data");
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const api_1 = require("../../../../common/api");
@@ -19,7 +18,26 @@ class StockCreatePayload {
 exports.StockCreatePayload = StockCreatePayload;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_SECTION_IS_EMPTY }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_TITLE_IS_EMPTY }),
     __metadata("design:type", String)
-], StockCreatePayload.prototype, "section", void 0);
+], StockCreatePayload.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_WIDTH_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockCreatePayload.prototype, "width", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_HEIGHT_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockCreatePayload.prototype, "height", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_SCALE_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockCreatePayload.prototype, "scale", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], StockCreatePayload.prototype, "shelves", void 0);
 //# sourceMappingURL=stock-create.payload.js.map

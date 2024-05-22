@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, Stock, StockCreatePayload, StockDto} from '@shelve-feature';
+import {Shelve, ShelveDto, Stock, StockCreatePayload, StockDto} from '@shelve-feature';
 import {ShelveUtilsService} from './shelve-utils.service';
 import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
 import {StockAction, StockKey} from '../data/enum';
@@ -105,7 +105,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       scale:stock.scale!,
       shelves: flatten(stock.shelves.map((shelve:Shelve)=>(
         [...Array(shelve.floor).keys()].map((key)=>({
-          ...shelve,
+          ...this.shelveUtils.toDTO(shelve),
           floor:key.toString()
         }))
       )))

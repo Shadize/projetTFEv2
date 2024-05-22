@@ -36,7 +36,10 @@ export enum ApiCodeResponse {
   STOCK_TITLE_LENGTH_ERROR = 'api.error.stock-payload-title-length',
   STOCK_TITLE_MISSING_ERROR = 'api.error.stock-payload-title-missing',
   STOCK_LOCATION_IS_EMPTY = 'api.error.stock-payload-location-missing',
-  STOCK_SECTION_IS_EMPTY = 'api.error.stock-payload-section-missing',
+  STOCK_TITLE_IS_EMPTY = 'api.error.stock-payload-title-missing',
+  STOCK_WIDTH_IS_EMPTY = 'api.error.stock-payload-width-missing',
+  STOCK_HEIGHT_IS_EMPTY = 'api.error.stock-payload-height-missing',
+  STOCK_SCALE_IS_EMPTY = 'api.error.stock-payload-scale-missing',
 
   LESSON_ID_LENGTH_ERROR = 'api.error.lesson-payload-id-length',
   LESSON_ID_MISSING_ERROR = 'api.error.lesson-payload-id-missing',

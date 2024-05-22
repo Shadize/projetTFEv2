@@ -13,8 +13,8 @@ export class StockController {
   }
 
   @Post('create')
-  create(@Body() payload: StockCreatePayload): Promise<Stock> {
-    return this.service.create(payload);
+  create(@User() user: Credential, @Body() payload: StockCreatePayload): Promise<Stock> {
+    return this.service.create(user, payload);
   }
 
   @Delete('delete/:id')
@@ -28,7 +28,7 @@ export class StockController {
   }
 
   @Get('list')
-  getAll(@User() user:Credential): Promise<Stock[]> {
+  getAll(@User() user: Credential): Promise<Stock[]> {
     return this.service.list(user);
   }
 

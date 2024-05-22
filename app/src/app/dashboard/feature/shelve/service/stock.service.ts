@@ -1,7 +1,7 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {Stock} from '@shelve-feature';
+import {Stock, StockCreatePayload} from '@shelve-feature';
 import {ApiResponse, ApiService, ApiURI} from '@api';
-import {tap} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {StockUtilsService} from './stock-utils.service';
 
 @Injectable({
@@ -21,5 +21,16 @@ export class StockService {
           this.list$.set([])
         }
       })).subscribe();
+  }
+
+  public create(payload: StockCreatePayload): Observable<Stock> {
+    return this.api.post(ApiURI.STOCK_CREATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.stockUtilsService.fromDTO(response.data) : this.stockUtilsService.getEmpty())
+    );
   }
 }

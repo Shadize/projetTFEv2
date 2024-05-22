@@ -4,7 +4,7 @@ import { Credential } from '@security/model';
 export declare class StockController {
     private readonly service;
     constructor(service: StockService);
-    create(payload: StockCreatePayload): Promise<Stock>;
+    create(user: Credential, payload: StockCreatePayload): Promise<Stock>;
     delete(id: string): Promise<void>;
     detail(id: string): Promise<Stock>;
     getAll(user: Credential): Promise<Stock[]>;

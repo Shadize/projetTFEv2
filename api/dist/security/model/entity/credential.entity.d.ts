@@ -1,4 +1,4 @@
-import { Consumption } from '../../../feature/consumption/data';
+import { Consumption } from '@consumption/data';
 import { Section } from '@common/data';
 export declare class Credential {
     credential_id: string;

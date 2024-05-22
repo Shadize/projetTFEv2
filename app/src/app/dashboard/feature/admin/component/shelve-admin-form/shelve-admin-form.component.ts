@@ -31,12 +31,13 @@ import {
   Shelve,
   StockKey,
   StockCreatePayload,
-  StockUtilsService
+  StockUtilsService, StockService
 } from '@shelve-feature';
 import {Section} from '@core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {tap} from 'rxjs';
 import {Router} from '@angular/router';
+import {ApiResponse} from '@api';
 
 @Component({
   selector: 'app-shelve-admin-form',
@@ -61,6 +62,7 @@ export class ShelveAdminFormComponent implements OnInit {
   public widthCell: number = 0;
   public shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
   public stockUtils: StockUtilsService = inject(StockUtilsService);
+  public stockService: StockService = inject(StockService);
   public shelveFormGroup!: FormGroup;
   public shelveFormConfig: FormControlSimpleConfig[] = [];
   public data$: WritableSignal<Surface> = signal({nbRows: 0, nbCells: 0, rows: []});
@@ -94,7 +96,14 @@ export class ShelveAdminFormComponent implements OnInit {
       ...this.formGroup.value,
       shelves: this.shelveAreas$()
     });
-    console.log('payload', payload);
+    this.stockService.create(payload)
+      .pipe(
+        tap((stock: Stock) => {
+          if (!stock.isEmpty) {
+            this.cancel();
+          }
+        }))
+      .subscribe();
   }
 
   public generateSurface(): void {
@@ -196,28 +205,6 @@ export class ShelveAdminFormComponent implements OnInit {
       this.shelveFormGroup.get(ShelveKey.WIDTH)!.patchValue(nbCellSelected * scale);
       this.shelveFormGroup.get(ShelveKey.HEIGHT)!.patchValue(nbRowSelected * scale);
       this.shelveFormGroup.get(ShelveKey.SURFACE)!.patchValue(nbRowSelected * nbCellSelected * surfCell);
-    }
-  }
-
-  public formGroupChangeHandle(definition: SurfaceDefinition): void {
-    if (!this.editionMode$()) {
-      this.data$.set({
-        nbRows: Math.ceil(definition.height / definition.scale),
-        nbCells: Math.ceil(definition.width / definition.scale),
-        rows: [...Array(Math.ceil(definition.height / definition.scale)).keys()].map((row) => (
-          {
-            index: row,
-            cells: [...Array(Math.ceil(definition.width / definition.scale)).keys()].map((cell) => (
-              {
-                rowIndex: row,
-                index: cell,
-                str: `${row}-${cell}`,
-                selected: false
-              }
-            ))
-          }))
-      });
-      this.shelveAreas$.set(this.stock.shelves);
     }
   }
 

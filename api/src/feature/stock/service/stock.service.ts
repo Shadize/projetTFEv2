@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stock, StockCreatePayload, StockUpdatePayload } from '@stock/data';
@@ -15,6 +15,7 @@ import { Credential } from '@security/model';
 
 @Injectable()
 export class StockService {
+  private readonly logger = new Logger(StockService.name);
   constructor(@InjectRepository(Stock) private readonly repository: Repository<Stock>) {
   }
 
@@ -46,13 +47,21 @@ export class StockService {
     }
   }
 
-  async create(payload: StockCreatePayload): Promise<Stock> {
+  async create(user:Credential,payload: StockCreatePayload): Promise<Stock> {
     try {
+      console.log(user)
       const newStock: Stock = Builder<Stock>()
         .stock_id(ulid())
+        .section(user.section)
+        .width(payload.width)
+        .height(payload.height)
+        .title(payload.title)
+        .scale(payload.scale)
+        .shelves(payload.shelves)
         .build();
       return await this.repository.save(newStock);
     } catch (e) {
+      this.logger.error(e);
       throw new StockCreateException();
     }
 
