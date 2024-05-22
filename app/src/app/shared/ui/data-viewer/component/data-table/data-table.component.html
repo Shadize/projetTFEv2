@@ -13,7 +13,7 @@
            [class.is-minimal]="cell.isMinimalWidth">
         @if (cell.actions) {
           <div class="action">
-            <div class="icon" *ngFor="let action of cell.actions" (click)="actionClicked.emit(action)">
+            <div class="icon" *ngFor="let action of cell.actions" (click)="onActionClicked(item,action)">
               <i class="{{action.icon}}"></i>
             </div>
           </div>

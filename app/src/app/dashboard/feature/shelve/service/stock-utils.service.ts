@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, ShelveDto, Stock, StockCreatePayload, StockDto} from '@shelve-feature';
+import {Shelve, ShelveDto, Stock, StockCreatePayload, StockDto, StockUpdatePayload} from '@shelve-feature';
 import {ShelveUtilsService} from './shelve-utils.service';
 import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
 import {StockAction, StockKey} from '../data/enum';
@@ -99,16 +99,19 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
 
   genCreatePayload(stock: Stock): StockCreatePayload {
     return {
-      title:stock.title,
-      width:stock.width,
-      height:stock.height,
-      scale:stock.scale!,
-      shelves: flatten(stock.shelves.map((shelve:Shelve)=>(
-        [...Array(shelve.floor).keys()].map((key)=>({
-          ...this.shelveUtils.toDTO(shelve),
-          floor:key.toString()
-        }))
-      )))
+      title: stock.title,
+      width: stock.width,
+      height: stock.height,
+      scale: stock.scale!,
+      shelves: this.shelveUtils.toDTOS(stock.shelves)
+    }
+  }
+
+  genUpdatePayload(stock: Stock): StockUpdatePayload {
+    console.log('stock id', stock.id);
+    return {
+      ...this.genCreatePayload(stock),
+      stock_id: stock.id
     }
   }
 }

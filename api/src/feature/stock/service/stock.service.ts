@@ -12,11 +12,13 @@ import {
 import { Builder } from 'builder-pattern';
 import { ulid } from 'ulid';
 import { Credential } from '@security/model';
+import { ShelveService } from '@stock/service/shelve.service';
 
 @Injectable()
 export class StockService {
   private readonly logger = new Logger(StockService.name);
-  constructor(@InjectRepository(Stock) private readonly repository: Repository<Stock>) {
+
+  constructor(@InjectRepository(Stock) private readonly repository: Repository<Stock>, private readonly shelveService: ShelveService) {
   }
 
   async list(user: Credential): Promise<Stock[]> {
@@ -47,9 +49,9 @@ export class StockService {
     }
   }
 
-  async create(user:Credential,payload: StockCreatePayload): Promise<Stock> {
+  async create(user: Credential, payload: StockCreatePayload): Promise<Stock> {
     try {
-      console.log(user)
+      console.log(user);
       const newStock: Stock = Builder<Stock>()
         .stock_id(ulid())
         .section(user.section)
@@ -57,9 +59,10 @@ export class StockService {
         .height(payload.height)
         .title(payload.title)
         .scale(payload.scale)
-        .shelves(payload.shelves)
         .build();
-      return await this.repository.save(newStock);
+      const stock = await this.repository.save(newStock);
+      await this.shelveService.setStockShelve(stock, payload.shelves);
+      return await this.detail(stock.stock_id);
     } catch (e) {
       this.logger.error(e);
       throw new StockCreateException();
@@ -70,8 +73,12 @@ export class StockService {
   async update(payload: StockUpdatePayload): Promise<Stock> {
     try {
       let detail: Stock = await this.detail(payload.stock_id);
-      return await this.repository.save(detail);
+      detail.title = payload.title;
+      await this.repository.save(detail);
+      await this.shelveService.setStockShelve(detail, payload.shelves);
+      return await this.detail(payload.stock_id);
     } catch (e) {
+      this.logger.error(e);
       throw new StockUpdateException();
     }
   }

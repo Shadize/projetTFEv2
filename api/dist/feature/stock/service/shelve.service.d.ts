@@ -1,4 +1,4 @@
-import { Shelve, ShelveCreatePayload, ShelveUpdatePayload } from '@stock/data';
+import { Shelve, ShelveCreatePayload, ShelveUpdatePayload, Stock } from '@stock/data';
 import { Repository } from 'typeorm';
 export declare class ShelveService {
     private readonly repository;
@@ -8,4 +8,5 @@ export declare class ShelveService {
     delete(id: string): Promise<void>;
     create(payload: ShelveCreatePayload): Promise<Shelve>;
     update(payload: ShelveUpdatePayload): Promise<Shelve>;
+    setStockShelve(detail: Stock, shelves: Shelve[]): Promise<void>;
 }

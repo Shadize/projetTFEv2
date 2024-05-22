@@ -26,4 +26,24 @@ export class Shelve {
   @OneToOne(() => Product, (p: Product) => p.shelve,
     { cascade: false, eager: true })
   product: Product;
+  @Column({ nullable: false })
+  background:string;
+  @Column({ nullable: false })
+  color:string;
+  @Column({ nullable: false })
+  startX:number;
+  @Column({ nullable: false })
+  startY:number;
+  @Column({ nullable: false })
+  endX:number;
+  @Column({ nullable: false })
+  endY:number;
+  @Column({ nullable: false })
+  top:string;
+  @Column({ nullable: false })
+  left:string;
+  @Column({ nullable: false })
+  width:string;
+  @Column({ nullable: false })
+  height:string;
 }

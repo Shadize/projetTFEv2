@@ -22,9 +22,11 @@ const lodash_1 = require("lodash");
 const stock_exception_1 = require("../stock.exception");
 const builder_pattern_1 = require("builder-pattern");
 const ulid_1 = require("ulid");
+const shelve_service_1 = require("./shelve.service");
 let StockService = StockService_1 = class StockService {
-    constructor(repository) {
+    constructor(repository, shelveService) {
         this.repository = repository;
+        this.shelveService = shelveService;
         this.logger = new common_1.Logger(StockService_1.name);
     }
     async list(user) {
@@ -64,9 +66,10 @@ let StockService = StockService_1 = class StockService {
                 .height(payload.height)
                 .title(payload.title)
                 .scale(payload.scale)
-                .shelves(payload.shelves)
                 .build();
-            return await this.repository.save(newStock);
+            const stock = await this.repository.save(newStock);
+            await this.shelveService.setStockShelve(stock, payload.shelves);
+            return await this.detail(stock.stock_id);
         }
         catch (e) {
             this.logger.error(e);
@@ -76,9 +79,13 @@ let StockService = StockService_1 = class StockService {
     async update(payload) {
         try {
             let detail = await this.detail(payload.stock_id);
-            return await this.repository.save(detail);
+            detail.title = payload.title;
+            await this.repository.save(detail);
+            await this.shelveService.setStockShelve(detail, payload.shelves);
+            return await this.detail(payload.stock_id);
         }
         catch (e) {
+            this.logger.error(e);
             throw new stock_exception_1.StockUpdateException();
         }
     }
@@ -87,6 +94,6 @@ exports.StockService = StockService;
 exports.StockService = StockService = StockService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(data_1.Stock)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository, shelve_service_1.ShelveService])
 ], StockService);
 //# sourceMappingURL=stock.service.js.map
