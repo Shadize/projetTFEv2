@@ -119,11 +119,8 @@ export class ShelveAdminFormComponent implements OnInit {
 
   public validate(): void {
     const coordinate = this.surfaceCoordinate$();
-    console.log('coordinate', this.widthCell);
-    console.log('largeur', coordinate.maximalCell + 1 - coordinate.minimalCell);
-    console.log('hauteur', coordinate.maximalRow + 1 - coordinate.minimalRow);
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
-    console.log('width', minimalItem!.offsetWidth );
+
     let newArea: ShelveArea = {
       background: this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value,
       color: this.invertHex(this.shelveFormGroup.get(ShelveKey.BACKGROUND_COLOR)!.value.replace('#', '')),
