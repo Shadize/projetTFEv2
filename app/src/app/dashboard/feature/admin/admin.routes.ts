@@ -31,6 +31,11 @@ export const adminRoutes: Routes = [
         path: AppNode.SHELVE_ADD,
         loadComponent: () =>
           import('./page').then(c => c.StockAdminAddPageComponent)
+      },
+      {
+        path: `${AppNode.SHELVE_UPDATE}/:id`,
+        loadComponent: () =>
+          import('./page').then(c => c.StockAdminUpdatePageComponent)
       }
     ]
   }

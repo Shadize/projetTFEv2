@@ -35,7 +35,7 @@ import {
 } from '@shelve-feature';
 import {Section} from '@core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {ApiResponse} from '@api';
 
@@ -85,6 +85,9 @@ export class ShelveAdminFormComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.initShelveCreateFormGroup();
+    if (!this.stock.isEmpty) {
+
+    }
   }
 
   public cancel(): void {
@@ -92,17 +95,25 @@ export class ShelveAdminFormComponent implements OnInit {
   }
 
   public save(): void {
-    const payload: StockCreatePayload = this.stockUtils.genCreatePayload({
-      ...this.formGroup.value,
-      shelves: this.shelveAreas$()
-    });
-    this.stockService.create(payload)
-      .pipe(
-        tap((stock: Stock) => {
-          if (!stock.isEmpty) {
-            this.cancel();
-          }
-        }))
+    let obs: Observable<Stock>;
+    if (this.stock.isEmpty) {
+      obs = this.stockService.create(this.stockUtils.genCreatePayload({
+        ...this.formGroup.value,
+        shelves: this.shelveAreas$()
+      }))
+    } else {
+      obs = this.stockService.update(this.stockUtils.genUpdatePayload({
+        ...this.stock,
+        ...this.formGroup.value,
+        shelves: this.shelveAreas$()
+      }));
+    }
+    obs.pipe(
+      tap((stock: Stock) => {
+        if (!stock.isEmpty) {
+          this.cancel();
+        }
+      }))
       .subscribe();
   }
 
@@ -111,12 +122,12 @@ export class ShelveAdminFormComponent implements OnInit {
       return;
     }
     this.data$.set({
-      nbRows: Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[2].formControl.value),
-      nbCells: Math.ceil(this.formConfigs[0].formControl.value / this.formConfigs[2].formControl.value),
-      rows: [...Array(Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[2].formControl.value)).keys()].map((row) => (
+      nbRows: Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value),
+      nbCells: Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value),
+      rows: [...Array(Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value)).keys()].map((row) => (
         {
           index: row,
-          cells: [...Array(Math.ceil(this.formConfigs[0].formControl.value / this.formConfigs[2].formControl.value)).keys()].map((cell) => (
+          cells: [...Array(Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value)).keys()].map((cell) => (
             {
               rowIndex: row,
               index: cell,
@@ -126,6 +137,9 @@ export class ShelveAdminFormComponent implements OnInit {
           ))
         }))
     });
+    if (!this.stock.isEmpty) {
+      this.shelveAreas$.set(this.stock.shelves);
+    }
 
   }
 
@@ -156,8 +170,8 @@ export class ShelveAdminFormComponent implements OnInit {
     const coordinate = this.surfaceCoordinate$();
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
 
-    let newArea: Shelve = {
-      floor: this.shelveFormGroup.get(ShelveKey.FLOOR)!.value,
+    let newAreas: Shelve[] = Array(parseInt(this.shelveFormGroup.get(ShelveKey.FLOOR)!.value, 10)).fill(0).map((key, index) => ({
+      floor: (index+1).toString(),
       nbItemsMax: this.shelveFormGroup.get(ShelveKey.NB_ITEM_MAX)!.value,
       id: '',
       isEmpty: false,
@@ -175,8 +189,8 @@ export class ShelveAdminFormComponent implements OnInit {
       height: (minimalItem!.offsetHeight * (coordinate.maximalRow + 1 - coordinate.minimalRow)) + 'px',
       top: minimalItem!.offsetTop + 'px',
       left: minimalItem!.offsetLeft + 'px'
-    }
-    this.shelveAreas$.set([newArea].concat(this.shelveAreas$()));
+    }));
+    this.shelveAreas$.set(this.shelveAreas$().concat(newAreas));
     this.goEditionMode(false);
   }
 
@@ -254,10 +268,10 @@ export class ShelveAdminFormComponent implements OnInit {
 
   private initFormGroup(): void {
     this.formGroup = new FormGroup<any>({
-      [StockKey.TITLE]: new FormControl('Emplacement #1', [Validators.required]),
-      [StockKey.WIDTH]: new FormControl('1000', [positiveNumberValidator()]),
-      [StockKey.HEIGHT]: new FormControl('500', [positiveNumberValidator()]),
-      [StockKey.SCALE]: new FormControl('50', [positiveNumberValidator()])
+      [StockKey.TITLE]: new FormControl(this.stock.title, [Validators.required]),
+      [StockKey.WIDTH]: new FormControl(this.stock.width, [positiveNumberValidator()]),
+      [StockKey.HEIGHT]: new FormControl(this.stock.height, [positiveNumberValidator()]),
+      [StockKey.SCALE]: new FormControl(this.stock.scale, [positiveNumberValidator()])
     });
     this.formConfigs = [
       StockKey.TITLE,
@@ -269,9 +283,15 @@ export class ShelveAdminFormComponent implements OnInit {
         formControl: this.formGroup.get(key) as FormControl,
         input: key,
         inputType: InputType.TEXT,
-        placeholder: `${this.translateKey}placeholder.${key}`
+        placeholder: `${this.translateKey}placeholder.${key}`,
+        readonly: key !== StockKey.TITLE && !this.stock.isEmpty
       }
     ));
+
+    if (!this.stock.isEmpty) {
+      this.generateSurface();
+    }
+
     // handle the error , with unsubscribe
     handleFormError(this.formGroup, this.errors$, this.destroyRef);
 

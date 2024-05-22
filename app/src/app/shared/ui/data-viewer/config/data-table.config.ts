@@ -17,6 +17,7 @@ export interface CellDefinition {
 export interface CellActionDefinition {
   icon: string;
   action: any;
+  data?:any;
 }
 
 export enum MinimalVisibilityWidth {

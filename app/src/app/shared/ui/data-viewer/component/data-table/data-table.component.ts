@@ -18,4 +18,12 @@ export class DataTableComponent {
   @Input({required: true}) config!: DataTableConfig;
   @Output() actionClicked = new EventEmitter<CellActionDefinition>();
   @Output() rowClicked = new EventEmitter<any>();
+
+  onRowClicked(): void {
+    this.rowClicked.emit();
+  }
+
+  onActionClicked(item: any, action: CellActionDefinition) {
+    this.actionClicked.emit({...action, data:item})
+  }
 }

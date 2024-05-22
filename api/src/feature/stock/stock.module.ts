@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-import { StockController } from './controller/stock.controller';
-import { StockService } from './service/stock.service';
+import { StockController } from '@stock/controller';
+import { StockService } from '@stock/service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Stock } from '@stock/data';
+import { Shelve, Stock } from '@stock/data';
+import { ShelveService } from '@stock/service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Stock])],
+  imports: [TypeOrmModule.forFeature([Stock,Shelve])],
   controllers: [StockController],
-  providers: [StockService]
+  providers: [StockService, ShelveService]
 })
-export class StockModule {}
+export class StockModule {
+}

@@ -42,7 +42,7 @@ __decorate([
     __metadata("design:type", String)
 ], Stock.prototype, "section", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => data_2.Shelve, (s) => s.location, { cascade: false, eager: true }),
+    (0, typeorm_1.OneToMany)(() => data_2.Shelve, (s) => s.location, { cascade: true, eager: true }),
     (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
     __metadata("design:type", Array)
 ], Stock.prototype, "shelves", void 0);

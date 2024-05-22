@@ -78,6 +78,14 @@ let ShelveService = class ShelveService {
             throw new stock_exception_1.StockUpdateException();
         }
     }
+    async setStockShelve(detail, shelves) {
+        for (let shelve of shelves) {
+            shelve.location = detail;
+            shelve.shelve_id = shelve.shelve_id ? shelve.shelve_id : (0, ulid_1.ulid)();
+            console.log(shelve);
+            await this.repository.save(shelve);
+        }
+    }
 };
 exports.ShelveService = ShelveService;
 exports.ShelveService = ShelveService = __decorate([

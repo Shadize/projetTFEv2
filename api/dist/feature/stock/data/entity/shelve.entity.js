@@ -47,6 +47,46 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => data_1.Product, (p) => p.shelve, { cascade: false, eager: true }),
     __metadata("design:type", data_1.Product)
 ], Shelve.prototype, "product", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "background", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "color", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", Number)
+], Shelve.prototype, "startX", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", Number)
+], Shelve.prototype, "startY", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", Number)
+], Shelve.prototype, "endX", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", Number)
+], Shelve.prototype, "endY", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "top", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "left", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "width", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Shelve.prototype, "height", void 0);
 exports.Shelve = Shelve = __decorate([
     (0, typeorm_1.Entity)()
 ], Shelve);

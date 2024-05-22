@@ -23,6 +23,26 @@ __decorate([
 ], StockUpdatePayload.prototype, "stock_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_TITLE_IS_EMPTY }),
+    __metadata("design:type", String)
+], StockUpdatePayload.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_WIDTH_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockUpdatePayload.prototype, "width", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_HEIGHT_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockUpdatePayload.prototype, "height", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.STOCK_SCALE_IS_EMPTY }),
+    __metadata("design:type", Number)
+], StockUpdatePayload.prototype, "scale", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], StockUpdatePayload.prototype, "shelves", void 0);
 //# sourceMappingURL=stock-update.payload.js.map

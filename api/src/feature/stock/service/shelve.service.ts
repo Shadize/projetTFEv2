@@ -1,21 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  Shelve,
-  ShelveCreatePayload,
-  ShelveUpdatePayload,
-  Stock,
-  StockCreatePayload,
-  StockUpdatePayload
-} from '@stock/data';
+import { Shelve, ShelveCreatePayload, ShelveUpdatePayload, Stock } from '@stock/data';
 import { Repository } from 'typeorm';
-import { Credential } from '@security/model';
 import { isNil } from 'lodash';
 import {
   StockCreateException,
   StockDeleteException,
   StockListException,
-  StockNotFoundException, StockUpdateException
+  StockNotFoundException,
+  StockUpdateException
 } from '@stock/stock.exception';
 import { Builder } from 'builder-pattern';
 import { ulid } from 'ulid';
@@ -81,4 +74,12 @@ export class ShelveService {
     }
   }
 
+  async setStockShelve(detail: Stock, shelves: Shelve[]): Promise<void> {
+    for (let shelve of shelves) {
+      shelve.location = detail;
+      shelve.shelve_id = shelve.shelve_id ? shelve.shelve_id : ulid();
+      console.log(shelve);
+      await this.repository.save(shelve);
+    }
+  }
 }

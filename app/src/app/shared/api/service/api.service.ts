@@ -18,7 +18,7 @@ export class ApiService {
   private readonly tokenService: TokenService = inject(TokenService);
   private readonly http: HttpClient = inject(HttpClient);
 
-  get(partURL: ApiURI): Observable<ApiResponse> {
+  get(partURL: ApiURI | string): Observable<ApiResponse> {
     return this.handle(this.http.get(`${this.baseURL}${partURL}`));
   }
 

@@ -1,8 +1,6 @@
 import {Component, computed, inject, OnInit, Signal} from '@angular/core';
-import {AppRoutes, CellActionDefinition, DataTableComponent, DataTableConfig, MinimalVisibilityWidth} from '@shared';
-import {StockService, StockUtilsService} from '../../../shelve/service';
-import {Stock} from '@shelve-feature';
-import {StockAction} from '../../../shelve/data/enum';
+import {AppRoutes, CellActionDefinition, DataTableComponent, DataTableConfig} from '@shared';
+import {StockService, StockUtilsService, Stock, StockAction} from '@shelve-feature';
 import {TranslateModule} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 
@@ -31,12 +29,13 @@ export class ShelveManagementPageComponent implements OnInit {
   }
 
   public onActionClicked(data: CellActionDefinition): void {
+    const item: Stock = data.data! as Stock;
     switch (data.action) {
       case StockAction.DETAIL:
         this.handleDetail();
         break;
       case StockAction.EDIT:
-        this.handleEdit();
+        this.handleEdit(item.id);
         break;
       case StockAction.DELETE:
         this.handleDelete();
@@ -57,8 +56,8 @@ export class ShelveManagementPageComponent implements OnInit {
     console.log('show detail');
   }
 
-  private handleEdit(): void {
-    console.log('edit item');
+  private handleEdit(id: string): void {
+    this.router.navigate([AppRoutes.ADMIN_SHELVE_UPDATE, id]).then();
   }
 
   private handleDelete(): void {

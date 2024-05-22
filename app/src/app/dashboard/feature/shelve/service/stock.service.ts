@@ -1,5 +1,5 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {Stock, StockCreatePayload} from '@shelve-feature';
+import {Stock, StockCreatePayload, StockUpdatePayload} from '@shelve-feature';
 import {ApiResponse, ApiService, ApiURI} from '@api';
 import {map, Observable, tap} from 'rxjs';
 import {StockUtilsService} from './stock-utils.service';
@@ -32,5 +32,29 @@ export class StockService {
       }),
       map((response: ApiResponse) => response.result ? this.stockUtilsService.fromDTO(response.data) : this.stockUtilsService.getEmpty())
     );
+  }
+
+  public update(payload: StockUpdatePayload): Observable<Stock> {
+    console.log('payload', payload);
+    return this.api.put(ApiURI.STOCK_UPDATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.stockUtilsService.fromDTO(response.data) : this.stockUtilsService.getEmpty())
+    );
+  }
+
+
+  detail(id: string): Observable<Stock> {
+    return this.api.get(`${ApiURI.STOCK_DETAIL}${id}`)
+      .pipe(map((response: ApiResponse) => {
+        if (response.result) {
+          return this.stockUtilsService.fromDTO(response.data);
+        }
+        return this.stockUtilsService.getEmpty()
+
+      }))
   }
 }
