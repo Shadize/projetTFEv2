@@ -134,7 +134,6 @@ export class ShelveAdminFormComponent implements OnInit {
       top: minimalItem!.offsetTop + 'px',
       left: minimalItem!.offsetLeft + 'px',
     }
-    console.log(document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell)!.offsetTop);
     this.shelveAreas$.set([newArea].concat(this.shelveAreas$()))
     this.surfaceCoordinate$.set({
       maximalRow: -1,
