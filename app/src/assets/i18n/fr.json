@@ -62,5 +62,13 @@
   "admin-feature-shelve.table.label.error.scale.nonPositive": "L'echelle n'est pas une valeur numérique",
   "admin-feature-shelve.table.label.error.title.required": "Vous devez fournir un titre",
   "admin-feature-shelve.table.label.placeholder.title": "Indiquez un titre",
-  "admin-feature-shelve-add.generate": "Générer la surface"
+  "admin-feature-shelve-add.generate": "Générer la surface",
+  "admin-feature-product.table.label.materials" : "Matériau",
+  "admin-feature-product.table.label.treatment" : "Traitement",
+  "admin-feature-product.table.label.thickness" : "Epaisseur en mm",
+  "admin-feature-product.table.label.title" : "Titre",
+  "admin-feature-product.table.label.width" : "Longueur en cm",
+  "admin-feature-product.table.label.height" : "Largeur en cm",
+  "admin-feature-product.table.label.price" : "Prix",
+  "admin-feature-product.table.label.type" : "Type de produit"
 }

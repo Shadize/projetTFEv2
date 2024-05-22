@@ -1,7 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils} from '@core';
-import {Product, ProductDto, ProductType} from '@product-feature';
+import {Product, ProductAction, ProductDto, ProductKey, ProductType} from '@product-feature';
 import {ConsumptionUtilsService} from '@consumption-feature';
+import { DataTableConfig, CellActionDefinition, MinimalVisibilityWidth } from '@shared';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       type: dto.type,
       width: dto.width
     }
+  }
+
+  public fromDTOS(dtos: ProductDto[]): Product[] {
+    return dtos.map(d => this.fromDTO(d));
   }
 
   getEmpty(): Product {
@@ -56,6 +61,62 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       treatment: business.treatment,
       type: business.type,
       width: business.width
+    }
+  }
+
+  public getDataTableConfig(products: Product[], isAdmin: boolean): DataTableConfig {
+    let actions: CellActionDefinition[] = [
+      {
+        icon: 'fa-solid fa-eye',
+        action: ProductAction.DETAIL
+      }
+    ]
+    if (isAdmin) {
+      actions.push({
+        icon: 'fa-solid fa-pencil',
+        action: ProductAction.EDIT
+      });
+      actions.push({
+        icon: 'fa-solid fa-trash',
+        action: ProductAction.DELETE
+      });
+    }
+    return {
+      translateKey: 'admin-feature-product.table.label.',
+      data: products,
+      cellDefinitions: [
+        {
+          targetData: ProductKey.TITLE,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        },
+        {
+          targetData: ProductKey.WIDTH,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: ProductKey.HEIGHT,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: ProductKey.THICKNESS,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: ProductKey.PRICE,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false
+        },
+        {
+          targetData: '',
+          actions,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: true
+        }
+      ]
     }
   }
 }

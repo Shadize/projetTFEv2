@@ -13,4 +13,5 @@ export enum ApiURI {
   STOCK_CREATE = 'stock/create',
   STOCK_UPDATE = 'stock/update',
   STOCK_DELETE = 'stock/delete/',
+  PRODUCT_LIST = 'product/list',
 }
