@@ -84,6 +84,13 @@ let ShelveService = class ShelveService {
             await this.repository.save(shelve);
         }
     }
+    async deleteForStock(stock) {
+        for (let shelve of stock.shelves) {
+            shelve.product = null;
+            await this.repository.save(shelve);
+            await this.repository.remove(shelve);
+        }
+    }
 };
 exports.ShelveService = ShelveService;
 exports.ShelveService = ShelveService = __decorate([

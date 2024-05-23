@@ -323,7 +323,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
         input: key,
         inputType: key === ShelveKey.BACKGROUND_COLOR ? InputType.COLOR : InputType.TEXT,
         placeholder: `${this.translateKey}placeholder.${key}`,
-        readonly: (index > 2)
+        readonly: (index > 1)
       }
     ));
     // handle the error , with unsubscribe

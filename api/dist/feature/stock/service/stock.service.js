@@ -50,6 +50,7 @@ let StockService = StockService_1 = class StockService {
     async delete(id) {
         try {
             const detail = await this.detail(id);
+            await this.shelveService.deleteForStock(detail);
             await this.repository.remove(detail);
         }
         catch (e) {

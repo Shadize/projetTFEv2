@@ -43,6 +43,7 @@ export class StockService {
   async delete(id: string): Promise<void> {
     try {
       const detail: Stock = await this.detail(id);
+      await this.shelveService.deleteForStock(detail);
       await this.repository.remove(detail);
     } catch (e) {
       throw new StockDeleteException();

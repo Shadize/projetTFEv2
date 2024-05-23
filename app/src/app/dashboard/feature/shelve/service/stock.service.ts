@@ -57,4 +57,13 @@ export class StockService {
 
       }))
   }
+
+  delete(id: string) {
+    this.api.delete(`${ApiURI.STOCK_DELETE}${id}`)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      })).subscribe();
+  }
 }

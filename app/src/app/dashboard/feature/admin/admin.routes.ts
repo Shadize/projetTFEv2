@@ -1,7 +1,7 @@
 import { ProductCreatePageComponent } from './page/product-create-page/product-create-page.component';
 import {Routes} from '@angular/router';
 import {AdminRouterComponent} from './router';
-import {AppNode} from '@shared';
+import {AppNode, AppRoutes} from '@shared';
 
 export const adminRoutes: Routes = [
   {
@@ -39,9 +39,14 @@ export const adminRoutes: Routes = [
           import('./page').then(c => c.StockAdminAddPageComponent)
       },
       {
-        path: `${AppNode.SHELVE_UPDATE}/:id`,
+        path: `${AppNode.SHELVE_UPDATE}`,
         loadComponent: () =>
           import('./page').then(c => c.StockAdminUpdatePageComponent)
+      },
+      {
+        path: `${AppNode.SHELVES}/${AppNode.DETAIL}`,
+        loadComponent: () =>
+          import('./page').then(c => c.StockAdminDetailPageComponent)
       }
     ]
   }

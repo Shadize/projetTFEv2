@@ -34,10 +34,11 @@
   "admin-feature.title.product": "Gestion des produits",
   "admin-feature.title.member": "Gestion des membres",
   "admin-feature.title.shelves": "Gestion des zones de stockage",
-  "admin-feature.title.shelves-add": "Ajouter un emplacement",
-  "admin-feature.title.shelves-update": "Modifier un emplacement",
-  "admin-feature-shelve-update.btn-title": "Mettre à jours l'emplacement",
-  "admin-feature-shelve-add.btn-title": "Créer l'emplacement",
+  "admin-feature.title.shelves-detail": "Détail de la zone de stockage",
+  "admin-feature.title.shelves-add": "Ajouter une zone de stockage",
+  "admin-feature.title.shelves-update": "Modifier une zone de stockage",
+  "admin-feature-shelve-update.btn-title": "Mettre à jours",
+  "admin-feature-shelve-add.btn-title": "Créer",
   "admin-feature-shelve.table.label.title": "Emplacement",
   "admin-feature-shelve.table.label.width": "Longueur en cm",
   "admin-feature-shelve.table.label.rack": "Emplacement",
@@ -77,5 +78,6 @@
   "admin-feature-product.table.label.width" : "Longueur en cm",
   "admin-feature-product.table.label.height" : "Largeur en cm",
   "admin-feature-product.table.label.price" : "Prix",
-  "admin-feature-product.table.label.type" : "Type de produit"
+  "admin-feature-product.table.label.type" : "Type de produit",
+  "shelve-detail-feature.not-found": "La zone de stockage n'a pas été trouvée"
 }

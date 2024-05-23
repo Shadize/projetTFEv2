@@ -80,4 +80,13 @@ export class ShelveService {
       await this.repository.save(shelve);
     }
   }
+
+  async deleteForStock(stock: Stock): Promise<void> {
+    for (let shelve of stock.shelves) {
+      shelve.product = null;
+      await this.repository.save(shelve);
+      await this.repository.remove(shelve);
+    }
+
+  }
 }

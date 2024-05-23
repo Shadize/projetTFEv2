@@ -32,13 +32,13 @@ export class ShelveManagementPageComponent implements OnInit {
     const item: Stock = data.data! as Stock;
     switch (data.action) {
       case StockAction.DETAIL:
-        this.handleDetail();
+        this.handleDetail(item.id);
         break;
       case StockAction.EDIT:
         this.handleEdit(item.id);
         break;
       case StockAction.DELETE:
-        this.handleDelete();
+        this.handleDelete(item.id);
         break;
 
     }
@@ -52,19 +52,19 @@ export class ShelveManagementPageComponent implements OnInit {
     return this.stockUtils.getDataTableConfig(stocks, true);
   }
 
-  private handleDetail(): void {
-    console.log('show detail');
+  private handleDetail(id:string): void {
+    this.router.navigate([AppRoutes.ADMIN_SHELVE_DETAIL.replace(':id',id)]).then();
   }
 
   private handleEdit(id: string): void {
-    this.router.navigate([AppRoutes.ADMIN_SHELVE_UPDATE, id]).then();
+    this.router.navigate([AppRoutes.ADMIN_SHELVE_UPDATE.replace(':id', id)]).then();
   }
 
   @confirmDialog({
     title: 'admin-feature-shelve-delete.confirm-title',
     message: 'admin-feature-shelve-delete.confirm-message'
   })
-  private handleDelete(): void {
-    console.log('handle delete');
+  private handleDelete(id:string): void {
+    this.stockService.delete(id);
   }
 }

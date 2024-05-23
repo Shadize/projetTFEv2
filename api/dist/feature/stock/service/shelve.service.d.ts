@@ -9,4 +9,5 @@ export declare class ShelveService {
     create(payload: ShelveCreatePayload): Promise<Shelve>;
     update(payload: ShelveUpdatePayload): Promise<Shelve>;
     setStockShelve(detail: Stock, shelves: Shelve[]): Promise<void>;
+    deleteForStock(stock: Stock): Promise<void>;
 }

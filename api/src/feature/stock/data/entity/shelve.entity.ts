@@ -18,32 +18,32 @@ export class Shelve {
   rack: string;
   @Column({ length: 10, nullable: true })
   floor: string;
-  @Column({ nullable: false, default:0 })
+  @Column({ nullable: false, default: 0 })
   nb_items_max: number;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
     { cascade: false, eager: false })
   consumptions: Consumption[];
   @OneToOne(() => Product, (p: Product) => p.shelve,
-    { cascade: false, eager: true })
+    { nullable: true, cascade: false, eager: true })
   product: Product;
   @Column({ nullable: false })
-  background:string;
+  background: string;
   @Column({ nullable: false })
-  color:string;
+  color: string;
   @Column({ nullable: false })
-  startX:number;
+  startX: number;
   @Column({ nullable: false })
-  startY:number;
+  startY: number;
   @Column({ nullable: false })
-  endX:number;
+  endX: number;
   @Column({ nullable: false })
-  endY:number;
+  endY: number;
   @Column({ nullable: false })
-  top:string;
+  top: string;
   @Column({ nullable: false })
-  left:string;
+  left: string;
   @Column({ nullable: false })
-  width:string;
+  width: string;
   @Column({ nullable: false })
-  height:string;
+  height: string;
 }

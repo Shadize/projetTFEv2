@@ -30,7 +30,7 @@ export class ApiService {
     return this.handle(this.http.put(`${this.baseURL}${partURL}`, payload));
   }
 
-  delete(partURL: ApiURI): Observable<ApiResponse> {
+  delete(partURL: ApiURI | string): Observable<ApiResponse> {
     return this.handle(this.http.delete(`${this.baseURL}${partURL}`));
   }
 
