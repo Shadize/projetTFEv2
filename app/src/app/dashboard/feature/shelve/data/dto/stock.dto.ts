@@ -1,5 +1,6 @@
 import {Dto, Section} from '@core';
 import {ShelveDto} from './shelve.dto';
+import {SurfaceDoorCell} from '../../../admin/data';
 
 export interface StockDto extends Dto {
   stock_id: string;
@@ -9,4 +10,5 @@ export interface StockDto extends Dto {
   height:number;
   scale:number;
   shelves: ShelveDto[];
+  doors:SurfaceDoorCell[]
 }

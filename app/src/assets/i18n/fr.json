@@ -79,5 +79,7 @@
   "admin-feature-product.table.label.height" : "Largeur en cm",
   "admin-feature-product.table.label.price" : "Prix",
   "admin-feature-product.table.label.type" : "Type de produit",
-  "shelve-detail-feature.not-found": "La zone de stockage n'a pas été trouvée"
+  "shelve-detail-feature.not-found": "La zone de stockage n'a pas été trouvée",
+  "admin-feature-shelve-add.add-doors": "Ajouter une ouverture",
+  "admin-feature-shelve-add.add-doors-validate": "Finaliser l'ouverture"
 }

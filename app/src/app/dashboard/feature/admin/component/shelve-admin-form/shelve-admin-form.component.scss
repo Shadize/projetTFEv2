@@ -17,7 +17,7 @@
     .cell {
       flex: 1 0 auto;
       height: auto;
-      border: 1px solid var(--theme-white);
+      border: 0.5px solid var(--theme-white);
 
     }
 
@@ -29,6 +29,14 @@
 
     .selected {
       background: var(--theme-eee);
+    }
+
+    .wall {
+      border: 0.5px solid red;
+    }
+
+    .wall-cell {
+      border: 0.5px solid red;
     }
   }
 }
@@ -50,12 +58,17 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-  .actions{
-    display: flex;
-    flex-direction: row;
-    gap:10px;
-    button{flex:1;}
-  }
+
+    .actions {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+
+      button {
+        flex: 1;
+      }
+    }
+
     .data {
       flex: 2;
       display: flex;
@@ -76,24 +89,33 @@
 
 .form {
   border-top: 1px solid var(--theme-eee);
-  button{
-    margin-top:15px;
+
+  button {
+    margin-top: 15px;
   }
 }
-
+.door{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background:var(--theme-white);
+  z-index:50;
+}
 .rack {
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border:1px solid var(--theme-eee);
+  border: 1px solid var(--theme-eee);
 }
 
 .input {
   display: flex;
   flex-direction: row;
-  width:100%;
+  width: 100%;
   gap: 15px;
   border: 1px solid var(--theme-eee);
   border-top: none;
@@ -119,14 +141,87 @@
 }
 
 .plan {
+  position: relative;
   margin-bottom: 30px;
+  padding: 30px;
+  border: 1px solid var(--theme-eee);
+
+  .left-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right-wall {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-wall {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    left: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bottom-wall {
+    position: absolute;
+    bottom: 0;
+    right: 30px;
+    left: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .cell-wall-square {
+    width: 30px;
+    height: 30px;
+    background: var(--theme-standard-bg-hover);
+  }
+
+  .cell-wall {
+    background: var(--theme-standard-bg-hover);
+    flex: 1;
+  }
+
+  .wall-selected {
+    background:var(--theme-white);
+  }
+
+  .wall-edition-mode {
+    .cell-wall-square, .cell-wall {
+      border: 0.5px solid var(--theme-eee);
+      background: var(--theme-white);
+      cursor: pointer;
+      &:hover {
+        background: var(--theme-standard-bg-hover);
+
+      }
+    }
+    .wall-selected {
+      background:var(--theme-standard-bg-hover);
+    }
+  }
 }
 
 .action {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap:20px;
+  gap: 20px;
 
   button {
     width: 240px;
@@ -159,9 +254,10 @@
 }
 
 .help {
-  flex:3;
+  flex: 3;
   display: flex;
-  flex-direction: row;gap:10px;
+  flex-direction: row;
+  gap: 10px;
 
 
   i {
@@ -169,14 +265,18 @@
     font-size: 18px;
     margin-right: 10px;
   }
-  span{
-    flex:2;
+
+  span {
+    flex: 2;
   }
 }
-input{border:none;}
 
-@media (max-width:600px){
-  .first-step{
+input {
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .first-step {
     display: flex;
     flex-direction: column;
   }

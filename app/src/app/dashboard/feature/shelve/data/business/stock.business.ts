@@ -1,11 +1,13 @@
-import {Business, Dto, Section} from '@core';
+import {Business, Section} from '@core';
 import {Shelve} from './shelve.business';
+import {StockDoor} from './stock-doors.business';
 
 export interface Stock extends Business {
-  title:string;
+  title: string;
   section: Section;
-  width:number;
-  height:number;
-  scale:number;
+  width: number;
+  height: number;
+  scale: number;
   shelves: Shelve[];
+  doors: StockDoor[]
 }

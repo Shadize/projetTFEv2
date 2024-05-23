@@ -23,6 +23,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       height: dto.height,
       scale: dto.scale,
       width: dto.width,
+      doors:[],
     }
   }
 
@@ -38,6 +39,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       title: '',
       section: Section.WOOD,
       shelves: [],
+      doors:[],
       str: 'api.common.empty'
 
     }
@@ -49,7 +51,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       section: business.section,
       shelves: this.shelveUtils.toDTOS(business.shelves),
       title: business.title,
-
+      doors:[],
       height: business.height,
       scale: business.scale,
       width: business.width,
