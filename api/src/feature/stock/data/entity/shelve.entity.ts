@@ -18,7 +18,7 @@ export class Shelve {
   rack: string;
   @Column({ length: 10, nullable: true })
   floor: string;
-  @Column({ nullable: true })
+  @Column({ nullable: false, default:0 })
   nb_items_max: number;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
     { cascade: false, eager: false })

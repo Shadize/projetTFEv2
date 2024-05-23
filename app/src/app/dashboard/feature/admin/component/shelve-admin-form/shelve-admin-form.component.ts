@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component, computed,
   DestroyRef,
   ElementRef,
@@ -14,7 +15,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {Surface, SurfaceCell, SurfaceCoordinate, SurfaceDefinition, SurfaceFormKey} from '../../data';
 import {
   AppRoutes,
-  CardHeaderComponent,
+  CardHeaderComponent, ConfirmDialogComponent,
   DataTableComponent,
   DataTableConfig,
   FormControlSimpleConfig,
@@ -48,11 +49,12 @@ import {ApiResponse} from '@api';
     TranslateModule,
     DataTableComponent,
     CardHeaderComponent,
+    ConfirmDialogComponent,
   ],
   templateUrl: './shelve-admin-form.component.html',
   styleUrl: './shelve-admin-form.component.scss'
 })
-export class ShelveAdminFormComponent implements OnInit {
+export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   @Input({required: true}) stock!: Stock;
   @ViewChild('table')
   public table!: ElementRef;
@@ -85,9 +87,9 @@ export class ShelveAdminFormComponent implements OnInit {
   ngOnInit() {
     this.initFormGroup();
     this.initShelveCreateFormGroup();
-    if (!this.stock.isEmpty) {
-
-    }
+  }
+  ngAfterViewInit() {
+    this.onResize();
   }
 
   public cancel(): void {
@@ -144,6 +146,7 @@ export class ShelveAdminFormComponent implements OnInit {
   }
 
   public onResize(): void {
+    if(this.cell?.nativeElement){
     this.widthCell = this.cell.nativeElement.offsetWidth;
     this.shelveAreas$.set(
       this.shelveAreas$().map((item) => {
@@ -157,6 +160,8 @@ export class ShelveAdminFormComponent implements OnInit {
         }
       })
     )
+
+    }
   }
 
   public goEditionMode(go: boolean): void {
@@ -171,8 +176,8 @@ export class ShelveAdminFormComponent implements OnInit {
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
 
     let newAreas: Shelve[] = Array(parseInt(this.shelveFormGroup.get(ShelveKey.FLOOR)!.value, 10)).fill(0).map((key, index) => ({
-      floor: (index+1).toString(),
-      nbItemsMax: this.shelveFormGroup.get(ShelveKey.NB_ITEM_MAX)!.value,
+      floor: (index + 1).toString(),
+      nbItemsMax: 0,
       id: '',
       isEmpty: false,
       location: '',
@@ -304,13 +309,11 @@ export class ShelveAdminFormComponent implements OnInit {
       [ShelveKey.WIDTH]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.HEIGHT]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.SURFACE]: new FormControl('', [positiveNumberValidator()]),
-      [ShelveKey.NB_ITEM_MAX]: new FormControl('', [positiveNumberValidator()]),
       [ShelveKey.BACKGROUND_COLOR]: new FormControl('#f5f5f7', [Validators.required])
     });
     this.shelveFormConfig = [
       ShelveKey.RACK,
       ShelveKey.FLOOR,
-      ShelveKey.NB_ITEM_MAX,
       ShelveKey.WIDTH,
       ShelveKey.HEIGHT,
       ShelveKey.SURFACE, ShelveKey.BACKGROUND_COLOR].map((key: string, index: number) => (

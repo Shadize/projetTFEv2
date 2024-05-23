@@ -89,16 +89,11 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       cellDefinitions: [
         {
           targetData: 'rack',
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
           isMinimalWidth: false
         },
         {
           targetData: 'floor',
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
-          isMinimalWidth: false
-        },
-        {
-          targetData: 'nbItemsMax',
           minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
           isMinimalWidth: false
         }

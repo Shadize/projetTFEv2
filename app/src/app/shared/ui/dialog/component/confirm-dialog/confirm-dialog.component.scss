@@ -1,0 +1,33 @@
+#background{
+  position: fixed;
+  top:0;left:0;right:0;bottom:0;
+  background: rgba(234, 232, 232, 0.71);
+  display: flex;
+  flex-direction: column;justify-content: center;align-items: center;
+  padding:20px;
+  #dialog{
+    background:var(--theme-white);
+    border-radius:3px;
+    max-width:600px;
+    width:auto;
+    padding:16px;
+    margin-top:-150px;
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+    button{
+      width:100px;
+    }
+  .title{
+    padding-bottom:15px;
+    font-size:16px;
+    font-family: 'OpenSans';
+    color:var(--theme-standard-write);
+  }
+    .actions{
+      display: flex;flex-direction: row;
+      gap:15px;
+      justify-content: flex-end;align-items: flex-end;
+    }
+  }
+}

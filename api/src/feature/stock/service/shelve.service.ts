@@ -51,7 +51,6 @@ export class ShelveService {
         .location(payload.location)
         .rack(payload.rack)
         .floor(payload.floor)
-        .nb_items_max(payload.nb_items_max)
         .build();
       return await this.repository.save(newShelve);
     } catch (e) {
@@ -66,7 +65,6 @@ export class ShelveService {
       detail.location = payload.location;
       detail.rack = payload.rack;
       detail.floor = payload.floor;
-      detail.nb_items_max = payload.nb_items_max;
       detail.product = payload.product;
       return await this.repository.save(detail);
     } catch (e) {

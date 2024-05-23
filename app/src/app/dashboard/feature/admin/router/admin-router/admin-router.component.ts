@@ -23,8 +23,11 @@ export class AdminRouterComponent implements OnInit {
 
   private setTitle(): void {
     console.log('url', this.router.url.split(AppRoutes.ADMIN+'/'));
-    const path = this.router.url.split(AppRoutes.ADMIN+'/');
-    this.title = `admin-feature.title.${path[1].replace('/','-')}`
+    const path = this.router.url.split(AppRoutes.ADMIN+'/')[1].split('/');
+    this.title = `admin-feature.title.${path.join('-')}`;
+    if(path.length > 2){
+      this.title = `admin-feature.title.${path[0]}-${path[1]}`;
+    }
   }
 
   private initMenu(): void {

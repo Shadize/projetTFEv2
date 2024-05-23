@@ -1,0 +1,10 @@
+<div id="background">
+  <div id="dialog">
+    <div class="title">{{ config.title | translate }}</div>
+    <div class="message">{{ config.message | translate }}</div>
+    <div class="actions">
+      <button  class='btn-error' (click)="confirm.emit()"> {{ 'common.confirm.ok'  | translate}}</button>
+      <button  class='btn-tertiary' (click)="cancel.emit()"> {{ 'common.confirm.cancel'  | translate}}</button>
+    </div>
+  </div>
+</div>

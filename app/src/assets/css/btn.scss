@@ -29,3 +29,14 @@ button{
     color: var(--theme-standard-footer-bg);
   }
 }
+
+.btn-tertiary{
+  background:var(--theme-white);
+  border:1px solid var(--theme-white);
+  color: var(--theme-label-text);
+  &:hover {
+    background: var(--theme-standard-footer-bg);
+    border: 1px solid var(--theme-standard-footer-bg);
+    color: var(--theme-label-text);
+  }
+}

@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], Shelve.prototype, "floor", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: false, default: 0 }),
     __metadata("design:type", Number)
 ], Shelve.prototype, "nb_items_max", void 0);
 __decorate([

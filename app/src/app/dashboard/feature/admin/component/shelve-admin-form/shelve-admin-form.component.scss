@@ -174,3 +174,10 @@
   }
 }
 input{border:none;}
+
+@media (max-width:600px){
+  .first-step{
+    display: flex;
+    flex-direction: column;
+  }
+}
