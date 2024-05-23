@@ -1,13 +1,6 @@
-import {Component, computed, inject, OnInit, Signal, ViewContainerRef} from '@angular/core';
-import {
-  AppRoutes,
-  CellActionDefinition,
-  confirmDialog,
-  ConfirmDialogComponent,
-  DataTableComponent,
-  DataTableConfig
-} from '@shared';
-import {StockService, StockUtilsService, Stock, StockAction} from '@shelve-feature';
+import {Component, computed, inject, OnInit, Signal} from '@angular/core';
+import {AppRoutes, CellActionDefinition, confirmDialog, DataTableComponent, DataTableConfig} from '@shared';
+import {Stock, StockAction, StockService, StockUtilsService} from '@shelve-feature';
 import {TranslateModule} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 
@@ -67,7 +60,10 @@ export class ShelveManagementPageComponent implements OnInit {
     this.router.navigate([AppRoutes.ADMIN_SHELVE_UPDATE, id]).then();
   }
 
-  @confirmDialog({title: 'admin-feature-shelve-delete.confirm-title', message: 'admin-feature-shelve-delete.confirm-message'})
+  @confirmDialog({
+    title: 'admin-feature-shelve-delete.confirm-title',
+    message: 'admin-feature-shelve-delete.confirm-message'
+  })
   private handleDelete(): void {
     console.log('handle delete');
   }

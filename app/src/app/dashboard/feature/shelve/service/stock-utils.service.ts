@@ -83,11 +83,6 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
           isMinimalWidth: false
         },
         {
-          targetData: StockKey.TITLE,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
-          isMinimalWidth: false
-        },
-        {
           targetData: '',
           actions,
           minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
