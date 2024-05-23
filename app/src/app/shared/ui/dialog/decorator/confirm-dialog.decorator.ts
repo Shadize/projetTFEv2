@@ -11,7 +11,6 @@ export function confirmDialog(confirmData: ConfirmDialogConfig = defaultData) {
   return function (target: Object, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     descriptor.value = async function (...args: any) {
-      console.log('im here', DialogService.getInstance()?.viewContainerRef);
       const component = DialogService.getInstance()?.viewContainerRef.createComponent(ConfirmDialogComponent);
       if (component?.instance) {
         component.instance.config = confirmData;
