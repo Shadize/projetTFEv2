@@ -3,7 +3,7 @@
     @for (config of formConfigs; track config.input) {
       <div class="input">
         <label>{{ translateKey + config.input | translate }}</label>
-        <input type="text"  [formControl]="config.formControl"
+        <input type="text" [formControl]="config.formControl"
                [placeholder]="config.placeholder! | translate"
                [readOnly]="shelveAreas$().length>0 || config.readonly"/>
       </div>
@@ -12,6 +12,10 @@
       <button (click)="generateSurface()"
               [class.disabled]="formGroup.invalid"
               [disabled]="formGroup.invalid">{{ 'admin-feature-shelve-add.generate'| translate }}
+      </button>
+      <button (click)="addDoor()"
+              [class.disabled]="formGroup.invalid || data$().nbRows === 0"
+              [disabled]="formGroup.invalid">{{ (wallEditionMode$() ? 'admin-feature-shelve-add.add-doors-validate' : 'admin-feature-shelve-add.add-doors')| translate }}
       </button>
     }
   </div>
@@ -43,6 +47,37 @@
 </div>
 @if (data$().rows.length || !stock.isEmpty) {
   <div class="plan" (window:resize)="onResize()">
+    @for (door of doors$(); let index = $index; track index) {
+
+      <div class="door"
+           [style]="'top:'+door.top+';left:'+door.left+';width:'+door.width+';height:'+door.height+';'">
+        ici
+      </div>
+    }
+    <div class="left-wall" [class.wall-edition-mode]="wallEditionMode$()">
+      <div class="cell-wall-square"></div>
+      @for (row of data$().wallLeftItems; track row.index) {
+        <div class="cell-wall" #wall (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+      }
+      <div class="cell-wall-square"></div>
+    </div>
+    <div class="top-wall" [class.wall-edition-mode]="wallEditionMode$()">
+      @for (row of data$().wallTopItems; let index = $index; track index) {
+        <div class="cell-wall" (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+      }
+    </div>
+    <div class="bottom-wall" [class.wall-edition-mode]="wallEditionMode$()">
+      @for (row of data$().wallBottomItems; let index = $index; track index) {
+        <div class="cell-wall" (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+      }
+    </div>
+    <div class="right-wall" [class.wall-edition-mode]="wallEditionMode$()">
+      <div class="cell-wall-square"></div>
+      @for (row of data$().wallRightItems; let index = $index; track index) {
+        <div class="cell-wall" (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+      }
+      <div class="cell-wall-square"></div>
+    </div>
     <div class="table" #table [class.edition-mode]="editionMode$()">
       @for (item of shelveAreas$(); let index = $index; track index) {
         <div class="rack"

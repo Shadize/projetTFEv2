@@ -83,5 +83,7 @@
   "shelve-detail-feature.not-found": "La zone de stockage n'a pas été trouvée",
   "admin-feature-member.table.label.username" : "Nom d'utilisateur",
   "admin-feature-member.table.label.mail" : "Adresse mail",
-  "admin-feature-member.table.label.isAdmin" : "Est administrateur"
+  "admin-feature-member.table.label.isAdmin" : "Est administrateur",
+  "admin-feature-shelve-add.add-doors": "Ajouter une ouverture",
+  "admin-feature-shelve-add.add-doors-validate": "Finaliser l'ouverture"
 }

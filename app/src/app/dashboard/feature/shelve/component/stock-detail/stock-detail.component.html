@@ -1,5 +1,9 @@
-@if (!detail.isEmpty){
+@if (detail.isEmpty){
   <div class="not-found">
     {{'shelve-detail-feature.not-found' | translate}}
+  </div>
+} @else {
+  <div class="header">
+    <div class="title">{{detail.title }}</div>
   </div>
 }
