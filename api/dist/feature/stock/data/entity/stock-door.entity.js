@@ -46,6 +46,10 @@ __decorate([
     __metadata("design:type", String)
 ], StockDoor.prototype, "style", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: enum_1.StockDoorType.HORIZONTAL }),
+    __metadata("design:type", String)
+], StockDoor.prototype, "type", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => data_1.Stock, (s) => s.shelves, { cascade: false, eager: false }),
     (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
     __metadata("design:type", data_1.Stock)

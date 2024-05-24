@@ -210,27 +210,33 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     });
     if (!this.stock.isEmpty) {
       this.shelveAreas$.set(this.stock.shelves);
-      this.doors$.set(this.stock.doors.map(item => item));
+      this.doors$.set(this.stock.doors.map(item => this.doorsFactor(item)));
       console.log(this.stock.doors);
     }
 
   }
-  public doorsFactor(item:StockDoor):StockDoor{
-    const nbCell = item.endX - item.startX + 1;
-    const wallV = this.wallV.nativeElement.offsetHeight;
-    const wallH = this.wallH.nativeElement.offsetWidth;
-    const width = item.type === StockDoorType.HORIZONTAL ? `${(nbCell * wallH) + (nbCell - 1)}px` : '32px';
-    const height = item.type === StockDoorType.VERTICAL ? `${(nbCell * wallV) + (nbCell - 1)}px` : '32px';
-    const top = item.type === StockDoorType.HORIZONTAL ? '-1px' : `${(item.startX * wallV) + (nbCell / 2 + 29)}px`;
-    const left = item.type === StockDoorType.VERTICAL ? '-1px' : `${item.startX * wallH + (nbCell / 2 + 29)}px`;
-    let style = item.wall === StockDoorPosition.TOP || item.type === StockDoorType.VERTICAL ? `top:${top};` : `bottom:${top};`;
-    style += item.wall === StockDoorPosition.LEFT || item.type === StockDoorType.HORIZONTAL ? `left:${left};` : `right:${left};`;
-    style += `width:${width};height:${height}`;
-    return {
-      ...item,
-      style
-    };
+
+  public doorsFactor(item: StockDoor): StockDoor {
+
+    if (this.wallH?.nativeElement && this.wallV?.nativeElement) {
+      const nbCell = item.endX - item.startX + 1;
+      const wallV = this.wallV.nativeElement.offsetHeight;
+      const wallH = this.wallH.nativeElement.offsetWidth;
+      const width = item.type === StockDoorType.HORIZONTAL ? `${(nbCell * wallH) + (nbCell - 1)}px` : '32px';
+      const height = item.type === StockDoorType.VERTICAL ? `${(nbCell * wallV) + (nbCell - 1)}px` : '32px';
+      const top = item.type === StockDoorType.HORIZONTAL ? '-1px' : `${(item.startX * wallV) + (nbCell / 2 + 29)}px`;
+      const left = item.type === StockDoorType.VERTICAL ? '-1px' : `${item.startX * wallH + (nbCell / 2 + 29)}px`;
+      let style = item.wall === StockDoorPosition.TOP || item.type === StockDoorType.VERTICAL ? `top:${top};` : `bottom:${top};`;
+      style += item.wall === StockDoorPosition.LEFT || item.type === StockDoorType.HORIZONTAL ? `left:${left};` : `right:${left};`;
+      style += `width:${width};height:${height}`;
+      return {
+        ...item,
+        style
+      };
+    }
+    return item;
   }
+
   public onResize(): void {
     if (this.cell?.nativeElement) {
       this.widthCell = this.cell.nativeElement.offsetWidth;
@@ -248,6 +254,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       )
     }
     if (this.wallH?.nativeElement && this.wallV?.nativeElement) {
+      console.log('resize', this.wallH?.nativeElement, this.doors$());
       this.doors$.set(
         this.doors$().map((item: StockDoor) => {
 
