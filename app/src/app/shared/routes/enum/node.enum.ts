@@ -5,6 +5,7 @@ export enum AppNode {
   REDIRECT_TO_AUTHENTICATED = AppNode.AUTHENTICATED,
   MEMBER = 'member',
   DETAIL = 'detail/:id',
+  LIST = 'list',
   SIGN_IN = 'signin',
   ACCOUNT_PARAMETER = 'parameter',
   ADMIN = 'admin',
@@ -16,4 +17,5 @@ export enum AppNode {
   SHELVE_UPDATE = 'shelves/update/:id',
   PRODUCT_ADD = 'product/add',
   MEMBER_ADD ='member/add'
+  
 }
