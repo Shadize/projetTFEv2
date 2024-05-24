@@ -19,6 +19,7 @@ export class StockDoor {
   endY: number;
   @Column({ nullable: false , default:StockDoorType.HORIZONTAL.toString()})
   style: string;
+  @Column({ default: StockDoorType.HORIZONTAL})
   type: StockDoorType;
   @ManyToOne(() => Stock, (s: Stock) => s.shelves,
     { cascade: false, eager: false })
