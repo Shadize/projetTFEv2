@@ -14,6 +14,9 @@ export declare class SignupException extends ApiException {
 export declare class CredentialDeleteException extends ApiException {
     constructor();
 }
+export declare class CredentialListException extends ApiException {
+    constructor();
+}
 export declare class UserAlreadyExistException extends ApiException {
     constructor();
 }

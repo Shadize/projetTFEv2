@@ -29,6 +29,12 @@ export class CredentialDeleteException extends ApiException {
     }
 }
 
+export class CredentialListException extends ApiException {
+    constructor() {
+        super(ApiCodeResponse.CREDENTIAL_LIST_ERROR, 200);
+    }
+}
+
 export class UserAlreadyExistException extends ApiException {
     constructor() {
         super(ApiCodeResponse.USER_ALREADY_EXIST, 200);

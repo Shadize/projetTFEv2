@@ -28,6 +28,7 @@ var ApiCodeResponse;
     ApiCodeResponse["NO_TOKEN_FOUNDED"] = "api.error.no-token-founded";
     ApiCodeResponse["TOKEN_EXPIRED"] = "api.error.token-expired";
     ApiCodeResponse["CREDENTIAL_DELETE_ERROR"] = "api.error.account-delete";
+    ApiCodeResponse["CREDENTIAL_LIST_ERROR"] = "api.error.account-list";
     ApiCodeResponse["CREDENTIAL_DELETE_SUCCESS"] = "api.success.account-delete";
     ApiCodeResponse["PAYLOAD_IS_NOT_VALID"] = "api.error.payload-is-not-valid";
     ApiCodeResponse["STOCK_ID_LENGTH_ERROR"] = "api.error.stock-payload-id-length";

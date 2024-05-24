@@ -11,4 +11,5 @@ export declare class SecurityService {
     signup(payload: SignupPayload): Promise<Token | null>;
     refresh(payload: RefreshTokenPayload): Promise<Token | null>;
     delete(id: string): Promise<void>;
+    list(user: Credential): Promise<Credential[]>;
 }

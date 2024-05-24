@@ -40,6 +40,9 @@ let SecurityController = class SecurityController {
     delete(id) {
         return this.service.delete(id);
     }
+    list(user) {
+        return this.service.list(user);
+    }
 };
 exports.SecurityController = SecurityController;
 __decorate([
@@ -88,6 +91,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], SecurityController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Get)('list'),
+    __param(0, (0, config_1.User)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_1.Credential]),
+    __metadata("design:returntype", void 0)
+], SecurityController.prototype, "list", null);
 exports.SecurityController = SecurityController = __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiTags)('Account'),

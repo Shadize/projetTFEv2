@@ -1,1 +1,7 @@
-<p>member-management-page works!</p>
+<div class="actions">
+    <div class="btn" (click)="addItem()"><i class="fa-solid fa-plus"></i> {{ 'app.common.add-member' | translate }}</div>
+  </div>
+
+<app-data-table [config]="config$()"
+                (actionClicked)="onActionClicked($event)"
+                (rowClicked)="onRowClicked($event)"></app-data-table>

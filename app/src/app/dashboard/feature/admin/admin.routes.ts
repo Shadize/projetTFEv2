@@ -1,4 +1,3 @@
-import { ProductCreatePageComponent } from './page/product-create-page/product-create-page.component';
 import {Routes} from '@angular/router';
 import {AdminRouterComponent} from './router';
 import {AppNode, AppRoutes} from '@shared';
@@ -27,6 +26,11 @@ export const adminRoutes: Routes = [
         path: AppNode.MEMBER,
         loadComponent: () =>
           import('./page').then(c => c.MemberManagementPageComponent)
+      },
+      {
+        path: AppNode.MEMBER_ADD,
+        loadComponent: () =>
+          import('./page').then(c => c.MemberCreatePageComponent)
       },
       {
         path: AppNode.SHELVES,

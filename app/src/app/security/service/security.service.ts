@@ -18,6 +18,8 @@ export class SecurityService {
   account$: WritableSignal<Credential> = signal(this.credentialUtil.getEmpty());
   private readonly isAuthenticatedHandler: EffectRef = effect(() => this.handleAuthenticatedChange(this.isAuthenticated$()));
   private readonly router: Router = inject(Router);
+  public list$: WritableSignal<Credential[]> = signal([]);
+
 
   signIn(payload: SignInPayload): Observable<ApiResponse> {
     return this.api.post(ApiURI.SIGN_IN, {...payload, socialLogin: false}).pipe(
@@ -58,6 +60,17 @@ export class SecurityService {
         }
       }))
       .subscribe();
+  }
+
+  list(): void {
+    this.api.get(ApiURI.CREDENTIAL_LIST)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list$.set(this.credentialUtil.fromDTOS(response.data));
+        } else {
+          this.list$.set([])
+        }
+      })).subscribe();
   }
 
 

@@ -78,6 +78,14 @@ let SecurityService = SecurityService_1 = class SecurityService {
             throw new security_exception_1.CredentialDeleteException();
         }
     }
+    async list(user) {
+        try {
+            return await this.repository.find();
+        }
+        catch (e) {
+            throw new security_exception_1.CredentialListException();
+        }
+    }
 };
 exports.SecurityService = SecurityService;
 exports.SecurityService = SecurityService = SecurityService_1 = __decorate([

@@ -2,6 +2,7 @@ import {Injectable, Logger} from '@nestjs/common';
 import {Credential, RefreshTokenPayload, SignInPayload, SignupPayload, Token} from './model';
 import {
     CredentialDeleteException,
+    CredentialListException,
     SignupException,
     UserAlreadyExistException,
     UserNotFoundException
@@ -74,5 +75,16 @@ export class SecurityService {
         } catch (e) {
             throw new CredentialDeleteException();
         }
+    }
+
+    async list(user: Credential): Promise<Credential[]>{
+        try{
+           
+                return await this.repository.find(); 
+            
+        }catch(e){
+            throw new CredentialListException();
+        }
+
     }
 }
