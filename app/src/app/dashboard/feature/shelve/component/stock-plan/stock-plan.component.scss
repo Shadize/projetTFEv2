@@ -1,0 +1,88 @@
+.plan {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 30px;
+  border: 1px solid var(--theme-ccc);
+  background: var(--theme-standard-bg-hover);
+
+  .door {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--theme-white);
+    z-index: 50;
+    border: 1px solid var(--theme-ccc);
+  }
+
+  .door-vertical {
+    border-left: none;
+    border-right: none;
+  }
+
+  .door-horizontal {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .table {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    z-index: 15;
+    background: var(--theme-white);
+    border: 1px solid var(--theme-ccc);
+
+    .row {
+      display: flex;
+      flex-direction: row;
+
+      .cell {
+        flex: 1 0 auto;
+        height: auto;
+        border: 0.5px solid var(--theme-white);
+
+      }
+
+      .cell::before {
+        content: '';
+        float: left;
+        padding-top: 100%;
+      }
+
+    }
+  }
+}
+
+.rack {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--theme-eee);
+}
+.top-wall {
+  position: absolute;
+  top: 0;
+  right: 30px;
+  left: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+} .left-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+.cell-wall {
+  background: var(--theme-standard-bg-hover);
+  flex: 1;
+}

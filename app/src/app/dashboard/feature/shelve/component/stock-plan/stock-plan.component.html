@@ -1,0 +1,39 @@
+
+<div class="plan" (window:resize)="onResize()">
+  @for (door of doors$(); let index = $index; track index) {
+    <div class="door"
+         [class.door-vertical]="door.type=== StockDoorType.VERTICAL"
+         [class.door-horizontal]="door.type=== StockDoorType.HORIZONTAL"
+         [style]="door.style">
+    </div>
+  }
+  <div class="left-wall">
+    <div class="cell-wall-square"></div>
+    @for (row of data$().wallLeftItems; track row.index) {
+      <div class="cell-wall" #wallV></div>
+    }
+    <div class="cell-wall-square"></div>
+  </div>
+  <div class="top-wall">
+    @for (row of data$().wallTopItems; let index = $index; track index) {
+      <div class="cell-wall" #wallH ></div>
+    }
+  </div>
+  <div class="table" #table>
+    @for (item of shelveAreas$(); let index = $index; track index) {
+      <div class="rack"
+           [style]="'background-color:' +item.background+';color:'+item.color+';top:'+item.top+';left:'+item.left+';width:'+item.width+';height:'+item.height+';'">
+        {{ item.rack }}
+      </div>
+    }
+    @for (row of data$().rows; track row.index) {
+      <div class="row">
+        @for (cell of row.cells; track cell.index) {
+          <div class="cell" [id]="cell.rowIndex +'-'+cell.index" #cell
+               [class.selected]="cell.selected">
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

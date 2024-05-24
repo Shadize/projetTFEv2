@@ -189,10 +189,10 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       return;
     }
     this.data$.set({
-      wallTopItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], StockDoorPosition.TOP, StockDoorType.HORIZONTAL),
-      wallBottomItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], StockDoorPosition.BOTTOM, StockDoorType.HORIZONTAL),
-      wallLeftItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], StockDoorPosition.LEFT, StockDoorType.VERTICAL),
-      wallRightItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], StockDoorPosition.RIGHT, StockDoorType.VERTICAL),
+      wallTopItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value)).keys()], StockDoorPosition.TOP, StockDoorType.HORIZONTAL),
+      wallBottomItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value)).keys()], StockDoorPosition.BOTTOM, StockDoorType.HORIZONTAL),
+      wallLeftItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value)).keys()], StockDoorPosition.LEFT, StockDoorType.VERTICAL),
+      wallRightItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value)).keys()], StockDoorPosition.RIGHT, StockDoorType.VERTICAL),
       nbRows: Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value),
       nbCells: Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value),
       rows: [...Array(Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value)).keys()].map((row) => (
@@ -254,7 +254,6 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       )
     }
     if (this.wallH?.nativeElement && this.wallV?.nativeElement) {
-      console.log('resize', this.wallH?.nativeElement, this.doors$());
       this.doors$.set(
         this.doors$().map((item: StockDoor) => {
 
@@ -279,43 +278,45 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
 
 
   public setWallSelection(row: SurfaceDoorCell) {
-    switch (row.wall) {
-      case StockDoorPosition.TOP:
-        this.data$.set({
-          ...this.data$(),
-          wallTopItems: this.data$().wallTopItems.map((i, index) => (index === row.index ? {
-            ...i,
-            selected: !i.selected
-          } : {...i}))
-        });
-        break
-      case StockDoorPosition.LEFT:
-        this.data$.set({
-          ...this.data$(),
-          wallLeftItems: this.data$().wallLeftItems.map((i, index) => (index === row.index ? {
-            ...i,
-            selected: !i.selected
-          } : {...i}))
-        });
-        break
-      case StockDoorPosition.RIGHT:
-        this.data$.set({
-          ...this.data$(),
-          wallRightItems: this.data$().wallRightItems.map((i, index) => (index === row.index ? {
-            ...i,
-            selected: !i.selected
-          } : {...i}))
-        });
-        break
-      case StockDoorPosition.BOTTOM:
-        this.data$.set({
-          ...this.data$(),
-          wallBottomItems: this.data$().wallBottomItems.map((i, index) => (index === row.index ? {
-            ...i,
-            selected: !i.selected
-          } : {...i}))
-        });
-        break
+    if (this.wallEditionMode$()) {
+      switch (row.wall) {
+        case StockDoorPosition.TOP:
+          this.data$.set({
+            ...this.data$(),
+            wallTopItems: this.data$().wallTopItems.map((i, index) => (index === row.index ? {
+              ...i,
+              selected: !i.selected
+            } : {...i}))
+          });
+          break
+        case StockDoorPosition.LEFT:
+          this.data$.set({
+            ...this.data$(),
+            wallLeftItems: this.data$().wallLeftItems.map((i, index) => (index === row.index ? {
+              ...i,
+              selected: !i.selected
+            } : {...i}))
+          });
+          break
+        case StockDoorPosition.RIGHT:
+          this.data$.set({
+            ...this.data$(),
+            wallRightItems: this.data$().wallRightItems.map((i, index) => (index === row.index ? {
+              ...i,
+              selected: !i.selected
+            } : {...i}))
+          });
+          break
+        case StockDoorPosition.BOTTOM:
+          this.data$.set({
+            ...this.data$(),
+            wallBottomItems: this.data$().wallBottomItems.map((i, index) => (index === row.index ? {
+              ...i,
+              selected: !i.selected
+            } : {...i}))
+          });
+          break
+      }
     }
   }
 
