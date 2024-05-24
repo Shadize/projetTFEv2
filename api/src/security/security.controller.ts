@@ -45,4 +45,9 @@ export class SecurityController {
         return this.service.delete(id);
     }
 
+    @Get('list')
+    public list(@User() user: Credential){
+        return this.service.list(user);
+    }
+
 }

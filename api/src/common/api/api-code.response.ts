@@ -27,6 +27,7 @@ export enum ApiCodeResponse {
   NO_TOKEN_FOUNDED = 'api.error.no-token-founded',
   TOKEN_EXPIRED = 'api.error.token-expired',
   CREDENTIAL_DELETE_ERROR = 'api.error.account-delete',
+  CREDENTIAL_LIST_ERROR = 'api.error.account-list',
   CREDENTIAL_DELETE_SUCCESS = 'api.success.account-delete',
   PAYLOAD_IS_NOT_VALID = 'api.error.payload-is-not-valid',
 

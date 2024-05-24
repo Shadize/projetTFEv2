@@ -2,6 +2,7 @@ export enum ApiURI {
   SIGN_IN = 'account/signin',
   SIGN_UP = 'account/signup',
   ME = 'account/me',
+  CREDENTIAL_LIST = 'account/list',
   REFRESH_TOKEN = 'account/refresh',
   SHELVE_LIST = 'shelve/list',
   SHELVE_DETAIL= 'shelve/detail/',
@@ -14,4 +15,5 @@ export enum ApiURI {
   STOCK_UPDATE = 'stock/update',
   STOCK_DELETE = 'stock/delete/',
   PRODUCT_LIST = 'product/list',
+  
 }

@@ -9,4 +9,5 @@ export declare class SecurityController {
     refresh(payload: RefreshTokenPayload): Promise<import("./model").Token>;
     me(user: Credential): Credential;
     delete(id: string): Promise<void>;
+    list(user: Credential): Promise<Credential[]>;
 }

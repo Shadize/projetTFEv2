@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignInPayloadException = exports.TokenGenerationException = exports.UserAlreadyExistException = exports.CredentialDeleteException = exports.SignupException = exports.TokenExpiredException = exports.UserNotFoundException = exports.NoTokenFoundedException = void 0;
+exports.SignInPayloadException = exports.TokenGenerationException = exports.UserAlreadyExistException = exports.CredentialListException = exports.CredentialDeleteException = exports.SignupException = exports.TokenExpiredException = exports.UserNotFoundException = exports.NoTokenFoundedException = void 0;
 const api_1 = require("../common/api");
 class NoTokenFoundedException extends api_1.ApiException {
     constructor() {
@@ -32,6 +32,12 @@ class CredentialDeleteException extends api_1.ApiException {
     }
 }
 exports.CredentialDeleteException = CredentialDeleteException;
+class CredentialListException extends api_1.ApiException {
+    constructor() {
+        super(api_1.ApiCodeResponse.CREDENTIAL_LIST_ERROR, 200);
+    }
+}
+exports.CredentialListException = CredentialListException;
 class UserAlreadyExistException extends api_1.ApiException {
     constructor() {
         super(api_1.ApiCodeResponse.USER_ALREADY_EXIST, 200);
