@@ -46,6 +46,11 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
     __metadata("design:type", Array)
 ], Stock.prototype, "shelves", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => data_2.StockDoor, (s) => s.location, { cascade: true, eager: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'stock_id_fk', referencedColumnName: 'stock_id' }),
+    __metadata("design:type", Array)
+], Stock.prototype, "doors", void 0);
 exports.Stock = Stock = __decorate([
     (0, typeorm_1.Entity)()
 ], Stock);

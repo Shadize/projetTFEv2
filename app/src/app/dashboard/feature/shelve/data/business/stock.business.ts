@@ -1,6 +1,6 @@
 import {Business, Section} from '@core';
 import {Shelve} from './shelve.business';
-import {StockDoor} from './stock-doors.business';
+import {StockDoor} from './stock-door.business';
 
 export interface Stock extends Business {
   title: string;

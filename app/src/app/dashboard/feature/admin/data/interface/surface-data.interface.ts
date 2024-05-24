@@ -1,3 +1,5 @@
+import {StockDoorPosition, StockDoorType} from '@shelve-feature';
+
 export interface Surface {
   nbRows: number;
   nbCells: number;
@@ -17,7 +19,8 @@ export interface SurfaceDefinition {
 export interface SurfaceDoorCell {
   index: number;
   str: string;
-  wall: string;
+  wall: StockDoorPosition;
+  type:StockDoorType;
   selected: boolean;
 }
 

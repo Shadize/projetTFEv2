@@ -8,6 +8,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  z-index:15;
+  background:var(--theme-white);
   border: 1px solid var(--theme-eee);
 
   .row {
@@ -93,15 +95,6 @@
   button {
     margin-top: 15px;
   }
-}
-.door{
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background:var(--theme-white);
-  z-index:50;
 }
 .rack {
   position: absolute;
@@ -214,6 +207,24 @@
     .wall-selected {
       background:var(--theme-standard-bg-hover);
     }
+  }
+  .door{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:var(--theme-white);
+    z-index:50;
+    border:1px solid var(--theme-eee);
+  }
+  .door-vertical{
+    border-left:none;
+    border-right:none;
+  }
+  .door-horizontal{
+    border-top:none;
+    border-bottom:none;
   }
 }
 

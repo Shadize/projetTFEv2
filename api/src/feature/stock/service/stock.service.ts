@@ -13,12 +13,13 @@ import { Builder } from 'builder-pattern';
 import { ulid } from 'ulid';
 import { Credential } from '@security/model';
 import { ShelveService } from '@stock/service/shelve.service';
+import { StockDoorService } from '@stock/service/stock-door.service';
 
 @Injectable()
 export class StockService {
   private readonly logger = new Logger(StockService.name);
 
-  constructor(@InjectRepository(Stock) private readonly repository: Repository<Stock>, private readonly shelveService: ShelveService) {
+  constructor(@InjectRepository(Stock) private readonly repository: Repository<Stock>, private readonly shelveService: ShelveService, private readonly doorService: StockDoorService) {
   }
 
   async list(user: Credential): Promise<Stock[]> {
@@ -44,6 +45,7 @@ export class StockService {
     try {
       const detail: Stock = await this.detail(id);
       await this.shelveService.deleteForStock(detail);
+      await this.doorService.deleteForStock(detail);
       await this.repository.remove(detail);
     } catch (e) {
       throw new StockDeleteException();
@@ -63,6 +65,7 @@ export class StockService {
         .build();
       const stock = await this.repository.save(newStock);
       await this.shelveService.setStockShelve(stock, payload.shelves);
+      await this.doorService.setStockDoor(stock, payload.doors);
       return await this.detail(stock.stock_id);
     } catch (e) {
       this.logger.error(e);
@@ -77,6 +80,7 @@ export class StockService {
       detail.title = payload.title;
       await this.repository.save(detail);
       await this.shelveService.setStockShelve(detail, payload.shelves);
+      await this.doorService.setStockDoor(detail, payload.doors);
       return await this.detail(payload.stock_id);
     } catch (e) {
       this.logger.error(e);

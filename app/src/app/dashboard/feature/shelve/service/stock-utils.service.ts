@@ -33,10 +33,10 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
 
   public getEmpty(): Stock {
     return {
-      height: 0, scale: 0, width: 0,
+      height: 500, scale: 50, width: 1000,
       id: '',
       isEmpty: true,
-      title: '',
+      title: 'hangar',
       section: Section.WOOD,
       shelves: [],
       doors:[],

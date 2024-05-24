@@ -3,7 +3,7 @@ import { Section } from '@common/data';
 import { IsNotEmpty } from 'class-validator';
 import { ApiCodeResponse } from '@common/api';
 import { ApiProperty } from '@nestjs/swagger';
-import { Shelve } from '@stock/data';
+import { Shelve, StockDoor } from '@stock/data';
 
 export class StockUpdatePayload {
   @ApiProperty()
@@ -23,4 +23,6 @@ export class StockUpdatePayload {
   scale:number;
   @ApiProperty()
   shelves: Shelve[];
+  @ApiProperty()
+  doors: StockDoor[];
 }

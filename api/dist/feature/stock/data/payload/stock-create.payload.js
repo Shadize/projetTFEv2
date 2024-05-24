@@ -40,4 +40,8 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Array)
 ], StockCreatePayload.prototype, "shelves", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Array)
+], StockCreatePayload.prototype, "doors", void 0);
 //# sourceMappingURL=stock-create.payload.js.map

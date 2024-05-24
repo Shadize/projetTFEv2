@@ -1,5 +1,5 @@
 import { Section } from '@common/data';
-import { Shelve } from '@stock/data';
+import { Shelve, StockDoor } from '@stock/data';
 export declare class Stock {
     stock_id: string;
     title: string;
@@ -8,4 +8,5 @@ export declare class Stock {
     scale: number;
     section: Section;
     shelves: Shelve[];
+    doors: StockDoor[];
 }

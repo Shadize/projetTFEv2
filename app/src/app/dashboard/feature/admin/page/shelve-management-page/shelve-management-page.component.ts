@@ -59,7 +59,6 @@ export class ShelveManagementPageComponent implements OnInit {
   private handleEdit(id: string): void {
     this.router.navigate([AppRoutes.ADMIN_SHELVE_UPDATE.replace(':id', id)]).then();
   }
-
   @confirmDialog({
     title: 'admin-feature-shelve-delete.confirm-title',
     message: 'admin-feature-shelve-delete.confirm-message'

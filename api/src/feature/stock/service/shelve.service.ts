@@ -87,6 +87,5 @@ export class ShelveService {
       await this.repository.save(shelve);
       await this.repository.remove(shelve);
     }
-
   }
 }

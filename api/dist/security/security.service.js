@@ -37,7 +37,7 @@ let SecurityService = SecurityService_1 = class SecurityService {
         throw new security_exception_1.UserNotFoundException();
     }
     async signIn(payload, isAdmin) {
-        let result = await this.repository.findOneBy({ username: payload.username, isAdmin: isAdmin });
+        let result = await this.repository.findOneBy({ username: payload.username });
         if (await (0, utils_1.comparePassword)(payload.password, result.password)) {
             return this.tokenService.getTokens(result);
         }

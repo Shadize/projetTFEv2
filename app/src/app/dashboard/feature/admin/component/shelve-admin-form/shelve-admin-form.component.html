@@ -48,22 +48,22 @@
 @if (data$().rows.length || !stock.isEmpty) {
   <div class="plan" (window:resize)="onResize()">
     @for (door of doors$(); let index = $index; track index) {
-
       <div class="door"
-           [style]="'top:'+door.top+';left:'+door.left+';width:'+door.width+';height:'+door.height+';'">
-        ici
+           [class.door-vertical]="door.type=== StockDoorType.VERTICAL"
+           [class.door-horizontal]="door.type=== StockDoorType.HORIZONTAL"
+           [style]="door.style">
       </div>
     }
     <div class="left-wall" [class.wall-edition-mode]="wallEditionMode$()">
       <div class="cell-wall-square"></div>
       @for (row of data$().wallLeftItems; track row.index) {
-        <div class="cell-wall" #wall (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+        <div class="cell-wall" #wallV (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
       }
       <div class="cell-wall-square"></div>
     </div>
     <div class="top-wall" [class.wall-edition-mode]="wallEditionMode$()">
       @for (row of data$().wallTopItems; let index = $index; track index) {
-        <div class="cell-wall" (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
+        <div class="cell-wall" #wallH (click)="setWallSelection(row)" [class.wall-selected]="row.selected"></div>
       }
     </div>
     <div class="bottom-wall" [class.wall-edition-mode]="wallEditionMode$()">

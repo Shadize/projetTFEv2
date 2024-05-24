@@ -92,17 +92,17 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         },
         {
           targetData: ProductKey.WIDTH,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
           isMinimalWidth: false
         },
         {
           targetData: ProductKey.HEIGHT,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
           isMinimalWidth: false
         },
         {
           targetData: ProductKey.THICKNESS,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
           isMinimalWidth: false
         },
         {

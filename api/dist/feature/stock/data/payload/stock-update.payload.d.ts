@@ -1,4 +1,4 @@
-import { Shelve } from '@stock/data';
+import { Shelve, StockDoor } from '@stock/data';
 export declare class StockUpdatePayload {
     stock_id: string;
     title: string;
@@ -6,4 +6,5 @@ export declare class StockUpdatePayload {
     height: number;
     scale: number;
     shelves: Shelve[];
+    doors: StockDoor[];
 }

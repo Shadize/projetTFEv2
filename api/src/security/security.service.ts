@@ -32,7 +32,7 @@ export class SecurityService {
     }
 
     async signIn(payload: SignInPayload, isAdmin: boolean): Promise<Token | null> {
-        let result =  await this.repository.findOneBy({username: payload.username, isAdmin: isAdmin});
+        let result =  await this.repository.findOneBy({username: payload.username});
 
         if ( await comparePassword(payload.password, result.password)) {
             return this.tokenService.getTokens(result);

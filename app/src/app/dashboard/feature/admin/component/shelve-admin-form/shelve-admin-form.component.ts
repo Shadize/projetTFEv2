@@ -34,6 +34,8 @@ import {
   ShelveUtilsService,
   Stock,
   StockDoor,
+  StockDoorPosition,
+  StockDoorType,
   StockKey,
   StockService,
   StockUtilsService
@@ -62,8 +64,10 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   public table!: ElementRef;
   @ViewChild('cell')
   public cell!: ElementRef;
-  @ViewChild('wall')
-  public wall!: ElementRef;
+  @ViewChild('wallV')
+  public wallV!: ElementRef;
+  @ViewChild('wallH')
+  public wallH!: ElementRef;
   public router: Router = inject(Router);
   public widthCell: number = 0;
   public shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
@@ -95,6 +99,8 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   public formConfigs: FormControlSimpleConfig[] = [];
   public destroyRef: DestroyRef = inject(DestroyRef);
   public translateKey: string = 'admin-feature-shelve.table.label.';
+  public readonly StockDoorType = StockDoorType;
+  public readonly StockDoorPosition = StockDoorPosition;
 
   ngOnInit() {
     this.initFormGroup();
@@ -146,22 +152,34 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   public validateDoors(): void {
     const selection: SurfaceDoorCell[] = this.data$().wallLeftItems.concat(this.data$().wallRightItems).concat(this.data$().wallTopItems).concat(this.data$().wallBottomItems)
       .filter(p => p.selected);
-    const cellIndex = selection.map(s => s.index);
-    const minimalCell = Math.min(...cellIndex);
-    const maxCell = Math.max(...cellIndex);
-    console.log(this.wall.nativeElement.clientWidth);
-    const stockDoors: StockDoor[] = selection.map((s) => ({
-      wall: s.wall,
-      startX: minimalCell,
-      endX: maxCell,
-      startY: minimalCell,
-      endY: maxCell ? 1 : 0,
-      width: (s.wall === 'top' || s.wall === 'bottom') ? (maxCell-minimalCell)*this.wall.nativeElement.clientWidth : this.wall.nativeElement.clientWidth,
-      height: (s.wall === 'left' || s.wall === 'right') ? (maxCell-minimalCell)*this.wall.nativeElement.clientHeight : this.wall.nativeElement.clientHeight,
-      top: (s.wall === 'top' || s.wall === 'bottom') ? '0px' : `${minimalCell*this.wall.nativeElement.clientHeight}px`,
-      left: (s.wall === 'left' || s.wall === 'right') ? '0px' : `${minimalCell*this.wall.nativeElement.clientWidth}px`,
-    }))
-    this.doors$.set(this.doors$().concat(stockDoors));
+    if (selection.length > 0) {
+      const item = selection[0];
+      const cellIndex = selection.map(s => s.index);
+      const minimalCell = Math.min(...cellIndex);
+      const maxCell = Math.max(...cellIndex);
+      const nbCell = maxCell - minimalCell + 1;
+      const wallV = this.wallV.nativeElement.offsetHeight;
+      const wallH = this.wallH.nativeElement.offsetWidth;
+      const width = item.type === StockDoorType.HORIZONTAL ? `${(nbCell * wallH) + (nbCell - 1)}px` : '32px';
+      const height = item.type === StockDoorType.VERTICAL ? `${(nbCell * wallV) + (nbCell - 1)}px` : '32px';
+      const top = item.type === StockDoorType.HORIZONTAL ? '-1px' : `${(minimalCell * wallV) + (nbCell / 2 + 29)}px`;
+      const left = item.type === StockDoorType.VERTICAL ? '-1px' : `${minimalCell * wallH + (nbCell / 2 + 29)}px`;
+      let style = item.wall === StockDoorPosition.TOP || item.type === StockDoorType.VERTICAL ? `top:${top};` : `bottom:${top};`;
+      style += item.wall === StockDoorPosition.LEFT || item.type === StockDoorType.HORIZONTAL ? `left:${left};` : `right:${left};`;
+      style += `width:${width};height:${height}`;
+      const stockDoors: StockDoor = {
+        id: '', str: '', isEmpty: false,
+        wall: item.wall,
+        type: item.type,
+        startX: minimalCell,
+        endX: maxCell,
+        startY: minimalCell,
+        endY: maxCell ? 1 : 0,
+        style
+      };
+      this.doors$.set(this.doors$().concat(stockDoors));
+
+    }
 
   }
 
@@ -170,10 +188,10 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       return;
     }
     this.data$.set({
-      wallTopItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], 'top'),
-      wallBottomItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], 'bottom'),
-      wallLeftItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], 'left'),
-      wallRightItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], 'right'),
+      wallTopItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], StockDoorPosition.TOP, StockDoorType.HORIZONTAL),
+      wallBottomItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[1].formControl.value / 50)).keys()], StockDoorPosition.BOTTOM, StockDoorType.HORIZONTAL),
+      wallLeftItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], StockDoorPosition.LEFT, StockDoorType.VERTICAL),
+      wallRightItems: this.genWallCell([...Array(Math.ceil(this.formConfigs[2].formControl.value / 50)).keys()], StockDoorPosition.RIGHT, StockDoorType.VERTICAL),
       nbRows: Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value),
       nbCells: Math.ceil(this.formConfigs[1].formControl.value / this.formConfigs[3].formControl.value),
       rows: [...Array(Math.ceil(this.formConfigs[2].formControl.value / this.formConfigs[3].formControl.value)).keys()].map((row) => (
@@ -210,14 +228,34 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
           }
         })
       )
+    }
+    if (this.wallH?.nativeElement && this.wallV?.nativeElement) {
+      this.doors$.set(
+        this.doors$().map((item: StockDoor) => {
 
+          const nbCell = item.endX - item.startX + 1;
+          const wallV = this.wallV.nativeElement.offsetHeight;
+          const wallH = this.wallH.nativeElement.offsetWidth;
+          const width = item.type === StockDoorType.HORIZONTAL ? `${(nbCell * wallH) + (nbCell - 1)}px` : '32px';
+          const height = item.type === StockDoorType.VERTICAL ? `${(nbCell * wallV) + (nbCell - 1)}px` : '32px';
+          const top = item.type === StockDoorType.HORIZONTAL ? '-1px' : `${(item.startX * wallV) + (nbCell / 2 + 29)}px`;
+          const left = item.type === StockDoorType.VERTICAL ? '-1px' : `${item.startX * wallH + (nbCell / 2 + 29)}px`;
+          let style = item.wall === StockDoorPosition.TOP || item.type === StockDoorType.VERTICAL ? `top:${top};` : `bottom:${top};`;
+          style += item.wall === StockDoorPosition.LEFT || item.type === StockDoorType.HORIZONTAL ? `left:${left};` : `right:${left};`;
+          style += `width:${width};height:${height}`;
+          return {
+            ...item,
+            style
+          };
+        })
+      )
     }
   }
 
 
   public setWallSelection(row: SurfaceDoorCell) {
     switch (row.wall) {
-      case 'top':
+      case StockDoorPosition.TOP:
         this.data$.set({
           ...this.data$(),
           wallTopItems: this.data$().wallTopItems.map((i, index) => (index === row.index ? {
@@ -226,7 +264,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
           } : {...i}))
         });
         break
-      case 'left':
+      case StockDoorPosition.LEFT:
         this.data$.set({
           ...this.data$(),
           wallLeftItems: this.data$().wallLeftItems.map((i, index) => (index === row.index ? {
@@ -235,7 +273,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
           } : {...i}))
         });
         break
-      case 'right':
+      case StockDoorPosition.RIGHT:
         this.data$.set({
           ...this.data$(),
           wallRightItems: this.data$().wallRightItems.map((i, index) => (index === row.index ? {
@@ -244,7 +282,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
           } : {...i}))
         });
         break
-      case 'bottom':
+      case StockDoorPosition.BOTTOM:
         this.data$.set({
           ...this.data$(),
           wallBottomItems: this.data$().wallBottomItems.map((i, index) => (index === row.index ? {
@@ -429,10 +467,11 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
   }
 
-  private genWallCell(data: number[], wall: string): SurfaceDoorCell[] {
+  private genWallCell(data: number[], wall: StockDoorPosition, type: StockDoorType): SurfaceDoorCell[] {
     return data.map((d, index) => ((
       {
         index,
+        type,
         str: d.toString(),
         selected: false,
         wall
