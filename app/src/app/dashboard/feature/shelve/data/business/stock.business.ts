@@ -9,5 +9,5 @@ export interface Stock extends Business {
   height: number;
   scale: number;
   shelves: Shelve[];
-  doors: StockDoor[]
+  doors: StockDoor[];
 }
