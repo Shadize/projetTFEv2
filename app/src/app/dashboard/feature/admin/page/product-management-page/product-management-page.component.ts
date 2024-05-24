@@ -1,8 +1,7 @@
 import { Component, OnInit, Signal, computed, inject } from '@angular/core';
-import { DataTableConfig, CellActionDefinition, AppRoutes } from '@shared';
+import { DataTableConfig, CellActionDefinition, AppRoutes, DataTableComponent } from '@shared';
 import { Product, ProductAction } from 'app/dashboard/feature/product/data';
 import { ProductService, ProductUtilsService } from 'app/dashboard/feature/product/service';
-import { DataTableComponent } from "../../../../../shared/ui/data-viewer/component/data-table/data-table.component";
 import {TranslateModule} from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
@@ -33,12 +32,13 @@ export class ProductManagementPageComponent implements OnInit {
 
 
   public onActionClicked(data: CellActionDefinition): void {
+    const item : Product = data.data! as Product;
     switch (data.action) {
       case ProductAction.DETAIL:
         this.handleDetail();
         break;
       case ProductAction.EDIT:
-        this.handleEdit();
+        this.handleEdit(item.id);
         break;
       case ProductAction.DELETE:
         this.handleDelete();
@@ -61,8 +61,9 @@ export class ProductManagementPageComponent implements OnInit {
     console.log('show detail');
   }
 
-  private handleEdit(): void {
-    console.log('edit item');
+  private handleEdit(id : string): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT_UPDATE.replace(':id',id)]).then();
+
   }
 
   private handleDelete(): void {

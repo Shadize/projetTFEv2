@@ -1,7 +1,7 @@
 import { ProductUtilsService } from 'app/dashboard/feature/product/service';
 import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { ApiService, ApiURI, ApiResponse } from '@api';
-import { tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Product } from '../data';
 
 @Injectable({
@@ -22,5 +22,17 @@ export class ProductService {
           this.list$.set([])
         }
       })).subscribe();
+  }
+
+
+  detail(id: string): Observable<Product> {
+    return this.api.get(`${ApiURI.PRODUCT_DETAIL}${id}`)
+      .pipe(map((response: ApiResponse) => {
+        if (response.result) {
+          return this.productUtilsService.fromDTO(response.data);
+        }
+        return this.productUtilsService.getEmpty()
+
+      }))
   }
 }

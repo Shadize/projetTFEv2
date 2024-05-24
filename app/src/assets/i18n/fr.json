@@ -33,6 +33,8 @@
   "security-feature.parameter-page.btn.log-out": "Se déconnecter",
   "admin-feature.title": "Zone d'administration",
   "admin-feature.title.product": "Gestion des produits",
+  "admin-feature.title.product-add": "Ajouter un produit",
+  "admin-feature.title.product-update": "Modifier un produit",
   "admin-feature.title.member": "Gestion des membres",
   "admin-feature.title.shelves": "Gestion des zones de stockage",
   "admin-feature.title.shelves-detail": "Détail de la zone de stockage",
