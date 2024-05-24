@@ -43,7 +43,7 @@ let StockService = StockService_1 = class StockService {
         }
     }
     async detail(id) {
-        const result = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true } });
+        const result = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true, doors: true } });
         if (!((0, lodash_1.isNil)(result))) {
             return result;
         }

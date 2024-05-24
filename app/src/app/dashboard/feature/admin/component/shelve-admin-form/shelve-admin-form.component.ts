@@ -120,7 +120,8 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     if (this.stock.isEmpty) {
       obs = this.stockService.create(this.stockUtils.genCreatePayload({
         ...this.formGroup.value,
-        shelves: this.shelveAreas$()
+        shelves: this.shelveAreas$(),
+        doors: this.doors$()
       }))
     } else {
       obs = this.stockService.update(this.stockUtils.genUpdatePayload({

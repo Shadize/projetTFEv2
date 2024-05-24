@@ -1,16 +1,17 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, ShelveDto, Stock, StockCreatePayload, StockDto, StockUpdatePayload} from '@shelve-feature';
+import {Stock, StockCreatePayload, StockDto, StockUpdatePayload} from '@shelve-feature';
 import {ShelveUtilsService} from './shelve-utils.service';
 import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
-import {StockAction, StockKey} from '../data/enum';
-import {flatten} from 'lodash';
+import {StockAction, StockKey} from '../data';
+import {StockDoorUtilsService} from './stock-door-utils.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
   private shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  private doorUtilsService: StockDoorUtilsService = inject(StockDoorUtilsService);
 
   public fromDTO(dto: StockDto): Stock {
     return {
@@ -23,7 +24,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       height: dto.height,
       scale: dto.scale,
       width: dto.width,
-      doors:[],
+      doors: this.doorUtilsService.fromDTOS(dto.doors),
     }
   }
 
@@ -39,7 +40,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       title: 'hangar',
       section: Section.WOOD,
       shelves: [],
-      doors:[],
+      doors: [],
       str: 'api.common.empty'
 
     }
@@ -51,7 +52,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       section: business.section,
       shelves: this.shelveUtils.toDTOS(business.shelves),
       title: business.title,
-      doors:[],
+      doors: this.doorUtilsService.toDTOS(business.doors),
       height: business.height,
       scale: business.scale,
       width: business.width,
@@ -100,7 +101,8 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
       width: stock.width,
       height: stock.height,
       scale: stock.scale!,
-      shelves: this.shelveUtils.toDTOS(stock.shelves)
+      shelves: this.shelveUtils.toDTOS(stock.shelves),
+      doors: this.doorUtilsService.toDTOS(stock.doors)
     }
   }
 

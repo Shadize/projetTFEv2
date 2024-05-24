@@ -34,7 +34,7 @@ export class StockService {
   }
 
   async detail(id: string): Promise<Stock> {
-    const result: Stock = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true } });
+    const result: Stock = await this.repository.findOne({ where: { stock_id: id }, relations: { shelves: true,doors:true } });
     if (!(isNil(result))) {
       return result;
     }
