@@ -1,0 +1,47 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FieldTypeConfig, FormConfig } from '../../data/config/form.config';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-form-builder',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
+  templateUrl: './form-builder.component.html',
+  styleUrl: './form-builder.component.scss'
+})
+export class FormBuilderComponent implements OnInit{
+  @Input({ required: true }) config!: FormConfig;
+  @Output() formSubmitted = new EventEmitter<any>();
+
+  form!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({});
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
+    this.config.fields.forEach(field => {
+      const fieldConfig = this.config.validators.find(v => v.field === field);
+      const validators = fieldConfig ? fieldConfig.validators : [];
+      this.addFormControl(field, validators);
+    });
+  }
+
+  private addFormControl(fieldName: string, validators: any[] = []): void {
+    this.form.addControl(fieldName, this.formBuilder.control('', validators));
+  }
+
+  getFieldConfig(fieldName: string): FieldTypeConfig | undefined {
+    return this.config.fieldTypes?.find(ft => ft.field === fieldName);
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      this.formSubmitted.emit(this.form.value);
+    }
+  }
+}

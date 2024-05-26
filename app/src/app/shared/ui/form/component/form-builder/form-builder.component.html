@@ -1,0 +1,23 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of config.fields">
+    <div class="form-group">
+      <label [for]="field">{{ field }}</label>
+      <ng-container *ngIf="getFieldConfig(field) as fieldConfig">
+        <ng-container [ngSwitch]="fieldConfig.type">
+          <ng-container *ngSwitchCase="'select'">
+            <select [formControlName]="field" [id]="field">
+              <option *ngFor="let option of fieldConfig.options" [value]="option">{{ option }}</option>
+            </select>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <input [formControlName]="field" [id]="field" [type]="fieldConfig.type" />
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <div *ngIf="form.get(field)?.invalid && form.get(field)?.touched" class="error">
+        {{ field }} is required
+      </div>
+    </div>
+  </div>
+  <button type="submit" [disabled]="form.invalid">Submit</button>
+</form>
