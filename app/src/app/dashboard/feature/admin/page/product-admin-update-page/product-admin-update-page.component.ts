@@ -4,6 +4,7 @@ import { FormBuilderComponent } from '@shared';
 import { ProductService, ProductUtilsService } from 'app/dashboard/feature/product/service';
 import { FormConfig } from 'app/shared/ui/form/data/config/form.config';
 import { tap } from 'rxjs';
+import {JsonPipe} from '@angular/common';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { tap } from 'rxjs';
     standalone: true,
     templateUrl: './product-admin-update-page.component.html',
     styleUrl: './product-admin-update-page.component.scss',
-    imports: [FormBuilderComponent]
+  imports: [FormBuilderComponent, JsonPipe]
 })
 export class ProductAdminUpdatePageComponent implements OnInit{
 
@@ -31,6 +32,8 @@ export class ProductAdminUpdatePageComponent implements OnInit{
 
   genFormConfigs(product:Product| null): FormConfig {
     const detail =  product ?? this.productUtils.getEmpty();
+    console.log('detail', detail);
+    console.log('config', this.productUtils.getDataFormConfig(detail));
     return this.productUtils.getDataFormConfig(detail);
 
   }

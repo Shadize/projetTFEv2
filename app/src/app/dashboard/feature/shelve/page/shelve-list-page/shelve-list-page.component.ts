@@ -1,7 +1,14 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {AppRoutes, CardComponent, CellActionDefinition, DataTableComponent, DataTableConfig} from '@shared';
+import {
+  AppRoutes,
+  CardComponent,
+  CardHeaderComponent,
+  CellActionDefinition,
+  DataTableComponent,
+  DataTableConfig
+} from '@shared';
 import { Stock, StockAction } from '../../data';
 import { StockService, StockUtilsService } from '../../service';
 
@@ -11,7 +18,8 @@ import { StockService, StockUtilsService } from '../../service';
   imports: [
     DataTableComponent,
     TranslateModule,
-    CardComponent
+    CardComponent,
+    CardHeaderComponent
   ],
   templateUrl: './shelve-list-page.component.html',
   styleUrl: './shelve-list-page.component.scss'

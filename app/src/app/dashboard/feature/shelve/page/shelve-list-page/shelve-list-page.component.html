@@ -1,4 +1,5 @@
 <app-card>
+  <app-card-header [title]="'feature.shelve-list.title'"></app-card-header>
   <app-data-table [config]="config$()"
                   (actionClicked)="onActionClicked($event)"
                   (rowClicked)="onRowClicked($event)"></app-data-table>

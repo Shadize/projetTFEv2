@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { BusinessUtils } from '@core';
+import {inject, Injectable} from '@angular/core';
+import {BusinessUtils} from '@core';
 import {
   Product,
   ProductAction,
@@ -8,18 +8,19 @@ import {
   ProductKeyForm,
   ProductType,
 } from '@product-feature';
-import { ConsumptionUtilsService } from '@consumption-feature';
+import {ConsumptionUtilsService} from '@consumption-feature';
 import {
   DataTableConfig,
   CellActionDefinition,
   MinimalVisibilityWidth,
 } from '@shared';
 import {
+  FieldSelectOption,
   FieldTypeConfig,
   FormConfig,
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
-import { Validators } from '@angular/forms';
+import {Validators} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -144,60 +145,66 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   public getDataFormConfig(product: Product): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
-  const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
-    let fieldValidators = [];
+    const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
+      let fieldValidators = [];
 
-    switch (field) {
-      case ProductKeyForm.TITLE:
-        fieldValidators.push(Validators.required, Validators.minLength(3));
-        break;
-      case ProductKeyForm.PRICE:
-        fieldValidators.push(Validators.required, Validators.min(0));
-        break;
-      case ProductKeyForm.WIDTH:
-        fieldValidators.push(Validators.required, Validators.min(0));
-        break;
-      case ProductKeyForm.HEIGHT:
-        fieldValidators.push(Validators.required, Validators.min(0));
-        break;
-      case ProductKeyForm.THICKNESS:
-        fieldValidators.push(Validators.required, Validators.min(0));
-        break;
-      case ProductKeyForm.TREATMENT:
-        fieldValidators.push();
-        break;
-      case ProductKeyForm.MATERIALS:
-        fieldValidators.push();
-        break;
-      case ProductKeyForm.TYPE:
-        fieldValidators.push(Validators.required);
-        break;
-      default:
-        // Add default validators if needed
-        break;
-    }
+      switch (field) {
+        case ProductKeyForm.TITLE:
+          fieldValidators.push(Validators.required, Validators.minLength(3));
+          break;
+        case ProductKeyForm.PRICE:
+          fieldValidators.push(Validators.required, Validators.min(0));
+          break;
+        case ProductKeyForm.WIDTH:
+          fieldValidators.push(Validators.required, Validators.min(0));
+          break;
+        case ProductKeyForm.HEIGHT:
+          fieldValidators.push(Validators.required, Validators.min(0));
+          break;
+        case ProductKeyForm.THICKNESS:
+          fieldValidators.push(Validators.required, Validators.min(0));
+          break;
+        case ProductKeyForm.TREATMENT:
+          fieldValidators.push();
+          break;
+        case ProductKeyForm.MATERIALS:
+          fieldValidators.push();
+          break;
+        case ProductKeyForm.TYPE:
+          fieldValidators.push(Validators.required);
+          break;
+        default:
+          // Add default validators if needed
+          break;
+      }
 
-    return { field, validators: fieldValidators };
-  });
+      return {field, validators: fieldValidators};
+    });
 
-  const fieldTypesConfig: FieldTypeConfig[] = fields.map(field => {
-    let fieldType = 'text';
-    let fieldOptions;
+    const fieldTypesConfig: FieldTypeConfig[] = fields.map(field => {
+      let fieldType = 'text';
+      let fieldOptions: FieldSelectOption[] = [];
 
-    if (field === ProductKeyForm.TYPE) {
-      fieldType = 'select';
-      fieldOptions = Object.values(ProductType);
-    }
+      if (field === ProductKeyForm.TYPE) {
+        fieldType = 'select';
+        fieldOptions = Object.values(ProductType).map(
+          o => ({
+            selected: product.type === o,
+            value: o,
+            label: `feature.product.type.${o.toLowerCase()}`
+          })
+        );
+      }
 
-    return { field, type: fieldType, options: fieldOptions };
-  });
+      return {field, type: fieldType, options: fieldOptions};
+    });
 
-  return {
-    data: product,
-    fields,
-    validators: validatorsConfig,
-    fieldTypes: fieldTypesConfig
-  };
+    return {
+      data: product,
+      fields,
+      validators: validatorsConfig,
+      fieldTypes: fieldTypesConfig
+    };
 
     /*
     Si on se contente juste de Validator.required tous les champs:
@@ -213,7 +220,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       fields,
       validators: validatorsConfig
     };
-    
+
     */
   }
 }

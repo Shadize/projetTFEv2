@@ -27,9 +27,6 @@ export class StockDetailComponent implements OnInit {
     this.shelveDataTableConfig$ = signal(this.shelveUtils.getDataTableConfig(this.detail.shelves));
   }
 
-  rowClicked(data: any): void {
-    console.log('rowclicked', data);
-  }
 
   onRackClickHandle(shelve: Shelve): void {
     this.router.navigate([AppRoutes.SHELVE_DETAIL.replace(':id', shelve.id)]).then();

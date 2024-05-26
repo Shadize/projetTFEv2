@@ -91,5 +91,8 @@
   "shelve.no-product": "-",
   "admin-feature-shelve.table.label.productName": "Produit",
   "admin-feature-shelve.table.label.productQuantity": "Quantité",
-  "feature.shelve-detail.not-found": "L'emplacement n'a pas été trouvé"
+  "feature.shelve-detail.not-found": "L'emplacement n'a pas été trouvé",
+  "feature.shelve-list.title": "Liste des emplacments de stockage",
+  "feature.product.type.panel": "Panneau",
+  "feature.product.type.plateau": "Plateau"
 }

@@ -1,8 +1,8 @@
 <app-card>
-  @if(detail$().isEmpty){
+  @if(!list$()){
     <app-detail-not-found [message]="'feature.shelve-detail.not-found'"></app-detail-not-found>
   } @else {
-    <app-card-header [title]="detail$().str"></app-card-header>
-    detail icey
+    <app-card-header [title]="list$()[0].rack"></app-card-header>
+    <app-data-table [config]="shelveDataTableConfig$()"></app-data-table>
   }
 </app-card>

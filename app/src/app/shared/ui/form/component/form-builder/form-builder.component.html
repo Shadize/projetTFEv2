@@ -6,11 +6,13 @@
         <ng-container [ngSwitch]="fieldConfig.type">
           <ng-container *ngSwitchCase="'select'">
             <select [formControlName]="field" [id]="field">
-              <option *ngFor="let option of fieldConfig.options" [value]="option">{{ option }}</option>
+              <option *ngFor="let option of fieldConfig.options" [value]="option.value"
+                      [selected]="option.selected">{{ option.label | translate }}
+              </option>
             </select>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <input [formControlName]="field" [id]="field" [type]="fieldConfig.type" />
+            <input [formControlName]="field" [id]="field" [type]="fieldConfig.type"/>
           </ng-container>
         </ng-container>
       </ng-container>

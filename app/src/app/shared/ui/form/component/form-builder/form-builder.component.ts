@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FieldTypeConfig, FormConfig } from '../../data/config/form.config';
 import { CommonModule } from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-form-builder',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslateModule],
   templateUrl: './form-builder.component.html',
   styleUrl: './form-builder.component.scss'
 })
@@ -31,8 +32,8 @@ export class FormBuilderComponent implements OnInit{
     });
   }
 
-  private addFormControl(fieldName: string, validators: any[] = []): void {
-    this.form.addControl(fieldName, this.formBuilder.control('', validators));
+  private addFormControl(fieldName: any, validators: any[] = []): void {
+    this.form.addControl(fieldName, this.formBuilder.control(this.config.data[fieldName], validators));
   }
 
   getFieldConfig(fieldName: string): FieldTypeConfig | undefined {
