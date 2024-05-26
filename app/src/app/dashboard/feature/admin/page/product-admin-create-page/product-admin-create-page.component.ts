@@ -21,7 +21,7 @@ export class ProductAdminCreatePageComponent {
 
     let product : Product = this.productUtils.getEmpty();
 
-    return this.productUtils.getDataFormConfig(product);
+    return this.productUtils.getDataFormConfig(product,[]);
 
   }
 

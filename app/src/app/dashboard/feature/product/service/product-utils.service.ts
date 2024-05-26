@@ -21,6 +21,8 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {Validators} from '@angular/forms';
+import {Stock} from '@shelve-feature';
+import {flatten} from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -142,7 +144,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product): FormConfig {
+  public getDataFormConfig(product: Product,stocks: Stock[]): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -192,6 +194,15 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
             selected: product.type === o,
             value: o,
             label: `feature.product.type.${o.toLowerCase()}`
+          })
+        );
+      } else if(field === ProductKeyForm.SHELVE){
+        fieldType = 'select';
+        fieldOptions = flatten(stocks.map(s => s.shelves)).map(
+          o => ({
+            selected:false,
+            value: o,
+            label: `${o.rack} ${o.floor}`
           })
         );
       }
