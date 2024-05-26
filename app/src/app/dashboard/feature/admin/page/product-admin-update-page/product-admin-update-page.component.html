@@ -1,2 +1,4 @@
-<app-form-builder [config]="config$()" 
-                  (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+@if (detail$()) {
+  <app-form-builder [config]="config$()"
+                    (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+}

@@ -1,5 +1,5 @@
 import { Product } from '../../../product/data/business/product.business';
-import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import {Component, OnInit, Signal, computed, inject, signal, WritableSignal} from '@angular/core';
 import { FormBuilderComponent } from "../../../../../shared/ui/form/component/form-builder/form-builder.component";
 import { FormConfig } from 'app/shared/ui/form/data/config/form.config';
 import { ProductKey } from '@product-feature';
@@ -15,12 +15,12 @@ import { ProductUtilsService } from 'app/dashboard/feature/product/service';
 })
 export class ProductAdminCreatePageComponent {
   private productUtils : ProductUtilsService = inject(ProductUtilsService)
-  protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs());
+  protected config$: WritableSignal<FormConfig> = signal( this.genFormConfigs());
 
   genFormConfigs(): FormConfig {
 
     let product : Product = this.productUtils.getEmpty();
-    
+
     return this.productUtils.getDataFormConfig(product);
 
   }

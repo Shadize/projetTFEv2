@@ -14,11 +14,11 @@ import { tap } from 'rxjs';
     imports: [FormBuilderComponent]
 })
 export class ProductAdminUpdatePageComponent implements OnInit{
-  
+
   @Input() id!: string;
   private productUtils : ProductUtilsService = inject(ProductUtilsService)
   protected productService : ProductService = inject(ProductService)
-  protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs());
+  protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.detail$()));
   public detail$: WritableSignal<Product | null> = signal(null);
 
 
@@ -29,10 +29,8 @@ export class ProductAdminUpdatePageComponent implements OnInit{
     ).subscribe()
   }
 
-  genFormConfigs(): FormConfig {
-    const detail = this.detail$() as Product;
-    console.log(detail);
-        
+  genFormConfigs(product:Product| null): FormConfig {
+    const detail =  product ?? this.productUtils.getEmpty();
     return this.productUtils.getDataFormConfig(detail);
 
   }
