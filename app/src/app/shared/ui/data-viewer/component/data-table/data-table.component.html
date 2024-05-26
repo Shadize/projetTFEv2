@@ -19,7 +19,7 @@
           </div>
         } @else {
           <div class="clickable" (click)="rowClicked.emit(item)">
-            {{ item[cell.targetData] }}
+            {{ item[cell.targetData] | translate }}
           </div>
         }
       </div>
@@ -27,6 +27,6 @@
   </div>
 } @else {
   <div class="no-item">
-    {{config.label ?? 'common.data-table.no-items' | translate}}
+    {{ config.label ?? 'common.data-table.no-items' | translate }}
   </div>
 }

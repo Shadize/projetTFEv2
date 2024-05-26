@@ -8,7 +8,7 @@ import {StockUtilsService} from './stock-utils.service';
   providedIn: 'root'
 })
 export class StockService {
-  public list$: WritableSignal<Stock[]> = signal([]);
+  public list$: WritableSignal<Stock[]| undefined> = signal(undefined);
   private api: ApiService = inject(ApiService);
   private stockUtilsService: StockUtilsService = inject(StockUtilsService);
 

@@ -1,7 +1,7 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppRoutes, CellActionDefinition, DataTableComponent, DataTableConfig } from '@shared';
+import {AppRoutes, CardComponent, CellActionDefinition, DataTableComponent, DataTableConfig} from '@shared';
 import { Stock, StockAction } from '../../data';
 import { StockService, StockUtilsService } from '../../service';
 
@@ -10,7 +10,8 @@ import { StockService, StockUtilsService } from '../../service';
   standalone: true,
   imports: [
     DataTableComponent,
-    TranslateModule
+    TranslateModule,
+    CardComponent
   ],
   templateUrl: './shelve-list-page.component.html',
   styleUrl: './shelve-list-page.component.scss'
@@ -36,12 +37,13 @@ export class ShelveListPageComponent {
   }
 
   public onRowClicked(data: any): void {
-    this.router.navigate([AppRoutes.ADMIN_SHELVE_DETAIL.replace(':id',data.id)]).then();
+    this.router.navigate([AppRoutes.STOCK_DETAIL.replace(':id',data.id)]).then();
 
   }
 
-  private genConfigs(stocks: Stock[]): DataTableConfig {
-    return this.stockUtils.getDataTableConfig(stocks, false);
+  private genConfigs(stocks: Stock[] | undefined): DataTableConfig {
+
+    return this.stockUtils.getDataTableConfig(stocks ?? [], false);
   }
 
   private handleDetail(id:string): void {

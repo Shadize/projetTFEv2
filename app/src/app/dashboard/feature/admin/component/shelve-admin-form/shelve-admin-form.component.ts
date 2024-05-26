@@ -352,7 +352,9 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       width: (minimalItem!.offsetWidth * (coordinate.maximalCell + 1 - coordinate.minimalCell)) + 'px',
       height: (minimalItem!.offsetHeight * (coordinate.maximalRow + 1 - coordinate.minimalRow)) + 'px',
       top: minimalItem!.offsetTop + 'px',
-      left: minimalItem!.offsetLeft + 'px'
+      left: minimalItem!.offsetLeft + 'px',
+      productName: '',
+      productQuantity: ''
     }));
     this.shelveAreas$.set(this.shelveAreas$().concat(newAreas));
     this.goEditionMode(false);

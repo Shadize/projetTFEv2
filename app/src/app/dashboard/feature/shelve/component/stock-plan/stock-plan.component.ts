@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  signal,
+  ViewChild,
+  WritableSignal
+} from '@angular/core';
 import {Shelve, Stock, StockDoor, StockDoorPosition, StockDoorType} from '../../data';
 import {Surface, SurfaceDoorCell} from '@admin-feature';
 
@@ -11,6 +21,7 @@ import {Surface, SurfaceDoorCell} from '@admin-feature';
 })
 export class StockPlanComponent implements OnInit, AfterViewInit {
   @Input() detail!: Stock;
+  @Output() onRackClick = new EventEmitter<Shelve>();
   protected readonly StockDoorType = StockDoorType;
   @ViewChild('table')
   public table!: ElementRef;
@@ -27,7 +38,6 @@ export class StockPlanComponent implements OnInit, AfterViewInit {
     nbCells: 0,
     rows: []
   });
-
   ngOnInit() {
     console.log(this.detail);
     this.generateSurface();

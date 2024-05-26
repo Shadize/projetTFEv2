@@ -1,18 +1,37 @@
-import {Component, Input} from '@angular/core';
-import {Stock} from '../../data';
+import {Component, inject, Input, OnInit, signal, WritableSignal} from '@angular/core';
+import {Shelve, Stock} from '../../data';
 import {TranslateModule} from '@ngx-translate/core';
 import {StockPlanComponent} from '../stock-plan/stock-plan.component';
+import {Router} from '@angular/router';
+import {AppRoutes, DataTableComponent, DataTableConfig} from '@shared';
+import {ShelveUtilsService} from '../../service';
 
 @Component({
   selector: 'app-stock-detail',
   standalone: true,
   imports: [
     TranslateModule,
-    StockPlanComponent
+    StockPlanComponent,
+    DataTableComponent
   ],
   templateUrl: './stock-detail.component.html',
   styleUrl: './stock-detail.component.scss'
 })
-export class StockDetailComponent {
+export class StockDetailComponent implements OnInit {
   @Input() detail!: Stock;
+  private readonly router: Router = inject(Router);
+  private readonly shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  public shelveDataTableConfig$!: WritableSignal<DataTableConfig>;
+
+  ngOnInit(): void {
+    this.shelveDataTableConfig$ = signal(this.shelveUtils.getDataTableConfig(this.detail.shelves));
+  }
+
+  rowClicked(data: any): void {
+    console.log('rowclicked', data);
+  }
+
+  onRackClickHandle(shelve: Shelve): void {
+    this.router.navigate([AppRoutes.SHELVE_DETAIL.replace(':id', shelve.id)]).then();
+  }
 }

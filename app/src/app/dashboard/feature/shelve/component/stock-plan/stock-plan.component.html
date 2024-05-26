@@ -21,7 +21,7 @@
   </div>
   <div class="table" #table>
     @for (item of shelveAreas$(); let index = $index; track index) {
-      <div class="rack"
+      <div class="rack" (click)="onRackClick.emit(item)"
            [style]="'background-color:' +item.background+';color:'+item.color+';top:'+item.top+';left:'+item.left+';width:'+item.width+';height:'+item.height+';'">
         {{ item.rack }}
       </div>

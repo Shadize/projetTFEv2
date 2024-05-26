@@ -6,5 +6,6 @@
   <div class="header">
     <div class="title">{{ detail.title }}</div>
   </div>
-  <app-stock-plan [detail]="detail"></app-stock-plan>
+  <app-stock-plan [detail]="detail" (onRackClick)="onRackClickHandle($event)"></app-stock-plan>
+  <app-data-table [config]="shelveDataTableConfig$()" (rowClicked)="onRackClickHandle($event)"></app-data-table>
 }

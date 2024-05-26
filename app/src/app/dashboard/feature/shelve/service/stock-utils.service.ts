@@ -60,13 +60,13 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
   }
 
   public getDataTableConfig(stocks: Stock[], isAdmin: boolean): DataTableConfig {
-    let actions: CellActionDefinition[] = [
-      {
-        icon: 'fa-solid fa-eye',
-        action: StockAction.DETAIL
-      }
-    ]
+    let actions: CellActionDefinition[] = []
     if (isAdmin) {
+      actions.push(
+        {
+          icon: 'fa-solid fa-eye',
+          action: StockAction.DETAIL
+        });
       actions.push({
         icon: 'fa-solid fa-pencil',
         action: StockAction.EDIT

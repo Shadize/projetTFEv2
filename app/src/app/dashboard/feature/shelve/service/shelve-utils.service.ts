@@ -32,7 +32,9 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       product,
       rack: dto.rack,
       section: dto.section,
-      str: product?.title || 'app.common.empty'
+      str: product?.title || 'app.common.empty',
+      productName: product?.title || 'shelve.no-product',
+      productQuantity: 'shelve.no-product' // toChange when johnny is good
     }
   }
 
@@ -54,7 +56,9 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       nbItemsMax: 0,
       rack: '',
       section: Section.WOOD,
-      str: 'api.common.empty'
+      str: 'api.common.empty',
+      productName: 'shelve.no-product',
+      productQuantity: 'shelve.no-product' // toChange when johnny is good
 
     }
   }
@@ -94,6 +98,34 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
         },
         {
           targetData: 'floor',
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        }
+      ],
+    }
+  }
+  getDataTableConfig(data: Shelve[]): DataTableConfig {
+    return {
+      data,
+      translateKey: 'admin-feature-shelve.table.label.',
+      cellDefinitions: [
+        {
+          targetData: 'rack',
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        },
+        {
+          targetData: 'floor',
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        },
+        {
+          targetData: 'productName',
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false
+        },
+        {
+          targetData: 'productQuantity',
           minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
           isMinimalWidth: false
         }

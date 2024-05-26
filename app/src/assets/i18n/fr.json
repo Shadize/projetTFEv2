@@ -87,5 +87,9 @@
   "admin-feature-member.table.label.mail" : "Adresse mail",
   "admin-feature-member.table.label.isAdmin" : "Est administrateur",
   "admin-feature-shelve-add.add-doors": "Ajouter une ouverture",
-  "admin-feature-shelve-add.add-doors-validate": "Finaliser l'ouverture"
+  "admin-feature-shelve-add.add-doors-validate": "Finaliser l'ouverture",
+  "shelve.no-product": "-",
+  "admin-feature-shelve.table.label.productName": "Produit",
+  "admin-feature-shelve.table.label.productQuantity": "Quantité",
+  "feature.shelve-detail.not-found": "L'emplacement n'a pas été trouvé"
 }
