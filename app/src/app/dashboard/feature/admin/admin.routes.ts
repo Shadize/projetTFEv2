@@ -38,6 +38,11 @@ export const adminRoutes: Routes = [
           import('./page').then(c => c.MemberAdminAddPageComponent)
       },
       {
+        path: `${AppNode.MEMBER_UPDATE}`,
+        loadComponent: () =>
+          import('./page').then(c => c.MemberAdminUpdatePageComponent)
+      },
+      {
         path: AppNode.SHELVES,
         loadComponent: () =>
           import('./page').then(c => c.ShelveManagementPageComponent)

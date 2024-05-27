@@ -37,12 +37,13 @@ export class MemberManagementPageComponent implements OnInit {
 
 
   public onActionClicked(data: CellActionDefinition): void {
+    const item : Credential = data.data! as Credential;
     switch (data.action) {
       case MemberAction.DETAIL:
         this.handleDetail();
         break;
       case MemberAction.EDIT:
-        this.handleEdit();
+        this.handleEdit(item.id);
         break;
       case MemberAction.DELETE:
         this.handleDelete();
@@ -66,8 +67,9 @@ export class MemberManagementPageComponent implements OnInit {
     console.log('show detail');
   }
 
-  private handleEdit(): void {
-    console.log('edit item');
+  private handleEdit(id: string): void {
+    this.router.navigate([AppRoutes.ADMIN_MEMBER_UPDATE.replace(':id',id)]).then();
+
   }
 
   private handleDelete(): void {

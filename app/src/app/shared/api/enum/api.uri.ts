@@ -3,6 +3,7 @@ export enum ApiURI {
   SIGN_UP = 'account/signup',
   ME = 'account/me',
   CREDENTIAL_LIST = 'account/list',
+  CREDENTIAL_UPDATE = 'account/update',
   REFRESH_TOKEN = 'account/refresh',
   SHELVE_LIST = 'shelve/list',
   SHELVE_DETAIL= 'shelve/detail/',

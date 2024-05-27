@@ -1,5 +1,6 @@
 export * from './member-management-page/member-management-page.component';
 export * from './member-admin-add-page/member-admin-add-page.component';
+export * from './member-admin-update-page/member-admin-update-page.component';
 export * from './product-management-page/product-management-page.component';
 export * from './product-admin-add-page/product-admin-add-page.component';
 export * from './product-admin-update-page/product-admin-update-page.component';

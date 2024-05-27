@@ -17,6 +17,7 @@ export enum AppNode {
   SHELVE_UPDATE = 'shelves/update/:id',
   PRODUCT_ADD = 'product/add',
   PRODUCT_UPDATE = 'product/update/:id',
-  MEMBER_ADD ='member/add'
+  MEMBER_ADD ='member/add',
+  MEMBER_UPDATE = 'member/update/:id'
   
 }

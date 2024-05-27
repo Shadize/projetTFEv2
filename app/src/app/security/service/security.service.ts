@@ -1,5 +1,5 @@
 import {computed, effect, EffectRef, inject, Injectable, signal, Signal, WritableSignal} from '@angular/core';
-import {Observable, tap} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {ApiResponse, ApiService, ApiURI, TokenService} from '@api';
 import {Credential, SignInPayload} from '@security';
 import {Router} from '@angular/router';
@@ -73,5 +73,39 @@ export class SecurityService {
       })).subscribe();
   }
 
+
+  detail(id: string): Observable<Credential> {
+    return this.api.get(`${ApiURI.PRODUCT_DETAIL}${id}`)
+      .pipe(map((response: ApiResponse) => {
+        if (response.result) {
+          return this.credentialUtil.fromDTO(response.data);
+        }
+        return this.credentialUtil.getEmpty()
+
+      }))
+  }
+
+  public update(payload: SignUpPayload /* A changer? */ ): Observable<Credential> {
+
+    /*
+    Mon problème:
+    
+    En gros comme c'est carrément 
+    un Credentiel entier qu'on récupère et qu'on modifie,
+     le SignIn et SignUP payload ne correspondent pas à un objet capable de gérer la modification
+     Il me faudrait un payload qui contient l'id, etc...
+
+     Pour le cas d'un craete c'est pas dérangeant car le SignUp payload suffit
+    */ 
+    console.log('payload', payload);
+    return this.api.put(ApiURI.SIGN_UP, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
+    );
+  }
 
 }

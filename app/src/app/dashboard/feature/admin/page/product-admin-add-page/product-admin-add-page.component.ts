@@ -37,10 +37,16 @@ export class ProductAdminAddPageComponent implements OnInit {
 
   onFormSubmitted(formValue: any): void {
 
+    console.log(formValue);
     this.productService.create(this.productUtils.genCreatePayload({
       ...formValue
     }));
 
+    /* Le push en DB ne marche pas, de plus 
+     je n'arrive pas à récuperer l'objet shelve que je selectionne dans le formulaire,
+     avec un console log ça me met "object Object"
+
+     */
 
   }
 }

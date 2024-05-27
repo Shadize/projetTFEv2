@@ -39,9 +39,9 @@ export class ProductService {
 
   public create(payload: ProductCreatePayload): Observable<Product> {
     console.log("test1");
-    return this.api.post(ApiURI.SHELVE_CREATE, payload).pipe(
+    return this.api.post(ApiURI.PRODUCT_CREATE, payload).pipe(
       tap((response: ApiResponse) => {
-        console.log("test2");
+        console.log("test2"); // Je ne rentre jamais dedans
         if (response.result) {
           this.list();
           

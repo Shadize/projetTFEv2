@@ -17,4 +17,5 @@ export enum AppRoutes {
   ADMIN_PRODUCT_UPDATE = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.PRODUCT_UPDATE}`,
   MEMBER_DETAIL = `${AppRoutes.MEMBER}/detail/`,
   ADMIN_MEMBER_CREATE = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.MEMBER_ADD}`,
+  ADMIN_MEMBER_UPDATE = `${AppRoutes.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.MEMBER_UPDATE}`
 }
