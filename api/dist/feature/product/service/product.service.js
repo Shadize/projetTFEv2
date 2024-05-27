@@ -85,8 +85,10 @@ let ProductService = class ProductService {
             detail.height = payload.height;
             detail.price = payload.price;
             detail.type = payload.type;
-            await this.shelveService.linkProduct(detail, payload.shelve);
-            return await this.repository.save(detail);
+            const product = await this.repository.save(detail);
+            console.log('payload.shelve', payload.shelve);
+            await this.shelveService.linkProduct(product, payload.shelve);
+            return product;
         }
         catch (e) {
             throw new stock_exception_1.StockUpdateException();

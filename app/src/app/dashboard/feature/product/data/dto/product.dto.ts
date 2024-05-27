@@ -13,7 +13,6 @@ export interface ProductDto extends Dto{
   width: number;
   height: number;
   price: number;
-  shelve?: Shelve;
   type: ProductType;
   consumptions: ConsumptionDto[];
 

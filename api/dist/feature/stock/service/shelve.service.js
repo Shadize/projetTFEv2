@@ -91,6 +91,11 @@ let ShelveService = class ShelveService {
             await this.repository.remove(shelve);
         }
     }
+    async linkProduct(detail, shelveId) {
+        let shelve = await this.detail(shelveId);
+        shelve.product = detail;
+        await this.repository.save(shelve);
+    }
 };
 exports.ShelveService = ShelveService;
 exports.ShelveService = ShelveService = __decorate([

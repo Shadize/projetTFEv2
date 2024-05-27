@@ -22,16 +22,16 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {Validators} from '@angular/forms';
-import {Stock} from '@shelve-feature';
+import {ShelveUtilsService, Stock} from '@shelve-feature';
 import {flatten} from 'lodash';
-import { ProductUpdatePayload } from '../data/payload/product-update.payload';
-import { TranslateService } from '@ngx-translate/core';
+import {ProductUpdatePayload} from '../data/payload/product-update.payload';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
-  private translateService : TranslateService = inject(TranslateService);
+  private translateService: TranslateService = inject(TranslateService);
   private consumptionUtils: ConsumptionUtilsService = inject(
     ConsumptionUtilsService
   );
@@ -50,7 +50,6 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       thickness: dto.thickness,
       treatment: dto.treatment,
       type: dto.type,
-      shelve: dto.shelve,
       width: dto.width,
     };
   }
@@ -152,7 +151,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product,stocks: Stock[] | undefined): FormConfig {
+  public getDataFormConfig(product: Product, stocks: Stock[] | undefined, isUpdate: boolean = false): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -162,9 +161,9 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         case ProductKeyForm.TITLE:
           fieldValidators.push(Validators.required, Validators.minLength(3));
           break;
-          case ProductKeyForm.QUNATITY:
-            fieldValidators.push(Validators.required, Validators.min(1));
-            break;
+        case ProductKeyForm.QUNATITY:
+          fieldValidators.push(Validators.required, Validators.min(1));
+          break;
         case ProductKeyForm.PRICE:
           fieldValidators.push(Validators.required, Validators.min(0));
           break;
@@ -186,7 +185,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         case ProductKeyForm.TYPE:
           fieldValidators.push(Validators.required);
           break;
-          case ProductKeyForm.SHELVE:
+        case ProductKeyForm.SHELVE:
           fieldValidators.push(Validators.required);
           break;
         default:
@@ -210,11 +209,11 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
             label: `feature.product.type.${o.toLowerCase()}`
           })
         );
-      } else if(field === ProductKeyForm.SHELVE){
+      } else if (field === ProductKeyForm.SHELVE) {
         fieldType = 'select';
         fieldOptions = flatten(stocks?.map(s => s.shelves)).map(
           o => ({
-            selected:false,
+            selected: false,
             value: o.id,
             label: this.translateService.instant('feature.product.rack-title', o)
           })
@@ -223,36 +222,22 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
       return {field, type: fieldType, options: fieldOptions};
     });
-
+    let shelve = '';
+    if (isUpdate && stocks) {
+      shelve = flatten(stocks
+          .map(s => s.shelves)).find(s => s.product?.id === product.id)?.id
+        ?? '';
+    }
     return {
-      data: product,
+      data: {...product, shelve},
       fields,
       validators: validatorsConfig,
       fieldTypes: fieldTypesConfig
     };
-
-    /*
-    Si on se contente juste de Validator.required tous les champs:
-
-    const fields = Object.keys(product);
-    const validatorsConfig: FormValidatorsConfig[] = fields.map(field => ({
-      field,
-      validators: [Validators.required]
-    }));
-
-    return {
-      data: product,
-      fields,
-      validators: validatorsConfig
-    };
-
-    */
   }
 
 
-
-  genCreatePayload(product: Product, stocks:Stock[],shelveId:string) : ProductCreatePayload{
-    const shelve = flatten(stocks.map(s => s.shelves)).find( s => s.id === shelveId)!;
+  genCreatePayload(product: Product, stocks: Stock[], shelveId: string): ProductCreatePayload {
     return {
       materials: product.materials,
       treatment: product.treatment,
@@ -263,11 +248,11 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       height: product.height,
       price: product.price,
       type: product.type,
-      shelve: product.shelve
+      shelve:shelveId
     }
   }
 
-  genUpdatePayload(product: Product, stocks:Stock[],shelveId:string) : ProductUpdatePayload{
+  genUpdatePayload(product: Product, stocks: Stock[], shelveId: string): ProductUpdatePayload {
     return {
       ...this.genCreatePayload(product, stocks, shelveId),
       product_id: product.id

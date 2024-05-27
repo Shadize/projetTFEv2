@@ -34,11 +34,12 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
   genFormConfigs(product: Product | null, stocks: Stock[] | undefined): FormConfig {
     const detail = product ?? this.productUtils.getEmpty();
-    return this.productUtils.getDataFormConfig(detail, stocks ?? []);
+    return this.productUtils.getDataFormConfig(detail, stocks ?? [], true);
 
   }
 
   onFormSubmitted(formValue: any): void {
+    console.log('shelve',formValue.shelve);
     this.productService.update(this.productUtils.genUpdatePayload({
       id:this.detail$()!.id,
       ...formValue

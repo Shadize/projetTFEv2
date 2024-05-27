@@ -19,6 +19,7 @@ exports.StockModule = StockModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([data_1.Stock, data_1.Shelve, data_1.StockDoor])],
         controllers: [controller_1.StockController],
+        exports: [service_1.ShelveService],
         providers: [service_1.StockService, service_1.ShelveService, service_1.StockDoorService]
     })
 ], StockModule);

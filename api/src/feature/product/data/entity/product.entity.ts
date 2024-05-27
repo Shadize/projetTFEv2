@@ -1,5 +1,5 @@
 import { ProductType } from '@product/data/enum';
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import { AfterLoad, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { ulid } from 'ulid';
 import { Consumption } from '@consumption/data';
 import { Shelve } from '@stock/data';
@@ -10,7 +10,7 @@ export class Product {
   product_id: string;
   @Column({ length: 50, nullable: false })
   title: string;
-  @Column({ nullable: false, default:0 })
+  @Column({ nullable: false, default: 0 })
   quantity: number;
   @Column({ length: 50, nullable: true })
   materials: string;
@@ -24,7 +24,7 @@ export class Product {
   height: number;
   @Column({ nullable: true })
   price: number;
-  
+
   @Column({ nullable: false })
   type: ProductType;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,

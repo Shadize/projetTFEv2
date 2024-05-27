@@ -13,7 +13,7 @@ export interface ProductUpdatePayload extends Payload {
   width: number;
   height: number;
   price: number;
-  shelve?: Shelve;
+  shelve: string;
   type: ProductType;
   consumptions?: Consumption[];
 }

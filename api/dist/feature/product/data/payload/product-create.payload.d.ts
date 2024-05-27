@@ -1,5 +1,4 @@
 import { ProductType } from "../enum";
-import { Shelve } from "@stock/data";
 export declare class ProductCreatePayload {
     title: string;
     quantity: string;
@@ -9,6 +8,6 @@ export declare class ProductCreatePayload {
     width: number;
     height: number;
     price: number;
-    shelve: Shelve;
+    shelve: string;
     type: ProductType;
 }

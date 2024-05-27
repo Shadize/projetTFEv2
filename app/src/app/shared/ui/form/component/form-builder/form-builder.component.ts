@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {FormGroup, FormBuilder, ReactiveFormsModule} from '@angular/forms';
 import {FieldTypeConfig, FormConfig} from '../../data/config/form.config';
 import {CommonModule} from '@angular/common';
@@ -11,7 +11,7 @@ import {TranslateModule} from '@ngx-translate/core';
   templateUrl: './form-builder.component.html',
   styleUrl: './form-builder.component.scss'
 })
-export class FormBuilderComponent implements OnInit {
+export class FormBuilderComponent implements OnChanges {
   @Input({required: true}) config!: FormConfig;
   @Output() formSubmitted = new EventEmitter<any>();
 
@@ -20,7 +20,7 @@ export class FormBuilderComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
   }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.form = this.formBuilder.group({});
     this.initializeForm();
   }
@@ -42,9 +42,8 @@ export class FormBuilderComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('onsubmit', this.form);
     if (this.form.valid) {
-      console.log('onsubmit valid');
+      console.log('onsubmit valid', this.form.value);
       this.formSubmitted.emit(this.form.value);
     }
   }
