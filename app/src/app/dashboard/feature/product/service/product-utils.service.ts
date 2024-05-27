@@ -215,10 +215,10 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         fieldOptions = flatten(stocks?.map(s => s.shelves)).map(
           o => ({
             selected:false,
-            value: o,
+            value: o.id,
             label: this.translateService.instant('feature.product.rack-title', o)
           })
-        ); 
+        );
       }
 
       return {field, type: fieldType, options: fieldOptions};
@@ -251,9 +251,8 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
 
 
-  genCreatePayload(product: Product) : ProductCreatePayload{
-
-    console.log(product);
+  genCreatePayload(product: Product, stocks:Stock[],shelveId:string) : ProductCreatePayload{
+    const shelve = flatten(stocks.map(s => s.shelves)).find( s => s.id === shelveId)!;
     return {
       materials: product.materials,
       treatment: product.treatment,
@@ -268,9 +267,9 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     }
   }
 
-  genUpdatePayload(product: Product) : ProductUpdatePayload{
+  genUpdatePayload(product: Product, stocks:Stock[],shelveId:string) : ProductUpdatePayload{
     return {
-      ...this.genCreatePayload(product),
+      ...this.genCreatePayload(product, stocks, shelveId),
       product_id: product.id
     }
   }

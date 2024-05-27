@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "title", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false, default: 0 }),
     __metadata("design:type", Number)
 ], Product.prototype, "quantity", void 0);
 __decorate([

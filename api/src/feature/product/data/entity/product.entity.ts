@@ -10,7 +10,7 @@ export class Product {
   product_id: string;
   @Column({ length: 50, nullable: false })
   title: string;
-  @Column({ nullable: false })
+  @Column({ nullable: false, default:0 })
   quantity: number;
   @Column({ length: 50, nullable: true })
   materials: string;

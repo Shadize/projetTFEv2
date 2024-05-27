@@ -10,7 +10,7 @@ export class ProductUpdatePayload{
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TITLE_MISSING_ERROR})
     title: string;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_QUANTITY_MISSING_ERROR})
-    qunatity: string;
+    quantity: number;
     materials: string;
     treatment: string;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_THICKNESS_MISSING_ERROR })
@@ -21,7 +21,7 @@ export class ProductUpdatePayload{
     height: number;
     price: number;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR })
-    shelve: Shelve;
+    shelve: string;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR })
     type: ProductType;
 

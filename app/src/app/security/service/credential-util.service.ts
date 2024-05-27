@@ -174,9 +174,6 @@ export class CredentialUtilService implements BusinessUtils<Credential, Credenti
       username: credential.username,
       password: credential.password,
       mail: credential.mail,
-      isAdmin: credential.isAdmin,
-      firstname: credential.firstname,
-      lastname: credential.lastname,
       section: credential.section
     }
   }

@@ -12,6 +12,7 @@ import {
 } from '@stock/stock.exception';
 import { Builder } from 'builder-pattern';
 import { ulid } from 'ulid';
+import { Product } from '@product/data';
 
 @Injectable()
 export class ShelveService {
@@ -87,5 +88,11 @@ export class ShelveService {
       await this.repository.save(shelve);
       await this.repository.remove(shelve);
     }
+  }
+
+  async linkProduct(detail: Product, shelveId: string): Promise<void> {
+    let shelve: Shelve = await this.detail(shelveId);
+    shelve.product = detail;
+    await this.repository.save(shelve);
   }
 }

@@ -22,8 +22,10 @@ const builder_pattern_1 = require("builder-pattern");
 const lodash_1 = require("lodash");
 const typeorm_2 = require("typeorm");
 const ulid_1 = require("ulid");
+const service_1 = require("../../stock/service");
 let ProductService = class ProductService {
-    constructor(repository) {
+    constructor(shelveService, repository) {
+        this.shelveService = shelveService;
         this.repository = repository;
     }
     async list() {
@@ -63,7 +65,9 @@ let ProductService = class ProductService {
                 .price(payload.price)
                 .type(payload.type)
                 .build();
-            return await this.repository.save(newProduct);
+            const product = await this.repository.save(newProduct);
+            await this.shelveService.linkProduct(product, payload.shelve);
+            return product;
         }
         catch (e) {
             throw new product_exception_1.ProductCreateException();
@@ -73,6 +77,7 @@ let ProductService = class ProductService {
         try {
             let detail = await this.detail(payload.product_id);
             detail.title = payload.title;
+            detail.quantity = payload.quantity;
             detail.materials = payload.materials;
             detail.treatment = payload.treatment;
             detail.thickness = payload.thickness;
@@ -80,6 +85,7 @@ let ProductService = class ProductService {
             detail.height = payload.height;
             detail.price = payload.price;
             detail.type = payload.type;
+            await this.shelveService.linkProduct(detail, payload.shelve);
             return await this.repository.save(detail);
         }
         catch (e) {
@@ -90,7 +96,7 @@ let ProductService = class ProductService {
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(data_1.Product)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(data_1.Product)),
+    __metadata("design:paramtypes", [service_1.ShelveService, typeorm_2.Repository])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

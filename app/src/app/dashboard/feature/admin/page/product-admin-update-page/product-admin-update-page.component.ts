@@ -40,7 +40,8 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
   onFormSubmitted(formValue: any): void {
     this.productService.update(this.productUtils.genUpdatePayload({
+      id:this.detail$()!.id,
       ...formValue
-    }));
+    }, this.stockService.list$()!, formValue.shelve)).subscribe();
   }
 }
