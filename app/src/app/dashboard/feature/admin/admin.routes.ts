@@ -20,7 +20,7 @@ export const adminRoutes: Routes = [
       {
         path: AppNode.PRODUCT_ADD,
         loadComponent: () =>
-          import('./page').then(c => c.ProductAdminCreatePageComponent)
+          import('./page').then(c => c.ProductAdminAddPageComponent)
       },
       {
         path: `${AppNode.PRODUCT_UPDATE}`,
@@ -35,7 +35,7 @@ export const adminRoutes: Routes = [
       {
         path: AppNode.MEMBER_ADD,
         loadComponent: () =>
-          import('./page').then(c => c.MemberCreatePageComponent)
+          import('./page').then(c => c.MemberAdminAddPageComponent)
       },
       {
         path: AppNode.SHELVES,
