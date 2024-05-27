@@ -17,4 +17,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./signup.payload"), exports);
 __exportStar(require("./signin.payload"), exports);
 __exportStar(require("./refresh.payload"), exports);
+__exportStar(require("./credential-update.payload"), exports);
+__exportStar(require("./credential-create.payload"), exports);
 //# sourceMappingURL=index.js.map
