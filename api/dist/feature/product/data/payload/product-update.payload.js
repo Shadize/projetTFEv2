@@ -13,6 +13,7 @@ exports.ProductUpdatePayload = void 0;
 const api_1 = require("../../../../common/api");
 const class_validator_1 = require("class-validator");
 const enum_1 = require("../enum");
+const data_1 = require("../../../stock/data");
 class ProductUpdatePayload {
 }
 exports.ProductUpdatePayload = ProductUpdatePayload;
@@ -25,6 +26,10 @@ __decorate([
     __metadata("design:type", String)
 ], ProductUpdatePayload.prototype, "title", void 0);
 __decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_QUANTITY_MISSING_ERROR }),
+    __metadata("design:type", String)
+], ProductUpdatePayload.prototype, "qunatity", void 0);
+__decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_THICKNESS_MISSING_ERROR }),
     __metadata("design:type", Number)
 ], ProductUpdatePayload.prototype, "thickness", void 0);
@@ -36,6 +41,10 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_HEIGHT_MISSING_ERROR }),
     __metadata("design:type", Number)
 ], ProductUpdatePayload.prototype, "height", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR }),
+    __metadata("design:type", data_1.Shelve)
+], ProductUpdatePayload.prototype, "shelve", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR }),
     __metadata("design:type", String)

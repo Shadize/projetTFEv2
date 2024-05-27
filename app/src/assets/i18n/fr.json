@@ -83,6 +83,7 @@
   "admin-feature-product.table.label.price" : "Prix",
   "admin-feature-product.table.label.type" : "Type de produit",
   "shelve-detail-feature.not-found": "La zone de stockage n'a pas été trouvée",
+  "feature.product.rack-title" : "{rack} étage {floor}",
   "admin-feature-member.table.label.username" : "Nom d'utilisateur",
   "admin-feature-member.table.label.mail" : "Adresse mail",
   "admin-feature-member.table.label.isAdmin" : "Est administrateur",

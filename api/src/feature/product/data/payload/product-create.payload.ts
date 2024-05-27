@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ProductType } from "../enum";
 import { IsNotEmpty } from 'class-validator';
 import { ApiCodeResponse } from "@common/api";
+import { Shelve } from "@stock/data";
 
 
 export class ProductCreatePayload{
@@ -9,6 +10,8 @@ export class ProductCreatePayload{
     @ApiProperty()
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TITLE_MISSING_ERROR})
     title: string;
+    @ApiProperty()
+    quantity : string;
     @ApiProperty()
     materials : string;
     @ApiProperty()
@@ -24,6 +27,9 @@ export class ProductCreatePayload{
     height: number;    
     @ApiProperty()
     price: number;
+    @ApiProperty()
+    @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR })
+    shelve: Shelve;
     @ApiProperty()
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR })
     type: ProductType;

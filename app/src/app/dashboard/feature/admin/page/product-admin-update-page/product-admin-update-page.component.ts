@@ -26,6 +26,7 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.stockService.list();
     this.productService.detail(this.id).pipe(
       tap((detail: Product) => this.detail$.set(detail))
     ).subscribe()
@@ -38,7 +39,8 @@ export class ProductAdminUpdatePageComponent implements OnInit {
   }
 
   onFormSubmitted(formValue: any): void {
-    console.log('Form submitted with value:', formValue);
-    // Créer un ProductUpdatePayload et l'envoyer au service de product pour le push de l'objet en DB
+    this.productService.update(this.productUtils.genUpdatePayload({
+      ...formValue
+    }));
   }
 }

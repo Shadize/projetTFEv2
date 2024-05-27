@@ -14,6 +14,7 @@ const swagger_1 = require("@nestjs/swagger");
 const enum_1 = require("../enum");
 const class_validator_1 = require("class-validator");
 const api_1 = require("../../../../common/api");
+const data_1 = require("../../../stock/data");
 class ProductCreatePayload {
 }
 exports.ProductCreatePayload = ProductCreatePayload;
@@ -22,6 +23,10 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_TITLE_MISSING_ERROR }),
     __metadata("design:type", String)
 ], ProductCreatePayload.prototype, "title", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], ProductCreatePayload.prototype, "quantity", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
@@ -49,6 +54,11 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], ProductCreatePayload.prototype, "price", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR }),
+    __metadata("design:type", data_1.Shelve)
+], ProductCreatePayload.prototype, "shelve", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR }),

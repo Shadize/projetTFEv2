@@ -1,6 +1,7 @@
 export enum ProductKeyForm {
   TYPE = 'type',
   TITLE = 'title',
+  QUNATITY = 'quantity',
   WIDTH = 'width',
   HEIGHT = 'height',
   THICKNESS = 'thickness',

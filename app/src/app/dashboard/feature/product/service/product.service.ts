@@ -2,7 +2,8 @@ import { ProductUtilsService } from 'app/dashboard/feature/product/service';
 import { Injectable, WritableSignal, inject, signal } from '@angular/core';
 import { ApiService, ApiURI, ApiResponse } from '@api';
 import { Observable, map, tap } from 'rxjs';
-import { Product } from '../data';
+import { Product, ProductCreatePayload } from '../data';
+import { ProductUpdatePayload } from '../data/payload/product-update.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ProductService {
   public list$: WritableSignal<Product[]> = signal([]);
   private productUtilsService: ProductUtilsService = inject(ProductUtilsService);
 
-  list(): void {
+  public list(): void {
     this.api.get(ApiURI.PRODUCT_LIST)
       .pipe(tap((response: ApiResponse) => {
         if (response.result) {
@@ -34,5 +35,34 @@ export class ProductService {
         return this.productUtilsService.getEmpty()
 
       }))
+  }
+
+  public create(payload: ProductCreatePayload): Observable<Product> {
+    console.log("test1");
+    return this.api.post(ApiURI.SHELVE_CREATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        console.log("test2");
+        if (response.result) {
+          this.list();
+          
+
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
+      
+    );
+
+  }
+
+  public update(payload: ProductUpdatePayload): Observable<Product> {
+    console.log('payload', payload);
+    return this.api.put(ApiURI.PRODUCT_UPDATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
+    );
   }
 }

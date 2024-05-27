@@ -4,6 +4,7 @@ import { Shelve } from '@stock/data';
 export declare class Product {
     product_id: string;
     title: string;
+    quantity: number;
     materials: string;
     treatment: string;
     thickness: number;

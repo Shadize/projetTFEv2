@@ -3,6 +3,7 @@ import {BusinessUtils} from '@core';
 import {
   Product,
   ProductAction,
+  ProductCreatePayload,
   ProductDto,
   ProductKey,
   ProductKeyForm,
@@ -23,11 +24,14 @@ import {
 import {Validators} from '@angular/forms';
 import {Stock} from '@shelve-feature';
 import {flatten} from 'lodash';
+import { ProductUpdatePayload } from '../data/payload/product-update.payload';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
+  private translateService : TranslateService = inject(TranslateService);
   private consumptionUtils: ConsumptionUtilsService = inject(
     ConsumptionUtilsService
   );
@@ -41,10 +45,12 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       materials: dto.materials,
       price: dto.price,
       title: dto.title,
+      quantity: dto.quantity,
       str: dto.title,
       thickness: dto.thickness,
       treatment: dto.treatment,
       type: dto.type,
+      shelve: dto.shelve,
       width: dto.width,
     };
   }
@@ -62,6 +68,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       isEmpty: true,
       materials: '',
       price: 0,
+      quantity: 0,
       str: 'app.common.empty',
       thickness: 0,
       treatment: '',
@@ -78,6 +85,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       materials: business.materials,
       price: business.price,
       title: business.title,
+      quantity: business.quantity,
       thickness: business.thickness,
       treatment: business.treatment,
       type: business.type,
@@ -144,7 +152,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product,stocks: Stock[]): FormConfig {
+  public getDataFormConfig(product: Product,stocks: Stock[] | undefined): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -154,6 +162,9 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         case ProductKeyForm.TITLE:
           fieldValidators.push(Validators.required, Validators.minLength(3));
           break;
+          case ProductKeyForm.QUNATITY:
+            fieldValidators.push(Validators.required, Validators.min(1));
+            break;
         case ProductKeyForm.PRICE:
           fieldValidators.push(Validators.required, Validators.min(0));
           break;
@@ -173,6 +184,9 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
           fieldValidators.push();
           break;
         case ProductKeyForm.TYPE:
+          fieldValidators.push(Validators.required);
+          break;
+          case ProductKeyForm.SHELVE:
           fieldValidators.push(Validators.required);
           break;
         default:
@@ -198,13 +212,13 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         );
       } else if(field === ProductKeyForm.SHELVE){
         fieldType = 'select';
-        fieldOptions = flatten(stocks.map(s => s.shelves)).map(
+        fieldOptions = flatten(stocks?.map(s => s.shelves)).map(
           o => ({
             selected:false,
             value: o,
-            label: `${o.rack} ${o.floor}`
+            label: this.translateService.instant('feature.product.rack-title', o)
           })
-        );
+        ); 
       }
 
       return {field, type: fieldType, options: fieldOptions};
@@ -233,5 +247,31 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
 
     */
+  }
+
+
+
+  genCreatePayload(product: Product) : ProductCreatePayload{
+
+    console.log(product);
+    return {
+      materials: product.materials,
+      treatment: product.treatment,
+      thickness: product.thickness,
+      title: product.title,
+      quantity: product.quantity,
+      width: product.width,
+      height: product.height,
+      price: product.price,
+      type: product.type,
+      shelve: product.shelve
+    }
+  }
+
+  genUpdatePayload(product: Product) : ProductUpdatePayload{
+    return {
+      ...this.genCreatePayload(product),
+      product_id: product.id
+    }
   }
 }

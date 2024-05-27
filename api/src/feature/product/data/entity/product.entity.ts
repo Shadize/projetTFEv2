@@ -10,7 +10,8 @@ export class Product {
   product_id: string;
   @Column({ length: 50, nullable: false })
   title: string;
-
+  @Column({ nullable: false })
+  quantity: number;
   @Column({ length: 50, nullable: true })
   materials: string;
   @Column({ length: 50, nullable: true })
@@ -23,6 +24,7 @@ export class Product {
   height: number;
   @Column({ nullable: true })
   price: number;
+  
   @Column({ nullable: false })
   type: ProductType;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,

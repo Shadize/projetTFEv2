@@ -3,7 +3,8 @@ import { ProductType } from '../enum';
 import { Consumption } from '@consumption-feature';
 import { Shelve } from '@shelve-feature';
 
-export interface ProductCreatePayload extends Payload {
+export interface ProductUpdatePayload extends Payload {
+  product_id: string;
   materials: string;
   treatment: string;
   thickness: number;
