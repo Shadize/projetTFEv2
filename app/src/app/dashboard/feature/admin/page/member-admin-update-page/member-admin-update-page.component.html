@@ -1,5 +1,5 @@
 @if (detail$()) {
     <app-form-builder [config]="config$()"
+                      (cancel)="cancel()"
                       (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
   }
-  

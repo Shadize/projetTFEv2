@@ -14,7 +14,7 @@ import {TranslateModule} from '@ngx-translate/core';
 export class FormBuilderComponent implements OnChanges {
   @Input({required: true}) config!: FormConfig;
   @Output() formSubmitted = new EventEmitter<any>();
-
+  @Output() cancel = new EventEmitter<void>();
   form!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -23,6 +23,16 @@ export class FormBuilderComponent implements OnChanges {
   ngOnChanges(): void {
     this.form = this.formBuilder.group({});
     this.initializeForm();
+  }
+
+  public onCancel(): void {
+    this.cancel.emit();
+  }
+
+  public onSubmit(): void {
+    if (this.form.valid) {
+      this.formSubmitted.emit(this.form.value);
+    }
   }
 
   private initializeForm(): void {
@@ -35,16 +45,5 @@ export class FormBuilderComponent implements OnChanges {
 
   private addFormControl(fieldName: any, validators: any[] = []): void {
     this.form.addControl(fieldName, this.formBuilder.control(this.config.data[fieldName], validators));
-  }
-
-  getFieldConfig(fieldName: string): FieldTypeConfig | undefined {
-    return this.config.fieldTypes?.find(ft => ft.field === fieldName);
-  }
-
-  onSubmit(): void {
-    if (this.form.valid) {
-      console.log('onsubmit valid', this.form.value);
-      this.formSubmitted.emit(this.form.value);
-    }
   }
 }

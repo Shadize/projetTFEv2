@@ -1,7 +1,8 @@
-import { Business } from '@core';
-import { Validators } from '@angular/forms';
+import {Business} from '@core';
+import {Validators} from '@angular/forms';
 
 export interface FormConfig {
+  submitTitle: string;
   data: any;
   fields: string[];
   validators: FormValidatorsConfig[];
@@ -18,8 +19,9 @@ export interface FieldTypeConfig {
   type: string;
   options?: FieldSelectOption[]; // Utilisé uniquement pour les champs de type 'select'
 }
-export interface FieldSelectOption{
-  selected:boolean;
-  value:any;
-  label:string;
+
+export interface FieldSelectOption {
+  selected: boolean;
+  value: any;
+  label: string;
 }

@@ -1,11 +1,12 @@
 import {Component, Input, OnInit, Signal, WritableSignal, computed, inject, signal} from '@angular/core';
 import {Product} from '@product-feature';
-import {FormBuilderComponent} from '@shared';
+import {AppRoutes, FormBuilderComponent} from '@shared';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {tap} from 'rxjs';
 import {JsonPipe} from '@angular/common';
 import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -20,9 +21,10 @@ export class ProductAdminUpdatePageComponent implements OnInit {
   @Input() id!: string;
   private productUtils: ProductUtilsService = inject(ProductUtilsService);
   protected productService: ProductService = inject(ProductService);
-  private shelveUtils:ShelveUtilsService = inject(ShelveUtilsService);
-  private stockUtils:StockUtilsService = inject(StockUtilsService);
+  private shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  private stockUtils: StockUtilsService = inject(StockUtilsService);
   protected stockService: StockService = inject(StockService);
+  private router: Router = inject(Router);
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.detail$(), this.stockService.list$()));
   public detail$: WritableSignal<Product | null> = signal(null);
 
@@ -36,14 +38,19 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
   genFormConfigs(product: Product | null, stocks: Stock[] | undefined): FormConfig {
     const detail = product ?? this.productUtils.getEmpty();
-    return this.productUtils.getDataFormConfig(detail, this.stockUtils.toDTOS(stocks), this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), true);
+    return this.productUtils.getDataFormConfig(detail, this.stockUtils.toDTOS(stocks), this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), true, 'feature.admin.product.title-update');
 
   }
 
+
+  cancel(): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT]).then();
+  }
+
   onFormSubmitted(formValue: any): void {
-    console.log('shelve',formValue.shelve);
+    console.log('shelve', formValue.shelve);
     this.productService.update(this.productUtils.genUpdatePayload({
-      id:this.detail$()!.id,
+      id: this.detail$()!.id,
       ...formValue
     }, this.stockUtils.toDTOS(this.stockService.list$()!), formValue.shelve)).subscribe();
   }

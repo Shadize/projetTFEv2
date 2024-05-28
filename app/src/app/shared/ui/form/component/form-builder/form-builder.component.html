@@ -1,25 +1,32 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div *ngFor="let field of config.fields">
+<div class="form" [formGroup]="form">
+  @for (config of config.fieldTypes; track config.field) {
     <div class="form-group">
-      <label [for]="field">{{ field }}</label>
-      <ng-container *ngIf="getFieldConfig(field) as fieldConfig">
-        <ng-container [ngSwitch]="fieldConfig.type">
+      <div class="label">
+        <label [for]="config.field">{{ config.field }}</label>
+      </div>
+      <div class="input">
+        <ng-container [ngSwitch]="config.type">
           <ng-container *ngSwitchCase="'select'">
-            <select [formControlName]="field" [id]="field">
-              <option *ngFor="let option of fieldConfig.options" [value]="option.value"
+            <select [formControlName]="config.field" [id]="config.field">
+              <option *ngFor="let option of config.options" [value]="option.value"
                       [selected]="option.selected">{{ option.label | translate }}
               </option>
             </select>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <input [formControlName]="field" [id]="field" [type]="fieldConfig.type"/>
+            <input [formControlName]="config.field" [id]="config.field" [type]="config.type"/>
           </ng-container>
         </ng-container>
-      </ng-container>
-      <div *ngIf="form.get(field)?.invalid && form.get(field)?.touched" class="error">
-        {{ field }} is required
+        <div *ngIf="form.get(config.field)?.invalid && form.get(config.field)?.touched" class="error">
+          {{ 'form.label.' + config.field }}
+        </div>
       </div>
     </div>
+  }
+  <div class="actions">
+    <button (click)="onSubmit()" [class.disabled]="form.invalid"
+            [disabled]="form.invalid">{{ config.submitTitle | translate }}
+    </button>
+    <button class="btn-error" (click)="onCancel()">{{ 'common.confirm.cancel'| translate }}</button>
   </div>
-  <button type="submit" [disabled]="form.invalid">Submit</button>
-</form>
+</div>

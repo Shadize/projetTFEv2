@@ -170,7 +170,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false): FormConfig {
+  public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle:string): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -248,6 +248,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
     return {
+      submitTitle,
       data: {...this.toForm(product, shelve.shelve_id)},
       fields,
       validators: validatorsConfig,

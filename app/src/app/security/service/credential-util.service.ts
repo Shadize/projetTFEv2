@@ -132,7 +132,7 @@ export class CredentialUtilService
     };
   }
 
-  public getDataFormConfig(credantial: Credential): FormConfig {
+  public getDataFormConfig(credantial: Credential, submitTitle:string): FormConfig {
     const fields = Object.values(MemberKey);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map((field) => {
@@ -193,6 +193,7 @@ export class CredentialUtilService
     });
 
     return {
+      submitTitle,
       data: credantial,
       fields,
       validators: validatorsConfig,
