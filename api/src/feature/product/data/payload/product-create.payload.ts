@@ -11,7 +11,7 @@ export class ProductCreatePayload{
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TITLE_MISSING_ERROR})
     title: string;
     @ApiProperty()
-    quantity : string;
+    quantity : number;
     @ApiProperty()
     materials : string;
     @ApiProperty()

@@ -2,7 +2,7 @@ import { ProductType } from "../enum";
 import { Shelve } from "@stock/data";
 export declare class ProductCreatePayload {
     title: string;
-    quantity: string;
+    quantity: number;
     materials: string;
     treatment: string;
     thickness: number;

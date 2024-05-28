@@ -25,7 +25,7 @@ __decorate([
 ], ProductCreatePayload.prototype, "title", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], ProductCreatePayload.prototype, "quantity", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),

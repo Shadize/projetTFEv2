@@ -38,7 +38,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
   fromDTO(dto: ProductDto): Product {
     return {
-      consumptions: this.consumptionUtils.fromDTOS(dto.consumptions),
+      consumptions: dto.consumptions? this.consumptionUtils.fromDTOS(dto.consumptions) : [],
       height: dto.height,
       id: dto.product_id,
       isEmpty: false,
@@ -245,8 +245,6 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     if (isUpdate && stocks) {
       const shelves = flatten(stocks
         .map(s => s.shelves));
-      console.log('shelves', shelves);
-      console.log(shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0));
       shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
     return {

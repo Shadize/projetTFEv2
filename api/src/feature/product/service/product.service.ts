@@ -57,6 +57,7 @@ export class ProductService {
         .width(payload.width)
         .height(payload.height)
         .shelve(payload.shelve)
+        .quantity(payload.quantity)
         .price(payload.price)
         .type(payload.type)
         .build();
