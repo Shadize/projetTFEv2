@@ -4,6 +4,7 @@ export enum ApiURI {
   MEMBER_CREATE = 'account/create',
   MEMBER_UPDATE = 'account/update',
   MEMBER_DETAIL = 'account/detail/',
+  MEMBER_DELETE = 'account/delete/',
   ME = 'account/me',
   CREDENTIAL_LIST = 'account/list',
   CREDENTIAL_UPDATE = 'account/update',
@@ -22,4 +23,5 @@ export enum ApiURI {
   PRODUCT_DETAIL = 'product/detail/',
   PRODUCT_CREATE = 'product/create',
   PRODUCT_UPDATE = 'product/update',
+  PRODUCT_DELETE = 'product/delete/'
 }

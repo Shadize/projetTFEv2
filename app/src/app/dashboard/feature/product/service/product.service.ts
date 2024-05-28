@@ -4,12 +4,15 @@ import { ApiService, ApiURI, ApiResponse } from '@api';
 import { Observable, map, tap } from 'rxjs';
 import { Product, ProductCreatePayload } from '../data';
 import { ProductUpdatePayload } from '../data/payload/product-update.payload';
+import { AppNode } from '@shared';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
+  private readonly router: Router = inject(Router);
   private readonly api: ApiService = inject(ApiService);
   public list$: WritableSignal<Product[]> = signal([]);
   private productUtilsService: ProductUtilsService = inject(ProductUtilsService);
@@ -41,7 +44,7 @@ export class ProductService {
     return this.api.post(ApiURI.PRODUCT_CREATE, payload).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.list();
+          this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
@@ -55,10 +58,19 @@ export class ProductService {
     return this.api.put(ApiURI.PRODUCT_UPDATE, payload).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.list();
+          this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
     );
+  }
+
+  delete(id: string) {
+    this.api.delete(`${ApiURI.PRODUCT_DELETE}${id}`)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      })).subscribe();
   }
 }

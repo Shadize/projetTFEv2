@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal, computed, inject } from '@angular/core';
-import { DataTableConfig, CellActionDefinition, AppRoutes, DataTableComponent } from '@shared';
+import { DataTableConfig, CellActionDefinition, AppRoutes, DataTableComponent, confirmDialog } from '@shared';
 import { Product, ProductAction } from 'app/dashboard/feature/product/data';
 import { ProductService, ProductUtilsService } from 'app/dashboard/feature/product/service';
 import {TranslateModule} from '@ngx-translate/core';
@@ -41,7 +41,7 @@ export class ProductManagementPageComponent implements OnInit {
         this.handleEdit(item.id);
         break;
       case ProductAction.DELETE:
-        this.handleDelete();
+        this.handleDelete(item.id);
         break;
 
     }
@@ -66,7 +66,10 @@ export class ProductManagementPageComponent implements OnInit {
 
   }
 
-  private handleDelete(): void {
-    console.log('handle delete');
-  }
+  @confirmDialog({
+    title: 'admin-feature-product-delete.confirm-title',
+    message: 'admin-feature-product-delete.confirm-message'
+  })
+  private handleDelete(id: string): void {
+    this.productService.delete(id);  }
 }
