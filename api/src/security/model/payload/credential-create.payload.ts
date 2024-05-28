@@ -22,7 +22,6 @@ export class CredentialCreatePayload{
   isAdmin: boolean;
 
   @ApiProperty()
-  @IsNotEmpty()
   active: boolean;
 
   @ApiProperty()
