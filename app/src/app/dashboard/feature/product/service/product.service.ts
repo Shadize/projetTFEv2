@@ -41,7 +41,7 @@ export class ProductService {
   }
 
   public create(payload: ProductCreatePayload): Observable<Product> {
-    return this.api.post(ApiURI.PRODUCT_CREATE, payload).pipe(
+    return this.api.post(ApiURI.PRODUCT_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
@@ -54,7 +54,6 @@ export class ProductService {
   }
 
   public update(payload: ProductUpdatePayload): Observable<Product> {
-    console.log('payload', payload);
     return this.api.put(ApiURI.PRODUCT_UPDATE, payload,true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
@@ -66,7 +65,7 @@ export class ProductService {
   }
 
   delete(id: string) {
-    this.api.delete(`${ApiURI.PRODUCT_DELETE}${id}`)
+    this.api.delete(`${ApiURI.PRODUCT_DELETE}${id}`, true)
       .pipe(tap((response: ApiResponse) => {
         if (response.result) {
           this.list();
