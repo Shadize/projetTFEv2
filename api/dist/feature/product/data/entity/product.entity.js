@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Product.prototype, "consumptions", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => data_2.Shelve, (s) => s.product, { cascade: false, eager: false }),
+    (0, typeorm_1.ManyToOne)(() => data_2.Shelve, (s) => s.products, { cascade: true, eager: false }),
     (0, typeorm_1.JoinColumn)({ name: 'shelve_id_fk', referencedColumnName: 'shelve_id' }),
     __metadata("design:type", data_2.Shelve)
 ], Product.prototype, "shelve", void 0);

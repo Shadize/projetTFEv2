@@ -1,4 +1,5 @@
 import { ProductType } from "../enum";
+import { Shelve } from "@stock/data";
 export declare class ProductUpdatePayload {
     product_id: string;
     title: string;
@@ -9,6 +10,6 @@ export declare class ProductUpdatePayload {
     width: number;
     height: number;
     price: number;
-    shelve: string;
+    shelve: Shelve;
     type: ProductType;
 }

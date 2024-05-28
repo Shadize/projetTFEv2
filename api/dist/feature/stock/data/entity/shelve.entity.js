@@ -44,9 +44,9 @@ __decorate([
     __metadata("design:type", Array)
 ], Shelve.prototype, "consumptions", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => data_1.Product, (p) => p.shelve, { nullable: true, cascade: false, eager: true }),
-    __metadata("design:type", data_1.Product)
-], Shelve.prototype, "product", void 0);
+    (0, typeorm_1.OneToMany)(() => data_1.Product, (p) => p.shelve, { nullable: true, cascade: false, eager: true }),
+    __metadata("design:type", Array)
+], Shelve.prototype, "products", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)

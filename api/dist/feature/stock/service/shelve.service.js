@@ -34,7 +34,7 @@ let ShelveService = class ShelveService {
         }
     }
     async detail(id) {
-        const result = await this.repository.findOne({ where: { shelve_id: id }, relations: { product: true } });
+        const result = await this.repository.findOne({ where: { shelve_id: id }, relations: { products: true } });
         if (!((0, lodash_1.isNil)(result))) {
             return result;
         }
@@ -69,7 +69,7 @@ let ShelveService = class ShelveService {
             detail.location = payload.location;
             detail.rack = payload.rack;
             detail.floor = payload.floor;
-            detail.product = payload.product;
+            detail.products = payload.products;
             return await this.repository.save(detail);
         }
         catch (e) {
@@ -86,15 +86,10 @@ let ShelveService = class ShelveService {
     }
     async deleteForStock(stock) {
         for (let shelve of stock.shelves) {
-            shelve.product = null;
+            shelve.products = null;
             await this.repository.save(shelve);
             await this.repository.remove(shelve);
         }
-    }
-    async linkProduct(detail, shelveId) {
-        let shelve = await this.detail(shelveId);
-        shelve.product = detail;
-        await this.repository.save(shelve);
     }
 };
 exports.ShelveService = ShelveService;
