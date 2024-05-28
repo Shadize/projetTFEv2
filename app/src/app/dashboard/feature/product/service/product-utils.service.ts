@@ -4,7 +4,7 @@ import {
   Product,
   ProductAction,
   ProductCreatePayload,
-  ProductDto,
+  ProductDto, ProductForm,
   ProductKey,
   ProductKeyForm,
   ProductType,
@@ -61,8 +61,23 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   public toDTOS(business: Product[]): ProductDto[] {
     return business.map((d) => this.toDTO(d));
   }
+  public toForm(business:Product,shelve_id:string):ProductForm{
+    return {
+      height: business.height,
+      id: business.id,
+      materials: business.materials,
+      price: business.height,
+      quantity: business.quantity,
+      shelve:shelve_id,
+      thickness: business.thickness,
+      title: business.title,
+      treatment: business.treatment,
+      type: business.type,
+      width: business.width
 
-  getEmpty(): Product {
+    }
+  }
+  public getEmpty(): Product {
     return {
       consumptions: [],
       height: 0,
@@ -230,10 +245,12 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     if (isUpdate && stocks) {
       const shelves = flatten(stocks
         .map(s => s.shelves));
+      console.log('shelves', shelves);
+      console.log(shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0));
       shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
     return {
-      data: {...product, shelve},
+      data: {...this.toForm(product, shelve.shelve_id)},
       fields,
       validators: validatorsConfig,
       fieldTypes: fieldTypesConfig
@@ -241,7 +258,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   }
 
 
-  genCreatePayload(product: Product, stocks: Stock[], shelveId: string): ProductCreatePayload {
+  public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId:string): ProductCreatePayload {
     return {
       materials: product.materials,
       treatment: product.treatment,
@@ -252,14 +269,19 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       height: product.height,
       price: product.price,
       type: product.type,
-      shelve: shelveId
+      shelve : this.getShelve(stocks, shelveId)
     }
   }
 
-  genUpdatePayload(product: Product, stocks: Stock[], shelveId: string): ProductUpdatePayload {
+  public genUpdatePayload(product: ProductForm, stocks: StockDto[], shelveId:string): ProductUpdatePayload {
     return {
       ...this.genCreatePayload(product, stocks, shelveId),
       product_id: product.id
     }
+  }
+
+  private getShelve(stocks:StockDto[],shelveId:string):ShelveDto{
+      const shelves = flatten(stocks.map(s => s.shelves));
+      return shelves.find(s => s.shelve_id === shelveId)!;
   }
 }

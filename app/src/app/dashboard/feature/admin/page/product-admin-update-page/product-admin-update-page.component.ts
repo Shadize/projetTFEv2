@@ -45,6 +45,6 @@ export class ProductAdminUpdatePageComponent implements OnInit {
     this.productService.update(this.productUtils.genUpdatePayload({
       id:this.detail$()!.id,
       ...formValue
-    }, this.stockService.list$()!, formValue.shelve)).subscribe();
+    }, this.stockUtils.toDTOS(this.stockService.list$()!), formValue.shelve)).subscribe();
   }
 }

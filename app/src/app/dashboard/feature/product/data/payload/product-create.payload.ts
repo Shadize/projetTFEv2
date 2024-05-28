@@ -1,7 +1,7 @@
-import { Payload } from '@core';
-import { ProductType } from '../enum';
-import { Consumption } from '@consumption-feature';
-import { Shelve } from '@shelve-feature';
+import {Payload} from '@core';
+import {ProductType} from '../enum';
+import {Consumption} from '@consumption-feature';
+import {Shelve, ShelveDto} from '@shelve-feature';
 
 export interface ProductCreatePayload extends Payload {
   materials: string;
@@ -12,7 +12,7 @@ export interface ProductCreatePayload extends Payload {
   width: number;
   height: number;
   price: number;
-  shelve: string;
+  shelve: ShelveDto;
   type: ProductType;
   consumptions?: Consumption[];
 }

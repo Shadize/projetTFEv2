@@ -31,8 +31,8 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       products:this.productUtilsService.fromDTOS(dto.products),
       rack: dto.rack,
       section: dto.section,
-      str: dto.products ? dto.products[0].title : 'app.common.empty',
-      productName: dto.products ? dto.products[0].title : 'app.common.empty',
+      str: dto.products.length>0 ? dto.products[0].title : 'app.common.empty',
+      productName: dto.products.length>0 ? dto.products[0].title : 'app.common.empty',
       productQuantity: 'shelve.no-product' // toChange when johnny is good
     }
   }

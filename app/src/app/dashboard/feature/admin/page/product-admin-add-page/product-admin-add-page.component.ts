@@ -37,10 +37,8 @@ export class ProductAdminAddPageComponent implements OnInit {
   }
 
   onFormSubmitted(formValue: any): void {
-
-    console.log(formValue);
     this.productService.create(this.productUtils.genCreatePayload({
       ...formValue
-    }, this.stockService.list$()!, formValue.shelve)).subscribe();
+    }, this.stockUtils.toDTOS(this.stockService.list$()!), formValue.shelve)).subscribe();
   }
 }

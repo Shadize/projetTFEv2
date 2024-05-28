@@ -339,7 +339,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       nbItemsMax: 0,
       id: '',
       isEmpty: false,
-      location: '',
+      location: '', products: [],
       rack: this.shelveFormGroup.get(ShelveKey.RACK)!.value,
       section: Section.WOOD,
       str: this.shelveFormGroup.get(ShelveKey.RACK)!.value,
