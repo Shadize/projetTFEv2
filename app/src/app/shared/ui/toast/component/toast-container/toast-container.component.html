@@ -1,0 +1,5 @@
+<div class="toaster">
+  @for (toast of toastService.toast$(); let index=$index;track index){
+    <app-toast  [toast]="toast" (remove)="remove($event)"></app-toast>
+  }
+</div>

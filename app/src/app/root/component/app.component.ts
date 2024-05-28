@@ -6,11 +6,12 @@ import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Language} from '@core';
 import {LoaderComponent} from '@shared';
 import {DialogService} from '../../shared/ui/dialog/service';
+import {ToastContainerComponent} from '@shared';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SignInPageComponent, RouterOutlet, TranslateModule, LoaderComponent],
+  imports: [CommonModule, SignInPageComponent, RouterOutlet, TranslateModule, LoaderComponent, ToastContainerComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

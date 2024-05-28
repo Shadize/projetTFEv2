@@ -45,14 +45,14 @@ export class ProductService {
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
-      
+
     );
 
   }
 
   public update(payload: ProductUpdatePayload): Observable<Product> {
     console.log('payload', payload);
-    return this.api.put(ApiURI.PRODUCT_UPDATE, payload).pipe(
+    return this.api.put(ApiURI.PRODUCT_UPDATE, payload,true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.list();
