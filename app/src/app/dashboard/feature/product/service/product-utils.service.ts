@@ -46,7 +46,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       price: dto.price,
       title: dto.title,
       quantity: dto.quantity,
-      str: dto.title,
+      str: `${dto.width} * ${dto.height} * ${dto.thickness}`,
       thickness: dto.thickness,
       treatment: dto.treatment,
       type: dto.type,
