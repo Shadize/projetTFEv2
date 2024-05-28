@@ -3,7 +3,7 @@ import {map, Observable, tap} from 'rxjs';
 import {ApiResponse, ApiService, ApiURI, TokenService} from '@api';
 import {Credential, SignInPayload} from '@security';
 import {Router} from '@angular/router';
-import {AppNode} from '@shared';
+import {AppNode, confirmDialog} from '@shared';
 import {CredentialUtilService} from './credential-util.service';
 import {SignUpPayload} from '../data/payload/sign-up.payload';
 import { CredentialCreatePayload, CredentialUpdatePayload } from 'app/dashboard/feature/member/data';
@@ -48,7 +48,7 @@ export class SecurityService {
     return this.api.post(ApiURI.MEMBER_CREATE, payload).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.list();
+          this.router.navigate([AppNode.REDIRECT_TO_MEMBER_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
@@ -60,7 +60,7 @@ export class SecurityService {
     return this.api.put(ApiURI.MEMBER_UPDATE, payload).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.list();
+          this.router.navigate([AppNode.REDIRECT_TO_MEMBER_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
@@ -109,6 +109,16 @@ export class SecurityService {
       }))
   }
 
+
+
+  delete(id: string) {
+    this.api.delete(`${ApiURI.MEMBER_DELETE}${id}`)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      })).subscribe();
+  }
   
 
 }

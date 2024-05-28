@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, Signal, computed } from "@angular/core";
 import { Router } from "@angular/router";
 import { SecurityService, CredentialUtilService, Credential } from "@security";
-import { DataTableConfig, AppRoutes, CellActionDefinition } from "@shared";
+import { DataTableConfig, AppRoutes, CellActionDefinition, confirmDialog } from "@shared";
 import { MemberAction } from "app/dashboard/feature/member/data/enum";
 import { DataTableComponent } from "../../../../../shared/ui/data-viewer/component/data-table/data-table.component";
 import { TranslateModule } from "@ngx-translate/core";
@@ -46,7 +46,7 @@ export class MemberManagementPageComponent implements OnInit {
         this.handleEdit(item.id);
         break;
       case MemberAction.DELETE:
-        this.handleDelete();
+        this.handleDelete(item.id);
         break;
 
     }
@@ -72,7 +72,11 @@ export class MemberManagementPageComponent implements OnInit {
 
   }
 
-  private handleDelete(): void {
-    console.log('handle delete');
-  }
+  @confirmDialog({
+    title: 'admin-feature-member-delete.confirm-title',
+    message: 'admin-feature-member-delete.confirm-message'
+  })
+  private handleDelete(id: string): void {
+    this.securityService.delete(id);
+    }
 }
