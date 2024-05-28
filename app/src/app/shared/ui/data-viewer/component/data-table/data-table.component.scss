@@ -77,6 +77,14 @@
     font-family: 'Figtree' !important;
   }
 }
+.input{
+  width:100%;
+  select{
+    width:100%;
+    border:1px solid var(--theme-ccc);
+    padding:5px;
+  }
+}
 // small screen
 @media all and (max-width: 600px) {
   .row {

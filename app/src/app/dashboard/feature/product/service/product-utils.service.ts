@@ -21,7 +21,7 @@ import {
   FormConfig,
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
-import {Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ShelveDto, ShelveUtilsService, Stock, StockDto} from '@shelve-feature';
 import {flatten} from 'lodash';
 import {ProductUpdatePayload} from '../data/payload/product-update.payload';
@@ -38,7 +38,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
   fromDTO(dto: ProductDto): Product {
     return {
-      consumptions: dto.consumptions? this.consumptionUtils.fromDTOS(dto.consumptions) : [],
+      consumptions: dto.consumptions ? this.consumptionUtils.fromDTOS(dto.consumptions) : [],
       height: dto.height,
       id: dto.product_id,
       isEmpty: false,
@@ -61,14 +61,15 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   public toDTOS(business: Product[]): ProductDto[] {
     return business.map((d) => this.toDTO(d));
   }
-  public toForm(business:Product,shelve_id:string):ProductForm{
+
+  public toForm(business: Product, shelve_id: string): ProductForm {
     return {
       height: business.height,
       id: business.id,
       materials: business.materials,
       price: business.height,
       quantity: business.quantity,
-      shelve:shelve_id,
+      shelve: shelve_id,
       thickness: business.thickness,
       title: business.title,
       treatment: business.treatment,
@@ -77,6 +78,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
     }
   }
+
   public getEmpty(): Product {
     return {
       consumptions: [],
@@ -108,6 +110,61 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       treatment: business.treatment,
       type: business.type,
       width: business.width,
+    };
+  }
+
+  public getShelveDetailDataConfig(products: Product[]): DataTableConfig {
+
+    let actions: CellActionDefinition[] = [
+      {
+        icon: 'fa-solid fa-cart-shopping',
+        action: ProductAction.CONSUMPTION,
+      },
+    ];
+    return {
+      translateKey: 'admin-feature-product.table.label.',
+      data: products,
+      cellDefinitions: [
+        {
+          targetData: ProductKey.TITLE,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ProductKey.STR,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ProductKey.PRICE,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: 'quantity-choose',
+          formGroup: products.map(p => ({
+            formGroup: new FormGroup<any>({quantity: new FormControl(1)}),
+            config: {
+              field: 'quantity',
+              type: 'select',
+              options: [...Array.from({length: p.quantity+1}).keys()].map(value => ({
+                selected: false,
+                value,
+                label: value.toString()
+              }))
+            }
+          }))
+          ,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: '',
+          actions,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: true,
+        },
+      ],
     };
   }
 
@@ -170,7 +227,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle:string): FormConfig {
+  public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle: string): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -257,7 +314,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   }
 
 
-  public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId:string): ProductCreatePayload {
+  public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductCreatePayload {
     return {
       materials: product.materials,
       treatment: product.treatment,
@@ -268,19 +325,19 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       height: product.height,
       price: product.price,
       type: product.type,
-      shelve : this.getShelve(stocks, shelveId)
+      shelve: this.getShelve(stocks, shelveId)
     }
   }
 
-  public genUpdatePayload(product: ProductForm, stocks: StockDto[], shelveId:string): ProductUpdatePayload {
+  public genUpdatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductUpdatePayload {
     return {
       ...this.genCreatePayload(product, stocks, shelveId),
       product_id: product.id
     }
   }
 
-  private getShelve(stocks:StockDto[],shelveId:string):ShelveDto{
-      const shelves = flatten(stocks.map(s => s.shelves));
-      return shelves.find(s => s.shelve_id === shelveId)!;
+  private getShelve(stocks: StockDto[], shelveId: string): ShelveDto {
+    const shelves = flatten(stocks.map(s => s.shelves));
+    return shelves.find(s => s.shelve_id === shelveId)!;
   }
 }

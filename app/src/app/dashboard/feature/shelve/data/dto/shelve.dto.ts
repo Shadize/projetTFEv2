@@ -10,6 +10,7 @@ export interface ShelveDto extends Dto {
   section: Section;
   products: ProductDto[];
 
+  location_reference:string;
   background:string;
   color:string;
   startX:number;

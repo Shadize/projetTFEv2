@@ -8,22 +8,46 @@
       </div>
 
     </div>
-    <div class="row" *ngFor="let item of config.data">
-      <div *ngFor="let cell of config.cellDefinitions" class="cell line  {{cell.minimalWidthVisibility}}"
-           [class.is-minimal]="cell.isMinimalWidth">
-        @if (cell.actions) {
-          <div class="action">
-            <div class="icon" *ngFor="let action of cell.actions" (click)="onActionClicked(item,action)">
-              <i class="{{action.icon}}"></i>
-            </div>
-          </div>
-        } @else {
-          <div class="clickable" (click)="rowClicked.emit(item)">
-            {{ item[cell.targetData] | translate }}
+    @for (item of config.data; let dataIndex = $index; track dataIndex) {
+      <div class="row">
+        @for (cell of config.cellDefinitions; let index = $index; track index) {
+          <div class="cell line  {{cell.minimalWidthVisibility}}"
+               [class.is-minimal]="cell.isMinimalWidth">
+            @if (cell.actions) {
+              <div class="action">
+                <div class="icon" *ngFor="let action of cell.actions" (click)="onActionClicked(item,action,dataIndex)">
+                  <i class="{{action.icon}}"></i>
+                </div>
+              </div>
+            } @else {
+              <div class="clickable" (click)="rowClicked.emit(item)">
+                @if (cell.formGroup) {
+                  <div class="input" [formGroup]="cell.formGroup[dataIndex].formGroup">
+                    <ng-container [ngSwitch]="cell.formGroup[dataIndex].config.type">
+                      <ng-container *ngSwitchCase="'select'">
+                        <select [formControlName]="cell.formGroup[dataIndex].config.field"
+                                [id]="cell.formGroup[dataIndex].config.field">
+                          <option *ngFor="let option of cell.formGroup[dataIndex].config.options" [value]="option.value"
+                                  [selected]="option.selected">{{ option.label | translate }}
+                          </option>
+                        </select>
+                      </ng-container>
+                      <ng-container *ngSwitchDefault>
+                        <input [formControlName]="cell.formGroup[dataIndex].config.field"
+                               [id]="cell.formGroup[dataIndex].config.field"
+                               [type]="cell.formGroup[index].config.type"/>
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                } @else {
+                  {{ item[cell.targetData] | translate }}
+                }
+              </div>
+            }
           </div>
         }
       </div>
-    </div>
+    }
   </div>
 } @else {
   <div class="no-item">

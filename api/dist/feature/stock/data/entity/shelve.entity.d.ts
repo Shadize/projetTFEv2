@@ -9,6 +9,7 @@ export declare class Shelve {
     nb_items_max: number;
     consumptions: Consumption[];
     products: Product[];
+    location_reference: string;
     background: string;
     color: string;
     startX: number;

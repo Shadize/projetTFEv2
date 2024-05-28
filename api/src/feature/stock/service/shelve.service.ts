@@ -77,7 +77,7 @@ export class ShelveService {
     for (let shelve of shelves) {
       shelve.location = detail;
       shelve.shelve_id = shelve.shelve_id ? shelve.shelve_id : ulid();
-      console.log(shelve);
+
       await this.repository.save(shelve);
     }
   }

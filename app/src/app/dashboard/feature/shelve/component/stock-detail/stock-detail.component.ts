@@ -33,6 +33,6 @@ export class StockDetailComponent implements OnInit {
   }
 
   onRowClickHandle(shelve: Shelve): void {
-    this.router.navigate([AppRoutes.STOCK_DETAIL.replace(':id', shelve.id)]).then();
+    this.router.navigate([AppRoutes.SHELVE_DETAIL.replace(':id', shelve.id)]).then();
   }
 }

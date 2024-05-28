@@ -1,10 +1,18 @@
 <app-card>
-  a faire
-  <!--
-  @if(!list$()){
+  @if (!detail$()) {
     <app-detail-not-found [message]="'feature.shelve-detail.not-found'"></app-detail-not-found>
   } @else {
-    <app-card-header [title]="list$()[0].rack"></app-card-header>
-    <app-data-table [config]="shelveDataTableConfig$()"></app-data-table>
-  }-->
+    <app-card-header [title]="detail$().str"></app-card-header>
+    liste de produits
+    <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
+
+    <div class="band"></div>
+    @if (isAddingConsumption$()) {
+      <app-card-header [title]="'ici tu m\'affiches le formulaire'"></app-card-header>
+
+    } @else {
+      <app-card-header [title]="'Liste de consommation'"></app-card-header>
+      <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
+    }
+  }
 </app-card>

@@ -20,4 +20,5 @@ export interface Shelve extends Business {
   height: string;
   productName: string;
   productQuantity: string;
+  locationReference:string;
 }

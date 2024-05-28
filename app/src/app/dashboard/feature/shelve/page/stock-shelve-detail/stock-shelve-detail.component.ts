@@ -1,6 +1,7 @@
-import {Component, computed, DestroyRef, inject, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
-import {Shelve, ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
+import {Component, computed, inject, Input, OnInit, Signal} from '@angular/core';
+import {Shelve, ShelveUtilsService, Stock, StockService} from '@shelve-feature';
 import {
+  AppRoutes,
   CardComponent,
   CardHeaderComponent,
   DataTableComponent,
@@ -8,8 +9,7 @@ import {
   DetailNotFoundComponent
 } from '@shared';
 import {flatten} from 'lodash';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {tap} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-stock-shelve-detail',
@@ -26,22 +26,34 @@ import {tap} from 'rxjs';
 export class StockShelveDetailComponent implements OnInit {
   @Input() id!: string;
   protected stockService: StockService = inject(StockService);
-  protected stockUtils: StockUtilsService = inject(StockUtilsService);
   protected shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
-  public destroyRef: DestroyRef = inject(DestroyRef);
-  public detail$: WritableSignal<Stock> = signal(this.stockUtils.getEmpty());
-  public shelveDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConfig(this.detail$()));
+  protected router: Router = inject(Router);
+  public list$: Signal<Shelve[]> = computed(() => this.getShelveDetail(this.stockService.list$()));
+  public shelveDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConfig(this.list$()));
 
 
   ngOnInit() {
-    this.stockService.detail(this.id).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      tap((stock: Stock) => this.detail$.set(stock))
-    ).subscribe()
+    this.stockService.detail(this.id);
   }
 
-  genConfig(stock: Stock): DataTableConfig {
-    return this.shelveUtils.getDataTableConfig(stock.shelves);
+  genConfig(shelves: Shelve[]): DataTableConfig {
+    return this.shelveUtils.getDataTableConfig(shelves);
+  }
+
+  getShelveDetail(stocks: Stock[] | undefined): Shelve[] {
+    if (stocks) {
+      const shelves = flatten(stocks.map(s => s.shelves));
+      const detail = shelves.find(s => s.id === this.id);
+      console.log('detail', detail);
+      return detail ? shelves.filter(s => s.locationReference === detail.locationReference) : [];
+    }
+    this.stockService.list();
+    return [this.shelveUtils.getEmpty()];
+
+  }
+
+  goToDetail(data: any): void {
+    this.router.navigate([AppRoutes.SHELVE_DETAIL.replace(':id', data.id)]);
   }
 }
 

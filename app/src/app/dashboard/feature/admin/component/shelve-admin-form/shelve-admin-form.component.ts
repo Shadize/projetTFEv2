@@ -43,6 +43,7 @@ import {
 import {Section} from '@core';
 import {Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
+import {ulid} from 'ulid';
 
 @Component({
   selector: 'app-shelve-admin-form',
@@ -333,9 +334,10 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   public validate(): void {
     const coordinate = this.surfaceCoordinate$();
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
-
+    const locationReference: string = ulid();
     let newAreas: Shelve[] = Array(parseInt(this.shelveFormGroup.get(ShelveKey.FLOOR)!.value, 10)).fill(0).map((key, index) => ({
       floor: (index + 1).toString(),
+      locationReference,
       nbItemsMax: 0,
       id: '',
       isEmpty: false,

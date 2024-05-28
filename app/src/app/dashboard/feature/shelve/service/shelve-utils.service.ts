@@ -4,12 +4,14 @@ import {Shelve, ShelveDto} from '@shelve-feature';
 import {ProductUtilsService} from '../../product/service';
 import {Product} from '@product-feature';
 import {DataTableConfig, FormControlSimpleConfig, MinimalVisibilityWidth} from '@shared';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
   private productUtilsService: ProductUtilsService = inject(ProductUtilsService);
+  private translateService: TranslateService = inject(TranslateService);
 
   fromDTO(dto: ShelveDto): Shelve {
     return {
@@ -28,12 +30,13 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       isEmpty: false,
       location: dto.location,
       nbItemsMax: dto.nb_items_max,
-      products:this.productUtilsService.fromDTOS(dto.products),
+      products: this.productUtilsService.fromDTOS(dto.products),
       rack: dto.rack,
       section: dto.section,
-      str: dto.products.length>0 ? dto.products[0].title : 'app.common.empty',
-      productName: dto.products.length>0 ? dto.products[0].title : 'app.common.empty',
-      productQuantity: 'shelve.no-product' // toChange when johnny is good
+      str: this.translateService.instant('feature.product.rack-title', dto),
+      productName: dto.products.length > 0 ? dto.products[0].title : 'app.common.empty',
+      productQuantity: dto.products.length > 0 ? dto.products.map(p => p.quantity).reduce((sum, current) => sum + current).toString() : 'shelve.no-product',
+      locationReference: dto.location_reference
     }
   }
 
@@ -54,18 +57,19 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       location: '',
       nbItemsMax: 0,
       rack: '',
-      products:[],
+      products: [],
       section: Section.WOOD,
       str: 'api.common.empty',
       productName: 'shelve.no-product',
-      productQuantity: 'shelve.no-product' // toChange when johnny is good
+      productQuantity: 'shelve.no-product',
+      locationReference: ''
 
     }
   }
 
   toDTO(business: Shelve): ShelveDto {
     return {
-
+      location_reference: business.locationReference,
       background: business.background,
       color: business.color,
       endX: business.endX,
@@ -104,6 +108,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       ],
     }
   }
+
   getDataTableConfig(data: Shelve[]): DataTableConfig {
     return {
       data,

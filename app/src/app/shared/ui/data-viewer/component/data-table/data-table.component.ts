@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {CellActionDefinition, DataTableConfig} from '../../config';
-import {NgForOf, NgIf} from '@angular/common';
+import {NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-data-table',
@@ -9,7 +10,11 @@ import {TranslateModule} from '@ngx-translate/core';
   imports: [
     NgForOf,
     NgIf,
-    TranslateModule
+    TranslateModule,
+    NgSwitchCase,
+    ReactiveFormsModule,
+    NgSwitch,
+    NgSwitchDefault
   ],
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
@@ -19,11 +24,13 @@ export class DataTableComponent {
   @Output() actionClicked = new EventEmitter<CellActionDefinition>();
   @Output() rowClicked = new EventEmitter<any>();
 
-  onRowClicked(): void {
-    this.rowClicked.emit();
-  }
 
-  onActionClicked(item: any, action: CellActionDefinition) {
-    this.actionClicked.emit({...action, data:item})
+  onActionClicked(item: any, action: CellActionDefinition, index: number): void {
+    const config = this.config.cellDefinitions.find(cd => cd.formGroup);
+    let data: any = item;
+    if (config) {
+      data = {item, config, index};
+    }
+    this.actionClicked.emit({...action, data})
   }
 }

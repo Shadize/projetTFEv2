@@ -26,6 +26,8 @@ export class Shelve {
   @OneToMany(() => Product, (p: Product) => p.shelve,
     { nullable: true, cascade: false, eager: true })
   products: Product[];
+  @Column({ nullable: false, default:'' })
+  location_reference: string;
   @Column({ nullable: false })
   background: string;
   @Column({ nullable: false })

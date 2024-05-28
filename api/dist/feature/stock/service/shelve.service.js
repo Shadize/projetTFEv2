@@ -80,7 +80,6 @@ let ShelveService = class ShelveService {
         for (let shelve of shelves) {
             shelve.location = detail;
             shelve.shelve_id = shelve.shelve_id ? shelve.shelve_id : (0, ulid_1.ulid)();
-            console.log(shelve);
             await this.repository.save(shelve);
         }
     }

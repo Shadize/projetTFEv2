@@ -48,6 +48,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Shelve.prototype, "products", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ nullable: false, default: '' }),
+    __metadata("design:type", String)
+], Shelve.prototype, "location_reference", void 0);
+__decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)
 ], Shelve.prototype, "background", void 0);
