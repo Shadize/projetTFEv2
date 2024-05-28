@@ -77,7 +77,10 @@ export enum ApiCodeResponse {
   PRODUCT_LIST_ERROR = 'api.error.product-list',
   PRODUCT_CREATE_ERROR = 'api.error.product-create',
   PRODUCT_UPDATE_ERROR = 'api.error.product-update',
-  
+
+  PRODUCT_UPDATE_SUCCESS = 'api.success.product-update',
+  PRODUCT_CREATE_SUCCESS = 'api.success.product-create',
+  PRODUCT_DELETE_SUCCESS = 'api.success.product-delete',
 
 
 
