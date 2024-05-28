@@ -33,19 +33,21 @@ export class ShelveDetailPageComponent implements OnInit {
   protected stockService: StockService = inject(StockService);
   protected shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
   public list$: Signal<Shelve[]> = computed(() => this.getShelveDetail(this.stockService.list$()));
-  public shelveDataTableConfig$: Signal<DataTableConfig> = computed(()=> this.genConfig(this.list$()));
+  public shelveDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConfig(this.list$()));
 
 
   ngOnInit() {
   }
-  genConfig(shelves:Shelve[]):DataTableConfig{
+
+  genConfig(shelves: Shelve[]): DataTableConfig {
     return this.shelveUtils.getDataTableConfig(shelves);
   }
+
   getShelveDetail(stocks: Stock[] | undefined): Shelve[] {
     if (stocks) {
       const shelves = flatten(stocks.map(s => s.shelves));
       const detail = shelves.find(s => s.id === this.id) ?? this.shelveUtils.getEmpty();
-      return detail.isEmpty ? [] : shelves.filter(s => s.rack === detail.rack);
+      console.log('detail', detail);
     }
     this.stockService.list();
     return [this.shelveUtils.getEmpty()];

@@ -15,6 +15,11 @@ export const shelveRoutes: Routes = [
   {
     path: `${AppNode.SHELVES}-${AppNode.DETAIL}`,
     loadComponent: () => import('./page')
+      .then(c => c.StockShelveDetailComponent)
+  },
+  {
+    path: `${AppNode.SHELVE}-${AppNode.DETAIL}`,
+    loadComponent: () => import('./page')
       .then(c => c.ShelveDetailPageComponent)
   }
 ]

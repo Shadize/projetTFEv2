@@ -10,6 +10,7 @@ export enum AppNode {
   ACCOUNT_PARAMETER = 'parameter',
   ADMIN = 'admin',
   SHELVES = 'shelves',
+  SHELVE = 'shelve',
   PRODUCT = 'product',
   FALL_BACK = '**',
   SIGN_UP = 'signup',
