@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {SecurityService} from './security.service';
-import {Credential, RefreshTokenPayload, SignInPayload, SignupPayload} from './model';
+import {Credential, CredentialCreatePayload, CredentialUpdatePayload, RefreshTokenPayload, SignInPayload, SignupPayload} from './model';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import {Public, User} from '@common/config';
 
@@ -50,4 +50,13 @@ export class SecurityController {
         return this.service.list(user);
     }
 
+    @Post('create')
+    public create(@Body() payload: CredentialCreatePayload) {
+        return this.service.create(payload);
+    }
+
+    @Put('update')
+    update(@Body() payload: CredentialUpdatePayload): Promise<Credential> {
+      return this.service.update(payload);
+    }
 }

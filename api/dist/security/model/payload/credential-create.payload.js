@@ -19,42 +19,42 @@ class CredentialCreatePayload {
 exports.CredentialCreatePayload = CredentialCreatePayload;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_USERNAME_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "username", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_PASSWORD_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "password", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_MAIL_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "mail", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_ISADMIN_MISSING_ERROR }),
     __metadata("design:type", Boolean)
 ], CredentialCreatePayload.prototype, "isAdmin", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Boolean)
 ], CredentialCreatePayload.prototype, "active", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_SECTION_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "section", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_FIRSTNAME_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "firstname", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.SIGNUP_PAYLOAD_MAIL_IS_MISSING }),
+    (0, class_validator_1.IsNotEmpty)({ message: api_1.ApiCodeResponse.CREDENTIAL_LASTNAME_MISSING_ERROR }),
     __metadata("design:type", String)
 ], CredentialCreatePayload.prototype, "lastname", void 0);
 //# sourceMappingURL=credential-create.payload.js.map

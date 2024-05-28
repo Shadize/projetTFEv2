@@ -43,6 +43,12 @@ let SecurityController = class SecurityController {
     list(user) {
         return this.service.list(user);
     }
+    create(payload) {
+        return this.service.create(payload);
+    }
+    update(payload) {
+        return this.service.update(payload);
+    }
 };
 exports.SecurityController = SecurityController;
 __decorate([
@@ -98,6 +104,20 @@ __decorate([
     __metadata("design:paramtypes", [model_1.Credential]),
     __metadata("design:returntype", void 0)
 ], SecurityController.prototype, "list", null);
+__decorate([
+    (0, common_1.Post)('create'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_1.CredentialCreatePayload]),
+    __metadata("design:returntype", void 0)
+], SecurityController.prototype, "create", null);
+__decorate([
+    (0, common_1.Put)('update'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_1.CredentialUpdatePayload]),
+    __metadata("design:returntype", Promise)
+], SecurityController.prototype, "update", null);
 exports.SecurityController = SecurityController = __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiTags)('Account'),

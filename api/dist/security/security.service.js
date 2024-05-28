@@ -65,6 +65,29 @@ let SecurityService = SecurityService_1 = class SecurityService {
             throw new security_exception_1.SignupException();
         }
     }
+    async create(payload) {
+        const result = await this.repository.findOneBy({ username: payload.username });
+        if (!(0, lodash_1.isNil)(result)) {
+            throw new security_exception_1.UserAlreadyExistException();
+        }
+        try {
+            const encryptedPassword = await (0, utils_1.encryptPassword)(payload.password);
+            await this.repository.save((0, builder_pattern_1.Builder)()
+                .username(payload.username)
+                .mail(payload.mail)
+                .password(encryptedPassword)
+                .isAdmin(payload.isAdmin)
+                .active(true)
+                .section(payload.section)
+                .firstname(payload.firstname)
+                .lastname(payload.lastname)
+                .build());
+        }
+        catch (e) {
+            this.logger.error(e.message);
+            throw new security_exception_1.MemberCreateException();
+        }
+    }
     async refresh(payload) {
         return this.tokenService.refresh(payload);
     }
@@ -84,6 +107,26 @@ let SecurityService = SecurityService_1 = class SecurityService {
         }
         catch (e) {
             throw new security_exception_1.CredentialListException();
+        }
+    }
+    async update(payload) {
+        const encryptedPassword = await (0, utils_1.encryptPassword)(payload.password);
+        try {
+            let detail = await this.detail(payload.credential_id);
+            detail.username = payload.username;
+            detail.mail = payload.mail;
+            detail.password = encryptedPassword;
+            detail.isAdmin = payload.isAdmin;
+            detail.active = payload.active;
+            detail.section = payload.section;
+            detail.firstname = payload.firstname;
+            detail.lastname = payload.lastname;
+            const member = await this.repository.save(detail);
+            return member;
+        }
+        catch (e) {
+            this.logger.error(e.message);
+            throw new security_exception_1.MemberCreateException();
         }
     }
 };

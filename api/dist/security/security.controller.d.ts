@@ -1,5 +1,5 @@
 import { SecurityService } from './security.service';
-import { Credential, RefreshTokenPayload, SignInPayload, SignupPayload } from './model';
+import { Credential, CredentialCreatePayload, CredentialUpdatePayload, RefreshTokenPayload, SignInPayload, SignupPayload } from './model';
 export declare class SecurityController {
     private readonly service;
     constructor(service: SecurityService);
@@ -10,4 +10,6 @@ export declare class SecurityController {
     me(user: Credential): Credential;
     delete(id: string): Promise<void>;
     list(user: Credential): Promise<Credential[]>;
+    create(payload: CredentialCreatePayload): Promise<void>;
+    update(payload: CredentialUpdatePayload): Promise<Credential>;
 }

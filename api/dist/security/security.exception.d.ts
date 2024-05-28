@@ -26,3 +26,9 @@ export declare class TokenGenerationException extends ApiException {
 export declare class SignInPayloadException extends ApiException {
     constructor(code: ApiCodeResponse);
 }
+export declare class MemberCreateException extends ApiException {
+    constructor();
+}
+export declare class MemberUpdateException extends ApiException {
+    constructor();
+}

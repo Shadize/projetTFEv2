@@ -75,5 +75,15 @@ var ApiCodeResponse;
     ApiCodeResponse["CONSUMPTION_LIST_ERROR"] = "api.error.consumption-list";
     ApiCodeResponse["CONSUMPTION_CREATE_ERROR"] = "api.error.consumption-create";
     ApiCodeResponse["CONSUMPTION_UPDATE_ERROR"] = "api.error.consumption-update";
+    ApiCodeResponse["CREDENTIAL_ID_MISSING_ERROR"] = "api.error.credential-payload-id-missing";
+    ApiCodeResponse["CREDENTIAL_MAIL_MISSING_ERROR"] = "api.error.credential-payload-mail-missing";
+    ApiCodeResponse["CREDENTIAL_PASSWORD_MISSING_ERROR"] = "api.error.credential-payload-password-missing";
+    ApiCodeResponse["CREDENTIAL_USERNAME_MISSING_ERROR"] = "api.error.credential-payload-username-missing";
+    ApiCodeResponse["CREDENTIAL_ISADMIN_MISSING_ERROR"] = "api.error.credential-payload-isadmin-missing";
+    ApiCodeResponse["CREDENTIAL_SECTION_MISSING_ERROR"] = "api.error.credential-payload-section-missing";
+    ApiCodeResponse["CREDENTIAL_FIRSTNAME_MISSING_ERROR"] = "api.error.credential-payload-firstname-missing";
+    ApiCodeResponse["CREDENTIAL_LASTNAME_MISSING_ERROR"] = "api.error.credential-payload-lastname-missing";
+    ApiCodeResponse["MEMBER_CREATE_ERROR"] = "api.error.member-create";
+    ApiCodeResponse["MEMBER_UPDATE_ERROR"] = "api.error.member-update";
 })(ApiCodeResponse || (exports.ApiCodeResponse = ApiCodeResponse = {}));
 //# sourceMappingURL=api-code.response.js.map

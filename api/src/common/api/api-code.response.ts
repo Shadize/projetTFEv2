@@ -88,4 +88,18 @@ export enum ApiCodeResponse {
   CONSUMPTION_CREATE_ERROR = 'api.error.consumption-create',
   CONSUMPTION_UPDATE_ERROR = 'api.error.consumption-update',
 
+
+  CREDENTIAL_ID_MISSING_ERROR ='api.error.credential-payload-id-missing',
+  CREDENTIAL_MAIL_MISSING_ERROR ='api.error.credential-payload-mail-missing',
+  CREDENTIAL_PASSWORD_MISSING_ERROR ='api.error.credential-payload-password-missing',
+  CREDENTIAL_USERNAME_MISSING_ERROR ='api.error.credential-payload-username-missing',
+  CREDENTIAL_ISADMIN_MISSING_ERROR ='api.error.credential-payload-isadmin-missing',
+  CREDENTIAL_SECTION_MISSING_ERROR ='api.error.credential-payload-section-missing',
+  CREDENTIAL_FIRSTNAME_MISSING_ERROR ='api.error.credential-payload-firstname-missing',
+  CREDENTIAL_LASTNAME_MISSING_ERROR ='api.error.credential-payload-lastname-missing',
+
+
+  MEMBER_CREATE_ERROR =  'api.error.member-create',
+  MEMBER_UPDATE_ERROR = 'api.error.member-update'
+
 }

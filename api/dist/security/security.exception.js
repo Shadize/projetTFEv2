@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignInPayloadException = exports.TokenGenerationException = exports.UserAlreadyExistException = exports.CredentialListException = exports.CredentialDeleteException = exports.SignupException = exports.TokenExpiredException = exports.UserNotFoundException = exports.NoTokenFoundedException = void 0;
+exports.MemberUpdateException = exports.MemberCreateException = exports.SignInPayloadException = exports.TokenGenerationException = exports.UserAlreadyExistException = exports.CredentialListException = exports.CredentialDeleteException = exports.SignupException = exports.TokenExpiredException = exports.UserNotFoundException = exports.NoTokenFoundedException = void 0;
 const api_1 = require("../common/api");
 class NoTokenFoundedException extends api_1.ApiException {
     constructor() {
@@ -56,4 +56,16 @@ class SignInPayloadException extends api_1.ApiException {
     }
 }
 exports.SignInPayloadException = SignInPayloadException;
+class MemberCreateException extends api_1.ApiException {
+    constructor() {
+        super(api_1.ApiCodeResponse.MEMBER_CREATE_ERROR, 200);
+    }
+}
+exports.MemberCreateException = MemberCreateException;
+class MemberUpdateException extends api_1.ApiException {
+    constructor() {
+        super(api_1.ApiCodeResponse.MEMBER_UPDATE_ERROR, 200);
+    }
+}
+exports.MemberUpdateException = MemberUpdateException;
 //# sourceMappingURL=security.exception.js.map

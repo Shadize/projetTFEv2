@@ -52,3 +52,15 @@ export class SignInPayloadException extends ApiException{
         super(code, 200);
     }
 }
+
+export class MemberCreateException extends ApiException{
+    constructor(){
+        super(ApiCodeResponse.MEMBER_CREATE_ERROR, 200)
+    }
+}
+
+export class MemberUpdateException extends ApiException{
+    constructor(){
+        super(ApiCodeResponse.MEMBER_UPDATE_ERROR, 200)
+    }
+}
