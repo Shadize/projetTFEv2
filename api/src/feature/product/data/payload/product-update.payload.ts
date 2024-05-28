@@ -21,7 +21,7 @@ export class ProductUpdatePayload{
     height: number;
     price: number;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR })
-    shelve: string;
+    shelve: Shelve;
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR })
     type: ProductType;
 

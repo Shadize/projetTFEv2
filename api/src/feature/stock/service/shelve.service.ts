@@ -29,7 +29,7 @@ export class ShelveService {
   }
 
   async detail(id: string): Promise<Shelve> {
-    const result: Shelve = await this.repository.findOne({ where: { shelve_id: id }, relations: { product: true } });
+    const result: Shelve = await this.repository.findOne({ where: { shelve_id: id }, relations: { products: true } });
     if (!(isNil(result))) {
       return result;
     }
@@ -66,7 +66,7 @@ export class ShelveService {
       detail.location = payload.location;
       detail.rack = payload.rack;
       detail.floor = payload.floor;
-      detail.product = payload.product;
+      detail.products = payload.products;
       return await this.repository.save(detail);
     } catch (e) {
       throw new StockUpdateException();
@@ -84,15 +84,9 @@ export class ShelveService {
 
   async deleteForStock(stock: Stock): Promise<void> {
     for (let shelve of stock.shelves) {
-      shelve.product = null;
+      shelve.products = null;
       await this.repository.save(shelve);
       await this.repository.remove(shelve);
     }
-  }
-
-  async linkProduct(detail: Product, shelveId: string): Promise<void> {
-    let shelve: Shelve = await this.detail(shelveId);
-    shelve.product = detail;
-    await this.repository.save(shelve);
   }
 }

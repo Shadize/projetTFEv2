@@ -29,7 +29,7 @@ export class ProductCreatePayload{
     price: number;
     @ApiProperty()
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_SHELVE_MISSING_ERROR })
-    shelve: string;
+    shelve: Shelve;
     @ApiProperty()
     @IsNotEmpty({ message: ApiCodeResponse.PRODUCT_TYPE_MISSING_ERROR })
     type: ProductType;

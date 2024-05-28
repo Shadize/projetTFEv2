@@ -12,7 +12,6 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
   private productUtilsService: ProductUtilsService = inject(ProductUtilsService);
 
   fromDTO(dto: ShelveDto): Shelve {
-    const product: Product | undefined = dto.product ? this.productUtilsService.fromDTO(dto.product) : undefined
     return {
       background: dto.background,
       color: dto.color,
@@ -29,11 +28,11 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       isEmpty: false,
       location: dto.location,
       nbItemsMax: dto.nb_items_max,
-      product,
+      products:this.productUtilsService.fromDTOS(dto.products),
       rack: dto.rack,
       section: dto.section,
-      str: product?.title || 'app.common.empty',
-      productName: product?.title || 'shelve.no-product',
+      str: dto.products ? dto.products[0].title : 'app.common.empty',
+      productName: dto.products ? dto.products[0].title : 'app.common.empty',
       productQuantity: 'shelve.no-product' // toChange when johnny is good
     }
   }
@@ -55,6 +54,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       location: '',
       nbItemsMax: 0,
       rack: '',
+      products:[],
       section: Section.WOOD,
       str: 'api.common.empty',
       productName: 'shelve.no-product',
@@ -80,7 +80,7 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
       shelve_id: business.id,
       location: business.location,
       nb_items_max: business.nbItemsMax,
-      product: business.product ? this.productUtilsService.toDTO(business.product) : undefined,
+      products: this.productUtilsService.toDTOS(business.products),
       rack: business.rack,
       section: business.section,
     }

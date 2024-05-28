@@ -8,7 +8,7 @@ export interface ShelveDto extends Dto {
   floor: string;
   nb_items_max: number;
   section: Section;
-  product?: ProductDto;
+  products: ProductDto[];
 
   background:string;
   color:string;

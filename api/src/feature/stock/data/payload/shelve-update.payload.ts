@@ -12,5 +12,5 @@ export class ShelveUpdatePayload {
   rack: string;
   floor: string;
   nb_items_max: number;
-  product: Product;
+  products: Product[];
 }

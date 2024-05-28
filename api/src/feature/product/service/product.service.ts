@@ -56,11 +56,11 @@ export class ProductService {
         .thickness(payload.thickness)
         .width(payload.width)
         .height(payload.height)
+        .shelve(payload.shelve)
         .price(payload.price)
         .type(payload.type)
         .build();
       const product =  await this.repository.save(newProduct);
-      await this.shelveService.linkProduct(product, payload.shelve);
       return product;
     } catch (e) {
       throw new ProductCreateException();
@@ -80,10 +80,8 @@ export class ProductService {
       detail.height = payload.height;
       detail.price = payload.price;
       detail.type = payload.type;
-
+      detail.shelve = payload.shelve
       const product =  await this.repository.save(detail);
-      console.log('payload.shelve', payload.shelve);
-      await this.shelveService.linkProduct(product, payload.shelve);
       return product
     } catch (e) {
       throw new StockUpdateException();

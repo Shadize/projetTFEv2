@@ -28,6 +28,13 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
     }
   }
 
+  public toDTOS(business: Stock[] | undefined): StockDto[] {
+    if (business) {
+      return business.map(b => this.toDTO(b));
+    }
+    return [];
+  }
+
   public fromDTOS(dtos: StockDto[]): Stock[] {
     return dtos.map(d => this.fromDTO(d));
   }

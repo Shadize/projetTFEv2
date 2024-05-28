@@ -7,7 +7,7 @@ export interface Shelve extends Business {
   floor: string;
   nbItemsMax: number;
   section: Section;
-  product?: Product;
+  products: Product[];
   background: string;
   color: string;
   startX: number;

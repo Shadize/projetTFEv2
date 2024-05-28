@@ -22,7 +22,7 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {Validators} from '@angular/forms';
-import {ShelveUtilsService, Stock} from '@shelve-feature';
+import {ShelveDto, ShelveUtilsService, Stock, StockDto} from '@shelve-feature';
 import {flatten} from 'lodash';
 import {ProductUpdatePayload} from '../data/payload/product-update.payload';
 import {TranslateService} from '@ngx-translate/core';
@@ -56,6 +56,10 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
   public fromDTOS(dtos: ProductDto[]): Product[] {
     return dtos.map((d) => this.fromDTO(d));
+  }
+
+  public toDTOS(business: Product[]): ProductDto[] {
+    return business.map((d) => this.toDTO(d));
   }
 
   getEmpty(): Product {
@@ -151,7 +155,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataFormConfig(product: Product, stocks: Stock[] | undefined, isUpdate: boolean = false): FormConfig {
+  public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false): FormConfig {
     const fields = Object.values(ProductKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
@@ -214,7 +218,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         fieldOptions = flatten(stocks?.map(s => s.shelves)).map(
           o => ({
             selected: false,
-            value: o.id,
+            value: o.shelve_id,
             label: this.translateService.instant('feature.product.rack-title', o)
           })
         );
@@ -222,11 +226,11 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
       return {field, type: fieldType, options: fieldOptions};
     });
-    let shelve = '';
+    let shelve: ShelveDto = emptyShelve;
     if (isUpdate && stocks) {
-      shelve = flatten(stocks
-          .map(s => s.shelves)).find(s => s.product?.id === product.id)?.id
-        ?? '';
+      const shelves = flatten(stocks
+        .map(s => s.shelves));
+      shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
     return {
       data: {...product, shelve},
@@ -248,7 +252,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       height: product.height,
       price: product.price,
       type: product.type,
-      shelve:shelveId
+      shelve: shelveId
     }
   }
 

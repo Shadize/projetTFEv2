@@ -1,12 +1,12 @@
 import {Payload, Section} from '@core';
 import {Stock} from '@shelve-feature';
-import {Product} from '@product-feature';
+import {Product, ProductDto} from '@product-feature';
 
 export interface ShelveCreatePayload extends Payload {
   rack: string;
   floor: string;
   nbItemsMax: number;
-  product?: Product;
+  products: ProductDto[];
   background:string;
   color:string;
   startX:number;

@@ -5,7 +5,7 @@ import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {tap} from 'rxjs';
 import {JsonPipe} from '@angular/common';
-import {Stock, StockService} from '@shelve-feature';
+import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
 
 
 @Component({
@@ -18,9 +18,11 @@ import {Stock, StockService} from '@shelve-feature';
 export class ProductAdminUpdatePageComponent implements OnInit {
 
   @Input() id!: string;
-  private productUtils: ProductUtilsService = inject(ProductUtilsService)
-  protected productService: ProductService = inject(ProductService)
-  protected stockService: StockService = inject(StockService)
+  private productUtils: ProductUtilsService = inject(ProductUtilsService);
+  protected productService: ProductService = inject(ProductService);
+  private shelveUtils:ShelveUtilsService = inject(ShelveUtilsService);
+  private stockUtils:StockUtilsService = inject(StockUtilsService);
+  protected stockService: StockService = inject(StockService);
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.detail$(), this.stockService.list$()));
   public detail$: WritableSignal<Product | null> = signal(null);
 
@@ -34,7 +36,7 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
   genFormConfigs(product: Product | null, stocks: Stock[] | undefined): FormConfig {
     const detail = product ?? this.productUtils.getEmpty();
-    return this.productUtils.getDataFormConfig(detail, stocks ?? [], true);
+    return this.productUtils.getDataFormConfig(detail, this.stockUtils.toDTOS(stocks), this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), true);
 
   }
 

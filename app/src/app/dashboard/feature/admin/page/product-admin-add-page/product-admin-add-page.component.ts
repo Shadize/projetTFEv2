@@ -8,7 +8,7 @@ import {
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {Product} from '@product-feature';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
-import {Stock, StockService} from '@shelve-feature';
+import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
 import {FormBuilderComponent} from '@shared';
 
 @Component({
@@ -20,7 +20,9 @@ import {FormBuilderComponent} from '@shared';
 })
 export class ProductAdminAddPageComponent implements OnInit {
   private productService: ProductService = inject(ProductService);
+  private shelveUtils:ShelveUtilsService = inject(ShelveUtilsService);
   private productUtils: ProductUtilsService = inject(ProductUtilsService);
+  private stockUtils:StockUtilsService = inject(StockUtilsService);
   private stockService: StockService = inject(StockService);
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.stockService.list$()));
 
@@ -31,7 +33,7 @@ export class ProductAdminAddPageComponent implements OnInit {
   genFormConfigs(list: Stock[] | undefined): FormConfig {
     let product: Product = this.productUtils.getEmpty();
 
-    return this.productUtils.getDataFormConfig(product, list);
+    return this.productUtils.getDataFormConfig(product, this.stockUtils.toDTOS(list), this.shelveUtils.toDTO(this.shelveUtils.getEmpty()));
   }
 
   onFormSubmitted(formValue: any): void {

@@ -1,5 +1,5 @@
 import { ProductType } from '@product/data/enum';
-import { AfterLoad, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import { AfterLoad, Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { ulid } from 'ulid';
 import { Consumption } from '@consumption/data';
 import { Shelve } from '@stock/data';
@@ -30,8 +30,8 @@ export class Product {
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
     { cascade: false, eager: true })
   consumptions: Consumption[];
-  @OneToOne(() => Shelve, (s: Shelve) => s.product,
-    { cascade: false, eager: false })
+  @ManyToOne(() => Shelve, (s: Shelve) => s.products,
+    { cascade: true, eager: false })
   @JoinColumn({ name: 'shelve_id_fk', referencedColumnName: 'shelve_id' })
   shelve: Shelve;
 }

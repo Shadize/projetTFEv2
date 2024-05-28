@@ -23,9 +23,9 @@ export class Shelve {
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
     { cascade: false, eager: false })
   consumptions: Consumption[];
-  @OneToOne(() => Product, (p: Product) => p.shelve,
+  @OneToMany(() => Product, (p: Product) => p.shelve,
     { nullable: true, cascade: false, eager: true })
-  product: Product;
+  products: Product[];
   @Column({ nullable: false })
   background: string;
   @Column({ nullable: false })
