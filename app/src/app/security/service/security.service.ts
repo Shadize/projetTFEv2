@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {AppNode} from '@shared';
 import {CredentialUtilService} from './credential-util.service';
 import {SignUpPayload} from '../data/payload/sign-up.payload';
+import { CredentialCreatePayload, CredentialUpdatePayload } from 'app/dashboard/feature/member/data';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,29 @@ export class SecurityService {
     );
   }
 
+  create(payload: CredentialCreatePayload): Observable<Credential> {
+    return this.api.post(ApiURI.MEMBER_CREATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
+
+    );
+  }
+
+  public update(payload: CredentialUpdatePayload): Observable<Credential> {
+    return this.api.put(ApiURI.MEMBER_UPDATE, payload).pipe(
+      tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      }),
+      map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
+    );
+  }
+
   logOut(): void {
     this.tokenService.setToken({token: '', refreshToken: '', isEmpty: true});
   }
@@ -75,7 +99,7 @@ export class SecurityService {
 
 
   detail(id: string): Observable<Credential> {
-    return this.api.get(`${ApiURI.PRODUCT_DETAIL}${id}`)
+    return this.api.get(`${ApiURI.MEMBER_DETAIL}${id}`)
       .pipe(map((response: ApiResponse) => {
         if (response.result) {
           return this.credentialUtil.fromDTO(response.data);
@@ -85,27 +109,6 @@ export class SecurityService {
       }))
   }
 
-  public update(payload: SignUpPayload /* A changer? */ ): Observable<Credential> {
-
-    /*
-    Mon problème:
-    
-    En gros comme c'est carrément 
-    un Credentiel entier qu'on récupère et qu'on modifie,
-     le SignIn et SignUP payload ne correspondent pas à un objet capable de gérer la modification
-     Il me faudrait un payload qui contient l'id, etc...
-
-     Pour le cas d'un craete c'est pas dérangeant car le SignUp payload suffit
-    */ 
-    console.log('payload', payload);
-    return this.api.put(ApiURI.SIGN_UP, payload).pipe(
-      tap((response: ApiResponse) => {
-        if (response.result) {
-          this.list();
-        }
-      }),
-      map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())
-    );
-  }
+  
 
 }

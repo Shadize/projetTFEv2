@@ -40,6 +40,11 @@ export class SecurityController {
         return user;
     }
 
+    @Get('detail/:id')
+    detail(@Param('id') id: string): Promise<Credential> {
+      return this.service.detail(id);
+    }
+
     @Delete('delete/:id')
     public delete(@Param('id') id: string) {
         return this.service.delete(id);

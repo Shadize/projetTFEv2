@@ -1,1 +1,5 @@
-<p>member-admin-update-page works!</p>
+@if (detail$()) {
+    <app-form-builder [config]="config$()"
+                      (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+  }
+  

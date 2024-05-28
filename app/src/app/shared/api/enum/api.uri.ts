@@ -1,6 +1,9 @@
 export enum ApiURI {
   SIGN_IN = 'account/signin',
   SIGN_UP = 'account/signup',
+  MEMBER_CREATE = 'account/create',
+  MEMBER_UPDATE = 'account/update',
+  MEMBER_DETAIL = 'account/detail/',
   ME = 'account/me',
   CREDENTIAL_LIST = 'account/list',
   CREDENTIAL_UPDATE = 'account/update',

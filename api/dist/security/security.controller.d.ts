@@ -8,6 +8,7 @@ export declare class SecurityController {
     signUp(payload: SignupPayload): Promise<import("./model").Token>;
     refresh(payload: RefreshTokenPayload): Promise<import("./model").Token>;
     me(user: Credential): Credential;
+    detail(id: string): Promise<Credential>;
     delete(id: string): Promise<void>;
     list(user: Credential): Promise<Credential[]>;
     create(payload: CredentialCreatePayload): Promise<void>;

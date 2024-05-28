@@ -38,14 +38,10 @@ export class ProductService {
   }
 
   public create(payload: ProductCreatePayload): Observable<Product> {
-    console.log("test1");
     return this.api.post(ApiURI.PRODUCT_CREATE, payload).pipe(
       tap((response: ApiResponse) => {
-        console.log("test2"); // Je ne rentre jamais dedans
         if (response.result) {
           this.list();
-          
-
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())

@@ -37,6 +37,9 @@ let SecurityController = class SecurityController {
     me(user) {
         return user;
     }
+    detail(id) {
+        return this.service.detail(id);
+    }
     delete(id) {
         return this.service.delete(id);
     }
@@ -90,6 +93,13 @@ __decorate([
     __metadata("design:paramtypes", [model_1.Credential]),
     __metadata("design:returntype", void 0)
 ], SecurityController.prototype, "me", null);
+__decorate([
+    (0, common_1.Get)('detail/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], SecurityController.prototype, "detail", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),

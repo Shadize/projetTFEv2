@@ -27,9 +27,9 @@ export class MemberAdminAddPageComponent implements OnInit{
 
   onFormSubmitted(formValue: any): void {
 
-    this.securityService.signUp(this.credentialUtils.genCreatePayload({
+    this.securityService.create(this.credentialUtils.genCreatePayload({
       ...formValue
-    }));
+    })).subscribe();
 
 
   }

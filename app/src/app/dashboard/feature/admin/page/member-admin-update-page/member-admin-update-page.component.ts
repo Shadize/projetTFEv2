@@ -2,13 +2,14 @@ import { Component, Input, Signal, WritableSignal, computed, inject, signal } fr
 import { Credential, CredentialUtilService, SecurityService } from '@security';
 import { FormConfig } from 'app/shared/ui/form/data/config/form.config';
 import { tap } from 'rxjs';
+import {FormBuilderComponent} from '@shared';
 
 @Component({
-  selector: 'app-member-admin-update-page',
-  standalone: true,
-  imports: [],
-  templateUrl: './member-admin-update-page.component.html',
-  styleUrl: './member-admin-update-page.component.scss'
+    selector: 'app-member-admin-update-page',
+    standalone: true,
+    templateUrl: './member-admin-update-page.component.html',
+    styleUrl: './member-admin-update-page.component.scss',
+    imports: [FormBuilderComponent]
 })
 export class MemberAdminUpdatePageComponent {
   @Input() id!: string;
@@ -22,19 +23,24 @@ export class MemberAdminUpdatePageComponent {
     this.securityService.detail(this.id).pipe(
       tap((detail: Credential) => this.detail$.set(detail))
     ).subscribe()
+
+    this.securityService.detail(this.id).pipe(
+      tap((detail: Credential) => console.log(detail))
+    ).subscribe()
   }
 
-  genFormConfigs(product: Credential | null): FormConfig {
-    const detail = product ?? this.credentialUtils.getEmpty();
+  genFormConfigs(credential: Credential | null): FormConfig {
+    const detail = credential ?? this.credentialUtils.getEmpty();
     return this.credentialUtils.getDataFormConfig(detail);
 
   }
 
   onFormSubmitted(formValue: any): void {
-    /*
+    
     this.securityService.update(this.credentialUtils.genUpdatePayload({
+      id:this.detail$()!.id,
       ...formValue
-    }));
-    */
+    })).subscribe();
+    
   }
 }
