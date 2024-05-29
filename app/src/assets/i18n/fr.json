@@ -109,5 +109,40 @@
   "feature.admin.member.title-add": "Ajouter un membre",
   "feature.admin.member.title-update": "Modifier le membre",
   "feature.admin.product.title-add": "Ajouter un produit",
-  "feature.admin.product.title-update": "Modifier le produit"
+  "feature.admin.product.title-update": "Modifier le produit",
+
+  
+  "api.success.product-create" : "Création du produit réussie !",
+  "api.success.product-update" : "Modification du produit réussie !",
+  "api.success.product-delete" : "Suppression du produit réussie !",
+  "api.error.product-create" : "ERREUR : Echec de la la création du produit",
+  "api.error.product-update" : "ERREUR : Echec de la modification du produit",
+  "api.error.product-delete" : "ERREUR : Echec de la suppression du produit",
+  
+  "api.success.consumption-create" : "Création de la consommation réussie !",
+  "api.success.consumption-update" : "Modification de la consommation réussie !",
+  "api.success.consumption-delete" : "Suppression de la consommation réussie !",
+  "api.error.consumption-create" : "ERREUR: Echec de la création de la consommation",
+  "api.error.consumption-update" : "ERREUR: Echec de la modification de la consommation",
+  "api.error.consumption-delete" : "ERREUR: Echec de la suppression de la consommation",
+
+
+  "api.error.account-create" : "ERREUR: Echec de la création du membre",
+  "api.error.account-update" : "ERREUR: Echec de la modification du membre",
+  "api.error.account-delete" : "ERREUR: Echec de la suppression du membre",
+  "api.success.account-create" : "Création du membre réussie !",
+  "api.success.account-update" : "Modification du membre réussie !",
+  "api.success.account-delete" : "Suppression du membre réussie !",
+
+
+  "api.error.stock-create" : "ERREUR: Echec de la création du stock",
+  "api.error.stock-update" : "ERREUR: Echec de la modification du stock",
+  "api.error.stock-delete" : "ERREUR: Echec de la suppression du stock",
+  "api.success.stock-create" : "Création du stock réussie !",
+  "api.success.stock-update" : "Modification du stock réussie !",
+  "api.success.stock-delete" : "Suppression du stock réussie !"
+
+
+
+
 }

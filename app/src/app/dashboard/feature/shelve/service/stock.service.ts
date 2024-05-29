@@ -24,7 +24,7 @@ export class StockService {
   }
 
   public create(payload: StockCreatePayload): Observable<Stock> {
-    return this.api.post(ApiURI.STOCK_CREATE, payload).pipe(
+    return this.api.post(ApiURI.STOCK_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.list();
@@ -36,7 +36,7 @@ export class StockService {
 
   public update(payload: StockUpdatePayload): Observable<Stock> {
     console.log('payload', payload);
-    return this.api.put(ApiURI.STOCK_UPDATE, payload).pipe(
+    return this.api.put(ApiURI.STOCK_UPDATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.list();
@@ -59,7 +59,7 @@ export class StockService {
   }
 
   delete(id: string) {
-    this.api.delete(`${ApiURI.STOCK_DELETE}${id}`)
+    this.api.delete(`${ApiURI.STOCK_DELETE}${id}`, true)
       .pipe(tap((response: ApiResponse) => {
         if (response.result) {
           this.list();

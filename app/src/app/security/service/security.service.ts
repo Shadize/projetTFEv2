@@ -45,7 +45,7 @@ export class SecurityService {
   }
 
   create(payload: CredentialCreatePayload): Observable<Credential> {
-    return this.api.post(ApiURI.MEMBER_CREATE, payload).pipe(
+    return this.api.post(ApiURI.MEMBER_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.router.navigate([AppNode.REDIRECT_TO_MEMBER_LIST]).then();
@@ -57,7 +57,7 @@ export class SecurityService {
   }
 
   public update(payload: CredentialUpdatePayload): Observable<Credential> {
-    return this.api.put(ApiURI.MEMBER_UPDATE, payload).pipe(
+    return this.api.put(ApiURI.MEMBER_UPDATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
           this.router.navigate([AppNode.REDIRECT_TO_MEMBER_LIST]).then();
@@ -112,7 +112,7 @@ export class SecurityService {
 
 
   delete(id: string) {
-    this.api.delete(`${ApiURI.MEMBER_DELETE}${id}`)
+    this.api.delete(`${ApiURI.MEMBER_DELETE}${id}`, true)
       .pipe(tap((response: ApiResponse) => {
         if (response.result) {
           this.list();

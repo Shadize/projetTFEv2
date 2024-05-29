@@ -26,9 +26,17 @@ export enum ApiCodeResponse {
   TOKEN_GEN_ERROR = 'api.error.token-generator',
   NO_TOKEN_FOUNDED = 'api.error.no-token-founded',
   TOKEN_EXPIRED = 'api.error.token-expired',
+  CREDENTIAL_CREATE_ERROR = 'api.error.account-create',
+  CREDENTIAL_UPDATE_ERROR = 'api.error.account-update',
   CREDENTIAL_DELETE_ERROR = 'api.error.account-delete',
   CREDENTIAL_LIST_ERROR = 'api.error.account-list',
   CREDENTIAL_DELETE_SUCCESS = 'api.success.account-delete',
+  CREDENTIAL_UPDATE_SUCCESS = 'api.success.account-update',
+  CREDENTIAL_CREATE_SUCCESS = 'api.success.account-create',
+
+
+  
+
   PAYLOAD_IS_NOT_VALID = 'api.error.payload-is-not-valid',
 
 
@@ -48,6 +56,10 @@ export enum ApiCodeResponse {
   LESSON_TITLE_MISSING_ERROR = 'api.error.lesson-payload-title-missing',
   LESSON_STOCK_LENGTH_ERROR = 'api.error.lesson-payload-stock-length',
   LESSON_STOCK_MISSING_ERROR = 'api.error.lesson-payload-stock-missing',
+
+  STOCK_DELETE_SUCCESS = 'api.success.stock-delete',
+  STOCK_CREATE_SUCCESS = 'api.success.stock-create',
+  STOCK_UPDATE_SUCCESS = 'api.success.stock-update',
 
   STOCK_NOT_FOUND = 'api.error.stock-not-found-delete',
   STOCK_DELETE_ERROR = 'api.error.stock-delete',
@@ -91,6 +103,10 @@ export enum ApiCodeResponse {
   CONSUMPTION_CREATE_ERROR = 'api.error.consumption-create',
   CONSUMPTION_UPDATE_ERROR = 'api.error.consumption-update',
 
+  CONSUMPTION_UPDATE_SUCCESS = 'api.success.consumption-update',
+  CONSUMPTION_CREATE_SUCCESS = 'api.success.consumption-create',
+  CONSUMPTION_DELETE_SUCCESS = 'api.success.consumption-delete',
+
 
   CREDENTIAL_ID_MISSING_ERROR ='api.error.credential-payload-id-missing',
   CREDENTIAL_MAIL_MISSING_ERROR ='api.error.credential-payload-mail-missing',
@@ -103,6 +119,7 @@ export enum ApiCodeResponse {
 
 
   MEMBER_CREATE_ERROR =  'api.error.member-create',
-  MEMBER_UPDATE_ERROR = 'api.error.member-update'
+  MEMBER_UPDATE_ERROR = 'api.error.member-update',
+
 
 }
