@@ -14,7 +14,7 @@
             </select>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <input [formControlName]="config.field" [id]="config.field" [type]="config.type"/>
+            <input [formControlName]="config.field" [id]="config.field" [type]="config.type" [readonly]="config.readOnly ? true : null"/>
           </ng-container>
         </ng-container>
         <div *ngIf="form.get(config.field)?.invalid && form.get(config.field)?.touched" class="error">

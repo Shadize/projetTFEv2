@@ -110,6 +110,12 @@
   "feature.admin.member.title-update": "Modifier le membre",
   "feature.admin.product.title-add": "Ajouter un produit",
   "feature.admin.product.title-update": "Modifier le produit",
+  "feature.admin.consumption.title-add": "Ajouter une consommation",
+  "feature.consumption.isReserved.true": "Oui",
+  "feature.consumption.isReserved.false": "Non",
+  "feature.consumption.type.direct_remove" : "Retrait immédiat",
+  "feature.consumption.type.reservation" : "Réserver",
+
 
   
   "api.success.product-create" : "Création du produit réussie !",

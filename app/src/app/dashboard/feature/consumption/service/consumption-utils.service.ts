@@ -1,8 +1,16 @@
+import { ConsumptionKeyForm } from './../data/enum/consumption-key-form.enum';
 import {inject, Injectable} from '@angular/core';
-import {BusinessUtils} from '@core';
-import {Consumption, ConsumptionDto, ConsumptionStatus} from '@consumption-feature';
+import {BusinessUtils, Section} from '@core';
+import {Consumption, ConsumptionCreatePayload, ConsumptionDto, ConsumptionStatus, ConsumptionUpdateePayload} from '@consumption-feature';
 import {CredentialUtilService} from '@security';
 import {ProductType} from '@product-feature';
+import { FieldSelectOption, FieldTypeConfig, FormConfig, FormValidatorsConfig } from 'app/shared/ui/form/data/config/form.config';
+import { Validators } from '@angular/forms';
+import { DataTableConfig, CellActionDefinition, MinimalVisibilityWidth } from '@shared';
+import { MemberAction, MemberKey, MemberIsAdminKey } from '../../member/data';
+import { ConsumptionIsReservedKey } from '../data/enum/consumptionIsReservedKey.enum';
+import { ConsumptionType } from '../data/enum/consumption-type.enum';
+import { Shelve } from '../../shelve/data';
 
 @Injectable({
   providedIn: 'root'
@@ -71,4 +79,98 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     return business.map(b => this.toDTO(b));
   }
 
+  
+
+
+  
+
+  public getDataFormConfig(consumption: Consumption, submitTitle:string): FormConfig {
+    const fields = Object.values(ConsumptionKeyForm);
+
+    const validatorsConfig: FormValidatorsConfig[] = fields.map((field) => {
+      let fieldValidators = [];
+
+      switch (field) {
+        case ConsumptionKeyForm.ORDER_DATE:
+          fieldValidators.push(Validators.required);
+          break;
+        case ConsumptionKeyForm.CONSUMPTION_TYPE:
+          fieldValidators.push(Validators.required);
+          break;
+        case ConsumptionKeyForm.DELIVERY_DATE:
+          fieldValidators.push(Validators.required);
+          break;
+        default:
+          // Add default validators if needed
+          break;
+      }
+
+      return { field, validators: fieldValidators };
+    });
+
+    const fieldTypesConfig: FieldTypeConfig[] = fields.map((field) => {
+      let fieldType = 'text';
+      let fieldOptions: FieldSelectOption[] = [];
+      let fieldReadOnly = false;
+
+      if (field === ConsumptionKeyForm.CONSUMPTION_TYPE) {
+        fieldType = 'select';
+        fieldOptions = Object.values(ConsumptionType).map((o) => ({
+          selected: (consumption.is_delivered && o === ConsumptionType.DIRECT_REMOVE) ||
+                    (!consumption.is_delivered && o === ConsumptionType.RESERVATION),
+          value: o,
+          label: `feature.consumption.type.${o.toLowerCase()}`,
+        }));
+      } 
+      else if (field === ConsumptionKeyForm.ORDER_DATE) {
+        fieldReadOnly = true;
+      }
+      else if (field === ConsumptionKeyForm.DELIVERY_DATE) {
+        fieldReadOnly = consumption.is_delivered;
+      }
+
+
+
+      return { field, type: fieldType, options: fieldOptions , readOnly: fieldReadOnly};
+    });
+
+    return {
+      submitTitle,
+      data: consumption,
+      fields,
+      validators: validatorsConfig,
+      fieldTypes: fieldTypesConfig,
+    };
+  }
+
+  genCreatePayload(formValue: any, quantity: number, shelve : Shelve): ConsumptionCreatePayload {
+
+    
+    return {
+      order_date: formValue.order_date,
+      delivery_date: formValue.delivery_date,
+      quantity: quantity,
+      is_reserved: formValue.consumption_type === "RESERVATION" ? true : false,
+      is_delivered: formValue.consumption_type === "RESERVATION" ? false : true,
+      type: formValue.type,
+      status: ConsumptionStatus.ACTIVE,
+      shelve: shelve.str,
+      shelve_reference: shelve.locationReference
+
+      
+    };
+  }
+
+  /*
+  genUpdatePayload(consumption: Consumption): ConsumptionUpdateePayload {
+    return {
+      ...this.genCreatePayload(consumption),
+      consumption_id : consumption.id
+
+    };
+  }
+  */
+  stringToBoolean(value: string): boolean{
+    return value.toLowerCase() === 'true';
+  }
 }

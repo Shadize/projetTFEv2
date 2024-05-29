@@ -18,6 +18,7 @@ export interface FieldTypeConfig {
   field: string;
   type: string;
   options?: FieldSelectOption[]; // Utilisé uniquement pour les champs de type 'select'
+  readOnly? : boolean;
 }
 
 export interface FieldSelectOption {
