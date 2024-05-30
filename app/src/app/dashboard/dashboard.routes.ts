@@ -38,6 +38,11 @@ export const dashboardRoutes: Routes = [
             path: AppNode.ADMIN,
             loadChildren: () => import('./feature/admin/admin.routes')
               .then(r => r.adminRoutes)
+          },
+          {
+            path: AppNode.PRODUCT,
+            loadChildren: () => import('./feature/product/product.routes')
+              .then(r => r.productRoutes)
           }
         ]
     }
