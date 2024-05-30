@@ -19,6 +19,7 @@ exports.ConsumptionModule = ConsumptionModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([data_1.Consumption])],
         controllers: [consumption_controller_1.ConsumptionController],
+        exports: [consumption_service_1.ConsumptionService],
         providers: [consumption_service_1.ConsumptionService]
     })
 ], ConsumptionModule);

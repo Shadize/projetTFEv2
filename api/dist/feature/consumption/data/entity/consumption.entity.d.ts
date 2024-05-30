@@ -1,4 +1,4 @@
-import { Product, ProductType } from '@product/data';
+import { Product } from '@product/data';
 import { Credential } from '@security/model';
 import { ConsumptionStatus } from '@consumption/data';
 export declare class Consumption {
@@ -8,10 +8,10 @@ export declare class Consumption {
     quantity: number;
     is_reserved: boolean;
     is_delivered: boolean;
-    type: ProductType;
     status: ConsumptionStatus;
     product: Product;
     author: Credential;
+    productName: string;
     shelve: string;
     shelve_reference: string;
 }

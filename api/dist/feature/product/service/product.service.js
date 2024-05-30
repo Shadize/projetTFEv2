@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var ProductService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
@@ -22,11 +23,12 @@ const builder_pattern_1 = require("builder-pattern");
 const lodash_1 = require("lodash");
 const typeorm_2 = require("typeorm");
 const ulid_1 = require("ulid");
-const service_1 = require("../../stock/service");
-let ProductService = class ProductService {
-    constructor(shelveService, repository) {
-        this.shelveService = shelveService;
+const service_1 = require("../../consumption/service");
+let ProductService = ProductService_1 = class ProductService {
+    constructor(consumptionService, repository) {
+        this.consumptionService = consumptionService;
         this.repository = repository;
+        this.logger = new common_1.Logger(ProductService_1.name);
     }
     async list() {
         try {
@@ -88,17 +90,19 @@ let ProductService = class ProductService {
             detail.type = payload.type;
             detail.shelve = payload.shelve;
             const product = await this.repository.save(detail);
+            await this.consumptionService.setForProduct(payload.consumptions, product);
             return product;
         }
         catch (e) {
+            this.logger.error(e);
             throw new stock_exception_1.StockUpdateException();
         }
     }
 };
 exports.ProductService = ProductService;
-exports.ProductService = ProductService = __decorate([
+exports.ProductService = ProductService = ProductService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, typeorm_1.InjectRepository)(data_1.Product)),
-    __metadata("design:paramtypes", [service_1.ShelveService, typeorm_2.Repository])
+    __metadata("design:paramtypes", [service_1.ConsumptionService, typeorm_2.Repository])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

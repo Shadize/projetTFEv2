@@ -1,5 +1,6 @@
-import { ProductType } from "../enum";
-import { Shelve } from "@stock/data";
+import { ProductType } from '../enum';
+import { Shelve } from '@stock/data';
+import { Consumption } from '@consumption/data';
 export declare class ProductUpdatePayload {
     product_id: string;
     title: string;
@@ -12,4 +13,5 @@ export declare class ProductUpdatePayload {
     price: number;
     shelve: Shelve;
     type: ProductType;
+    consumptions: Consumption[];
 }

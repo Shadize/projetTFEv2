@@ -43,15 +43,11 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Consumption.prototype, "is_delivered", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
-    __metadata("design:type", String)
-], Consumption.prototype, "type", void 0);
-__decorate([
     (0, typeorm_1.Column)({ nullable: false, default: 'ACTIVE' }),
     __metadata("design:type", String)
 ], Consumption.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => data_1.Product, (p) => p.consumptions, { cascade: false, eager: false }),
+    (0, typeorm_1.ManyToOne)(() => data_1.Product, (p) => p.consumptions, { cascade: true, eager: false }),
     (0, typeorm_1.JoinColumn)({ name: 'product_id_fk', referencedColumnName: 'product_id' }),
     __metadata("design:type", data_1.Product)
 ], Consumption.prototype, "product", void 0);
@@ -60,6 +56,14 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'credential_id_fk', referencedColumnName: 'credential_id' }),
     __metadata("design:type", model_1.Credential)
 ], Consumption.prototype, "author", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Consumption.prototype, "productName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Consumption.prototype, "shelve", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: false }),
     __metadata("design:type", String)

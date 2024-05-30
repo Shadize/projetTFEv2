@@ -59,7 +59,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "type", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => data_1.Consumption, (c) => c.product, { cascade: false, eager: true }),
+    (0, typeorm_1.OneToMany)(() => data_1.Consumption, (c) => c.product, { onUpdate: 'CASCADE', eager: true }),
     __metadata("design:type", Array)
 ], Product.prototype, "consumptions", void 0);
 __decorate([

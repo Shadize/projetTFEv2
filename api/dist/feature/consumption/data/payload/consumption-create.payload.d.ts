@@ -1,4 +1,4 @@
-import { ProductType } from '@product/data';
+import { Product, ProductType } from '@product/data';
 export declare class ConsumptionCreatePayload {
     order_date: Date;
     delivery_date: Date;
@@ -7,5 +7,7 @@ export declare class ConsumptionCreatePayload {
     is_delivered: boolean;
     type: ProductType;
     shelve: string;
+    product: Product;
+    productName: string;
     shelve_reference: string;
 }

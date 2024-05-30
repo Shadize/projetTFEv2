@@ -13,12 +13,13 @@ const product_service_1 = require("./service/product.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const data_1 = require("./data");
 const stock_module_1 = require("../stock/stock.module");
+const consumption_module_1 = require("../consumption/consumption.module");
 let ProductModule = class ProductModule {
 };
 exports.ProductModule = ProductModule;
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
-        imports: [stock_module_1.StockModule, typeorm_1.TypeOrmModule.forFeature([data_1.Product])],
+        imports: [stock_module_1.StockModule, consumption_module_1.ConsumptionModule, typeorm_1.TypeOrmModule.forFeature([data_1.Product])],
         controllers: [product_controller_1.ProductController],
         providers: [product_service_1.ProductService]
     })

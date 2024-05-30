@@ -24,7 +24,7 @@ let ConsumptionController = class ConsumptionController {
         this.service = service;
     }
     create(payload, user) {
-        return this.service.create(payload);
+        return this.service.create(payload, user);
     }
     delete(id) {
         return this.service.delete(id);
