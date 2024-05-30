@@ -14,4 +14,5 @@ export interface Consumption extends Business {
   author: Credential; // on fournit pas on le récupèrera depuis l'api avec @User
   shelve: string; // shelve.str
   shelve_reference: string; //locationReference
+  productName:string;
 }

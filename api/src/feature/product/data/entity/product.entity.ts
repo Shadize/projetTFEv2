@@ -28,7 +28,7 @@ export class Product {
   @Column({ nullable: false })
   type: ProductType;
   @OneToMany(() => Consumption, (c: Consumption) => c.product,
-    { cascade: false, eager: true })
+    { onUpdate: 'CASCADE', eager: true })
   consumptions: Consumption[];
   @ManyToOne(() => Shelve, (s: Shelve) => s.products,
     { cascade: true, eager: false })

@@ -53,10 +53,10 @@ export class ProductService {
 
   }
 
-  public update(payload: ProductUpdatePayload): Observable<Product> {
+  public update(payload: ProductUpdatePayload, needRedirect=true): Observable<Product> {
     return this.api.put(ApiURI.PRODUCT_UPDATE, payload,true).pipe(
       tap((response: ApiResponse) => {
-        if (response.result) {
+        if (needRedirect && response.result) {
           this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
         }
       }),

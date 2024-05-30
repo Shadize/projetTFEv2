@@ -1,15 +1,27 @@
-import { ConsumptionKeyForm } from './../data/enum/consumption-key-form.enum';
+import {ConsumptionKeyForm} from './../data/enum/consumption-key-form.enum';
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils} from '@core';
-import {Consumption, ConsumptionCreatePayload, ConsumptionDto, ConsumptionKey, ConsumptionStatus, ConsumptionUpdateePayload} from '@consumption-feature';
+import {
+  Consumption,
+  ConsumptionCreatePayload,
+  ConsumptionDto,
+  ConsumptionKey,
+  ConsumptionStatus,
+  ConsumptionUpdateePayload
+} from '@consumption-feature';
 import {CredentialUtilService} from '@security';
-import {ProductType} from '@product-feature';
-import { FieldSelectOption, FieldTypeConfig, FormConfig, FormValidatorsConfig } from 'app/shared/ui/form/data/config/form.config';
-import { Validators } from '@angular/forms';
-import { DataTableConfig, CellActionDefinition, MinimalVisibilityWidth } from '@shared';
-import { ConsumptionType } from '../data/enum/consumption-type.enum';
-import { Shelve } from '../../shelve/data';
-import { ConsumptionAction } from '../data/enum/consumption-action';
+import {Product, ProductType} from '@product-feature';
+import {
+  FieldSelectOption,
+  FieldTypeConfig,
+  FormConfig,
+  FormValidatorsConfig
+} from 'app/shared/ui/form/data/config/form.config';
+import {Validators} from '@angular/forms';
+import {DataTableConfig, CellActionDefinition, MinimalVisibilityWidth} from '@shared';
+import {ConsumptionType} from '../data/enum/consumption-type.enum';
+import {Shelve} from '../../shelve/data';
+import {ConsumptionAction} from '../data/enum/consumption-action';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +44,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       shelve_reference: dto.shelve_reference,
       status: dto.status,
       str: `${author.username} - ${dto.type}`,
-      type: dto.type
+      type: dto.type,
+      productName: dto.productName
     }
   }
 
@@ -41,6 +54,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       author: this.credentialUtils.getEmpty(),
       delivery_date: new Date(),
       id: '',
+      productName: '',
       isEmpty: true,
       is_delivered: false,
       is_reserved: false,
@@ -66,7 +80,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       shelve: business.shelve,
       shelve_reference: business.shelve_reference,
       status: business.status,
-      type: business.type
+      type: business.type,
+      productName: business.productName
     }
   }
 
@@ -78,7 +93,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     return business.map(b => this.toDTO(b));
   }
 
-  
+
   public getDataTableConfig(
     consumptions: Consumption[],
     isAdmin: boolean
@@ -137,9 +152,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     };
   }
 
-  
 
-  public getDataFormConfig(consumption: Consumption, submitTitle:string): FormConfig {
+  public getDataFormConfig(consumption: Consumption, submitTitle: string): FormConfig {
     const fields = Object.values(ConsumptionKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map((field) => {
@@ -160,7 +174,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
           break;
       }
 
-      return { field, validators: fieldValidators };
+      return {field, validators: fieldValidators};
     });
 
     const fieldTypesConfig: FieldTypeConfig[] = fields.map((field) => {
@@ -172,21 +186,18 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
         fieldType = 'select';
         fieldOptions = Object.values(ConsumptionType).map((o) => ({
           selected: (consumption.is_delivered && o === ConsumptionType.DIRECT_REMOVE) ||
-                    (!consumption.is_delivered && o === ConsumptionType.RESERVATION),
+            (!consumption.is_delivered && o === ConsumptionType.RESERVATION),
           value: o,
           label: `feature.consumption.type.${o.toLowerCase()}`,
         }));
-      } 
-      else if (field === ConsumptionKeyForm.ORDER_DATE) {
+      } else if (field === ConsumptionKeyForm.ORDER_DATE) {
         fieldReadOnly = true;
-      }
-      else if (field === ConsumptionKeyForm.DELIVERY_DATE) {
+      } else if (field === ConsumptionKeyForm.DELIVERY_DATE) {
         fieldReadOnly = consumption.is_delivered;
       }
 
 
-
-      return { field, type: fieldType, options: fieldOptions , readOnly: fieldReadOnly};
+      return {field, type: fieldType, options: fieldOptions, readOnly: fieldReadOnly};
     });
 
     return {
@@ -198,9 +209,9 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     };
   }
 
-  genCreatePayload(formValue: any, quantity: number, shelve : Shelve): ConsumptionCreatePayload {
+  genCreatePayload(formValue: any, quantity: number, shelve: Shelve, product: Product): ConsumptionCreatePayload {
 
-    
+
     return {
       order_date: formValue.order_date,
       delivery_date: formValue.delivery_date,
@@ -210,9 +221,11 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       type: formValue.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: shelve.str,
-      shelve_reference: shelve.locationReference
-
+      shelve_reference: shelve.locationReference,
+      product,
+      productName: product.str
       
+
     };
   }
 
@@ -225,7 +238,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     };
   }
   */
-  stringToBoolean(value: string): boolean{
+  stringToBoolean(value: string): boolean {
     return value.toLowerCase() === 'true';
   }
 }

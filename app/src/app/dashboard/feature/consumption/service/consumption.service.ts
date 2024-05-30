@@ -17,7 +17,7 @@ export class ConsumptionService {
   private consumptionsUtilsService: ConsumptionUtilsService = inject(ConsumptionUtilsService);
 
   create(payload: ConsumptionCreatePayload): Observable<Consumption> {
-    return this.api.post(ApiURI.MEMBER_CREATE, payload, true).pipe(
+    return this.api.post(ApiURI.CONSUMPTION_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
         }
@@ -57,5 +57,5 @@ export class ConsumptionService {
         }
       })).subscribe();
   }
-  
+
 }

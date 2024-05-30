@@ -15,4 +15,5 @@ export interface ConsumptionDto extends Dto {
   author: CredentialDto;
   shelve: string;
   shelve_reference: string;
+  productName:string;
 }

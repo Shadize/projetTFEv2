@@ -13,7 +13,7 @@ export class ConsumptionController {
   }
   @Post('create')
   create(@Body() payload: ConsumptionCreatePayload, @User() user: Credential) {
-    return this.service.create(payload);
+    return this.service.create(payload,user);
   }
 
   @Delete('delete/:id')

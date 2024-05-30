@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from '@product/data';
 import { ProductCreatePayload, ProductUpdatePayload } from '@product/data/payload';
@@ -14,11 +14,13 @@ import { isNil } from 'lodash';
 import { Repository } from 'typeorm';
 import { ulid } from 'ulid';
 import { ShelveService } from '@stock/service';
+import { ConsumptionService } from '@consumption/service';
 
 @Injectable()
 export class ProductService {
+  private readonly logger = new Logger(ProductService.name);
 
-  constructor(private readonly shelveService: ShelveService,@InjectRepository(Product) private readonly repository: Repository<Product>) {
+  constructor(private readonly consumptionService: ConsumptionService, @InjectRepository(Product) private readonly repository: Repository<Product>) {
   }
 
   async list(): Promise<Product[]> {
@@ -61,7 +63,7 @@ export class ProductService {
         .price(payload.price)
         .type(payload.type)
         .build();
-      const product =  await this.repository.save(newProduct);
+      const product = await this.repository.save(newProduct);
       return product;
     } catch (e) {
       throw new ProductCreateException();
@@ -81,10 +83,12 @@ export class ProductService {
       detail.height = payload.height;
       detail.price = payload.price;
       detail.type = payload.type;
-      detail.shelve = payload.shelve
-      const product =  await this.repository.save(detail);
-      return product
+      detail.shelve = payload.shelve;
+      const product = await this.repository.save(detail);
+      await this.consumptionService.setForProduct(payload.consumptions, product);
+      return product;
     } catch (e) {
+      this.logger.error(e);
       throw new StockUpdateException();
     }
   }

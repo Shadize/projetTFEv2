@@ -18,12 +18,10 @@ export class Consumption {
   is_reserved: boolean;
   @Column()
   is_delivered: boolean;
-  @Column({ nullable: false })
-  type: ProductType;
   @Column({ nullable: false, default: 'ACTIVE' })
   status: ConsumptionStatus;
   @ManyToOne(() => Product, (p: Product) => p.consumptions,
-    { cascade: false, eager: false })
+    { cascade: true, eager: false })
   @JoinColumn({ name: 'product_id_fk', referencedColumnName: 'product_id' })
   product: Product;
 
@@ -35,6 +33,10 @@ export class Consumption {
   author: Credential;
   // on stock l'emplacement sous forme de chaine de caractère
 
+  @Column({ nullable: false })
+  productName:string;
+
+  @Column({ nullable: false })
   shelve:string;
   // on stock l'id comme ca on peut y retourner.
   @Column({ nullable: false })

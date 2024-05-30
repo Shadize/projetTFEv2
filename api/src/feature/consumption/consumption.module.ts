@@ -7,6 +7,7 @@ import { Consumption } from '@consumption/data';
 @Module({
   imports: [TypeOrmModule.forFeature([Consumption])],
   controllers: [ConsumptionController],
+  exports: [ConsumptionService],
   providers: [ConsumptionService]
 })
 export class ConsumptionModule {

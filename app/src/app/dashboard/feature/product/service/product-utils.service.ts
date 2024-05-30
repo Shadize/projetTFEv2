@@ -9,7 +9,7 @@ import {
   ProductKeyForm,
   ProductType,
 } from '@product-feature';
-import {ConsumptionUtilsService} from '@consumption-feature';
+import {Consumption, ConsumptionDto, ConsumptionUtilsService} from '@consumption-feature';
 import {
   DataTableConfig,
   CellActionDefinition,
@@ -147,7 +147,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
             config: {
               field: 'quantity',
               type: 'select',
-              options: [...Array.from({length: p.quantity+1}).keys()].map(value => ({
+              options: [...Array.from({length: p.quantity + 1}).keys()].map(value => ({
                 selected: false,
                 value,
                 label: value.toString()
@@ -332,12 +332,30 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   public genUpdatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductUpdatePayload {
     return {
       ...this.genCreatePayload(product, stocks, shelveId),
-      product_id: product.id
+      product_id: product.id,
+      consumptions: []
     }
   }
 
   private getShelve(stocks: StockDto[], shelveId: string): ShelveDto {
     const shelves = flatten(stocks.map(s => s.shelves));
     return shelves.find(s => s.shelve_id === shelveId)!;
+  }
+
+  toUpdatePayload(product: Product, stocks: StockDto[], shelveId: string, consumptions: ConsumptionDto[]): ProductUpdatePayload {
+    return {
+      product_id: product.id,
+      materials: product.materials,
+      treatment: product.treatment,
+      thickness: product.thickness,
+      title: product.title,
+      quantity: product.quantity,
+      width: product.width,
+      height: product.height,
+      price: product.price,
+      type: product.type,
+      consumptions: consumptions,
+      shelve: this.getShelve(stocks, shelveId)
+    }
   }
 }
