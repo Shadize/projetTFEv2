@@ -1,5 +1,27 @@
-<div id="qrcodes">
-  @for (product of products;let index=$index;track index){
-    {{product}}
+<button (click)="getPdf()">imprimer</button>
+<div id="qrcodes" #qrcodes>
+  @for (page of products; let index = $index; track index) {
+    <div class="page" [id]="page.id">
+      @for (product of page.products; let paIndex = $index; track paIndex) {
+        <div class="item">
+          <qrcode [qrdata]="'http://localhost:4200/dashboard/product/detail/'+product" [width]="100"
+                  [errorCorrectionLevel]="'M'"></qrcode>
+          <div class="data">
+            <div class="line">
+              <div class="label">Type</div>
+              <div class="content">Panneau</div>
+            </div>
+            <div class="line">
+              <div class="label">Dimension</div>
+              <div class="content">100*100*50</div>
+            </div>
+            <div class="line">
+              <div class="label">Matériel</div>
+              <div class="content">le matos</div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
   }
 </div>
