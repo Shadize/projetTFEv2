@@ -1,9 +1,10 @@
-import {AfterViewInit, Component, ElementRef, signal, ViewChild, WritableSignal} from '@angular/core';
+import {Component} from '@angular/core';
 import {ulid} from 'ulid';
 import {QRCodeModule} from 'angularx-qrcode';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {forkJoin, from, tap} from 'rxjs';
+import {format} from 'date-fns';
 
 interface ProductPage {
   id: string;
@@ -19,7 +20,7 @@ interface ProductPage {
   templateUrl: './product-qr-code-pdf.component.html',
   styleUrl: './product-qr-code-pdf.component.scss'
 })
-export class ProductQrCodePdfComponent  {
+export class ProductQrCodePdfComponent {
   products: ProductPage[] = [
     {id: ulid(), products: new Array(30).fill(ulid())},
     {id: ulid(), products: new Array(30).fill(ulid())},
@@ -34,7 +35,7 @@ export class ProductQrCodePdfComponent  {
           from(html2canvas(document.getElementById(page.id)!))
       )).pipe(
       tap((data) => {
-        for (let i=0; i< data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           var imgWidth = 208;
           var pageHeight = 295;
           var imgHeight = data[i].height * imgWidth / data[i].width;
@@ -42,13 +43,13 @@ export class ProductQrCodePdfComponent  {
           const contentDataURL = data[i].toDataURL('image/png');
           var position = 0;
           pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-          if(i+1<data.length){
+          if (i + 1 < data.length) {
             pdf.addPage();
           }
         }
       })
     ).subscribe(() => {
-      pdf.save('test.pdf')
+      pdf.save(`${format(new Date(), 'dd-MM-yyyy')}_product_list.pdf`)
     });
   }
 

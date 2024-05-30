@@ -1,5 +1,6 @@
-<button (click)="getPdf()">imprimer</button>
+
 <div id="qrcodes" #qrcodes>
+  <div class="actions"><button (click)="getPdf()">imprimer</button></div>
   @for (page of products; let index = $index; track index) {
     <div class="page" [id]="page.id">
       @for (product of page.products; let paIndex = $index; track paIndex) {
