@@ -35,6 +35,9 @@ let ConsumptionController = class ConsumptionController {
     getAll() {
         return this.service.list();
     }
+    getByShelveId(shelveId) {
+        return this.service.findByShelveId(shelveId);
+    }
 };
 exports.ConsumptionController = ConsumptionController;
 __decorate([
@@ -65,6 +68,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ConsumptionController.prototype, "getAll", null);
+__decorate([
+    (0, common_1.Get)('shelve/:shelveId'),
+    __param(0, (0, common_1.Param)('shelveId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "getByShelveId", null);
 exports.ConsumptionController = ConsumptionController = __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiTags)('Consumption'),

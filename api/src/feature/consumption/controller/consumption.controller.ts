@@ -30,4 +30,9 @@ export class ConsumptionController {
   getAll(): Promise<Consumption[]> {
     return this.service.list();
   }
+
+  @Get('shelve/:shelveId')
+  getByShelveId(@Param('shelveId') shelveId: string): Promise<Consumption[]> {
+    return this.service.findByShelveId(shelveId);
+  }
 }

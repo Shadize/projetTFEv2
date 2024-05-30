@@ -23,3 +23,10 @@ export class ConsumptionCreateException extends ApiException {
     super(ApiCodeResponse.CONSUMPTION_CREATE_ERROR, 200);
   }
 }
+
+export class ConsumptionListByShelveException extends ApiException {
+  constructor() {
+    super(ApiCodeResponse.CONSUMPTION_LIST_BY_SHELVE_ERROR, 200);
+  }
+}
+

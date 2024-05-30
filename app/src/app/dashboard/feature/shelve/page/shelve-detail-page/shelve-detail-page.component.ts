@@ -1,4 +1,3 @@
-import { FormBuilder } from '@angular/forms';
 import {Component, computed, inject, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import {Shelve, ShelveUtilsService, Stock, StockDetailComponent, StockService} from '@shelve-feature';
 import {
@@ -14,9 +13,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {JsonPipe} from '@angular/common';
 import { FormConfig } from 'app/shared/ui/form/data/config/form.config';
 import { ProductUtilsService } from 'app/dashboard/feature/product/service';
-import { Consumption, ConsumptionUtilsService } from '@consumption-feature';
+import { Consumption, ConsumptionAction, ConsumptionKey, ConsumptionUtilsService } from '@consumption-feature';
 import { ConsumptionService } from 'app/dashboard/feature/consumption/service/consumption.service';
-import { Product, ProductType } from '@product-feature';
 
 @Component({
     selector: 'app-shelve-detail-page',
@@ -45,13 +43,37 @@ export class ShelveDetailPageComponent implements OnInit {
   public productDataTableConfig: Signal<DataTableConfig> = computed(() => this.genConfig(this.detail$()));
   public consumptionFormConfig$: Signal<FormConfig> = computed(() => this.genFormConfigs());
   public isAddingConsumption$: WritableSignal<boolean> = signal(false);
+  protected consumptionDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConsumptionTableConfig(this.consumptionService.list$()));
+
 
   selectedQuantity! : number;
   ngOnInit() {
-
+    this.consumptionService.listByShelve(this.id);
   }
 
 
+  public onActionClicked(data: CellActionDefinition): void {
+    const item : Consumption = data.data! as Consumption;
+    switch (data.action) {
+      case ConsumptionAction.DELETE:
+        this.handleDelete(item.id);
+        break;
+      case ConsumptionAction.DELIVERED:
+        this.handleDeliver(item.id);
+        break;
+
+    }
+  
+  }
+
+
+  private handleDelete(id: string): void {
+    this.consumptionService.delete(id);
+  }
+
+  private handleDeliver(id: string): void {
+
+  }
   genFormConfigs() : FormConfig{
 
     let consumption: Consumption = this.consumptionUtils.getEmpty();
@@ -60,6 +82,10 @@ export class ShelveDetailPageComponent implements OnInit {
 
   genConfig(shelve: Shelve): DataTableConfig {
     return this.productUtils.getShelveDetailDataConfig(shelve.products);
+  }
+
+  genConsumptionTableConfig(consumptions : Consumption[]) : DataTableConfig{
+    return this.consumptionUtils.getDataTableConfig(consumptions, true);
   }
 
   getShelveDetail(stocks: Stock[] | undefined): Shelve {
@@ -87,6 +113,6 @@ export class ShelveDetailPageComponent implements OnInit {
   }
 
   cancel(): void {
-
+    this.isAddingConsumption$.set(false);
   }
 }

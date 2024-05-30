@@ -11,3 +11,6 @@ export declare class ConsumptionListException extends ApiException {
 export declare class ConsumptionCreateException extends ApiException {
     constructor();
 }
+export declare class ConsumptionListByShelveException extends ApiException {
+    constructor();
+}

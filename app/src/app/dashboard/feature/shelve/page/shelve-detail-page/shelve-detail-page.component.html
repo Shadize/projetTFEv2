@@ -8,13 +8,13 @@
 
     <div class="band"></div>
     @if (isAddingConsumption$()) {
-      <app-card-header [title]="'ici tu m\'affiches le formulaire'"></app-card-header>
+      <app-card-header [title]="'feature.consumption-form'"></app-card-header>
       <app-form-builder [config]="consumptionFormConfig$()"
                         (cancel)="cancel()"
                         (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
     } @else {
-      <app-card-header [title]="'Liste de consommation'"></app-card-header>
-      <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
+      <app-card-header [title]="'feature.consumption-list'"></app-card-header>
+      <app-data-table [config]="consumptionDataTableConfig$()" (actionClicked)="onActionClicked($event)"></app-data-table>
     }
   }
 </app-card>

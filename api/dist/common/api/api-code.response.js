@@ -83,6 +83,7 @@ var ApiCodeResponse;
     ApiCodeResponse["CONSUMPTION_NOT_FOUND"] = "api.error.consumption-not-found-delete";
     ApiCodeResponse["CONSUMPTION_DELETE_ERROR"] = "api.error.consumption-delete";
     ApiCodeResponse["CONSUMPTION_LIST_ERROR"] = "api.error.consumption-list";
+    ApiCodeResponse["CONSUMPTION_LIST_BY_SHELVE_ERROR"] = "api.error.consumption-list-by-shelve";
     ApiCodeResponse["CONSUMPTION_CREATE_ERROR"] = "api.error.consumption-create";
     ApiCodeResponse["CONSUMPTION_UPDATE_ERROR"] = "api.error.consumption-update";
     ApiCodeResponse["CONSUMPTION_UPDATE_SUCCESS"] = "api.success.consumption-update";

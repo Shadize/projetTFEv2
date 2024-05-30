@@ -100,6 +100,13 @@
   "shelve.no-product": "-",
   "admin-feature-shelve.table.label.productName": "Produit",
   "admin-feature-shelve.table.label.productQuantity": "Quantité",
+  "admin-feature-consumption.table.label.order_date" : "Date de commande",
+  "admin-feature-consumption.table.label.delivery_date" : "Date de livraison",
+  "admin-feature-consumption.table.label.type" : "Type du produit",
+  "admin-feature-consumption.table.label.is_delivered" : "A été livré",
+  "admin-feature-consumption.table.label.is_reserved" : "Est réservé",
+  "admin-feature-consumption.table.label.status" : "Status",
+
   "feature.shelve-detail.not-found": "L'emplacement n'a pas été trouvé",
   "feature.shelve-list.title": "Liste des emplacments de stockage",
   "feature.product.type.panel": "Panneau",
@@ -115,8 +122,8 @@
   "feature.consumption.isReserved.false": "Non",
   "feature.consumption.type.direct_remove" : "Retrait immédiat",
   "feature.consumption.type.reservation" : "Réserver",
-
-
+  "feature.consumption-form" : "Consommer un produit",
+  "feature.consumption-list" : "Liste des consommations",
   
   "api.success.product-create" : "Création du produit réussie !",
   "api.success.product-update" : "Modification du produit réussie !",
@@ -149,6 +156,7 @@
   "api.success.stock-delete" : "Suppression du stock réussie !"
 
 
+ 
 
 
 }

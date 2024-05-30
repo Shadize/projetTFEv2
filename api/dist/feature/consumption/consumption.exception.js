@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConsumptionCreateException = exports.ConsumptionListException = exports.ConsumptionDeleteException = exports.ConsumptionNotFoundException = void 0;
+exports.ConsumptionListByShelveException = exports.ConsumptionCreateException = exports.ConsumptionListException = exports.ConsumptionDeleteException = exports.ConsumptionNotFoundException = void 0;
 const api_1 = require("../../common/api");
 class ConsumptionNotFoundException extends api_1.ApiException {
     constructor() {
@@ -26,4 +26,10 @@ class ConsumptionCreateException extends api_1.ApiException {
     }
 }
 exports.ConsumptionCreateException = ConsumptionCreateException;
+class ConsumptionListByShelveException extends api_1.ApiException {
+    constructor() {
+        super(api_1.ApiCodeResponse.CONSUMPTION_LIST_BY_SHELVE_ERROR, 200);
+    }
+}
+exports.ConsumptionListByShelveException = ConsumptionListByShelveException;
 //# sourceMappingURL=consumption.exception.js.map

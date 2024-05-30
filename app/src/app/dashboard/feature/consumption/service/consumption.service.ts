@@ -26,4 +26,36 @@ export class ConsumptionService {
 
     );
   }
+
+  public list(): void {
+    this.api.get(ApiURI.CONSUMPTION_LIST)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list$.set(this.consumptionsUtilsService.fromDTOS(response.data));
+        } else {
+          this.list$.set([])
+        }
+      })).subscribe();
+  }
+
+  public listByShelve(id: string): void {
+    this.api.get(`${ApiURI.CONSUMPTION_LIST_BY_SHELVE}${id}`)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list$.set(this.consumptionsUtilsService.fromDTOS(response.data));
+        } else {
+          this.list$.set([])
+        }
+      })).subscribe();
+  }
+
+  delete(id: string) {
+    this.api.delete(`${ApiURI.CONSUMPTION_DELETE}${id}`, true)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list();
+        }
+      })).subscribe();
+  }
+  
 }

@@ -8,4 +8,5 @@ export declare class ConsumptionController {
     delete(id: string): Promise<void>;
     detail(id: string): Promise<Consumption>;
     getAll(): Promise<Consumption[]>;
+    getByShelveId(shelveId: string): Promise<Consumption[]>;
 }

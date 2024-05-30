@@ -59,11 +59,20 @@ let ConsumptionService = class ConsumptionService {
                 .is_reserved(payload.is_reserved)
                 .is_delivered(payload.is_delivered)
                 .type(payload.type)
+                .shelve_reference(payload.shelve_reference)
                 .build();
             return await this.repository.save(newProduct);
         }
         catch (e) {
             throw new consumption_exception_1.ConsumptionCreateException();
+        }
+    }
+    async findByShelveId(shelveId) {
+        try {
+            return await this.repository.find({ where: { shelve_reference: shelveId } });
+        }
+        catch (e) {
+            throw new consumption_exception_1.ConsumptionListByShelveException();
         }
     }
 };

@@ -1,16 +1,15 @@
 import { ConsumptionKeyForm } from './../data/enum/consumption-key-form.enum';
 import {inject, Injectable} from '@angular/core';
-import {BusinessUtils, Section} from '@core';
-import {Consumption, ConsumptionCreatePayload, ConsumptionDto, ConsumptionStatus, ConsumptionUpdateePayload} from '@consumption-feature';
+import {BusinessUtils} from '@core';
+import {Consumption, ConsumptionCreatePayload, ConsumptionDto, ConsumptionKey, ConsumptionStatus, ConsumptionUpdateePayload} from '@consumption-feature';
 import {CredentialUtilService} from '@security';
 import {ProductType} from '@product-feature';
 import { FieldSelectOption, FieldTypeConfig, FormConfig, FormValidatorsConfig } from 'app/shared/ui/form/data/config/form.config';
 import { Validators } from '@angular/forms';
 import { DataTableConfig, CellActionDefinition, MinimalVisibilityWidth } from '@shared';
-import { MemberAction, MemberKey, MemberIsAdminKey } from '../../member/data';
-import { ConsumptionIsReservedKey } from '../data/enum/consumptionIsReservedKey.enum';
 import { ConsumptionType } from '../data/enum/consumption-type.enum';
 import { Shelve } from '../../shelve/data';
+import { ConsumptionAction } from '../data/enum/consumption-action';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +79,63 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
   }
 
   
-
+  public getDataTableConfig(
+    consumptions: Consumption[],
+    isAdmin: boolean
+  ): DataTableConfig {
+    let actions: CellActionDefinition[] = [
+      {
+        icon: 'fa-solid fa-trash',
+        action: ConsumptionAction.DELETE,
+      },
+      {
+        icon: 'fa-solid fa-regular fa-truck',
+        action: ConsumptionAction.DELIVERED,
+      },
+    ];
+    return {
+      translateKey: 'admin-feature-consumption.table.label.',
+      data: consumptions,
+      cellDefinitions: [
+        {
+          targetData: ConsumptionKey.ORDER_DATE,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ConsumptionKey.DELIVERY_DATE,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ConsumptionKey.TYPE,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ConsumptionKey.STATUS,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ConsumptionKey.IS_DELIVERED,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: ConsumptionKey.IS_RESERVED,
+          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+          isMinimalWidth: false,
+        },
+        {
+          targetData: '',
+          actions,
+          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+          isMinimalWidth: true,
+        },
+      ],
+    };
+  }
 
   
 

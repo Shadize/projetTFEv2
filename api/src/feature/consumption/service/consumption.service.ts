@@ -1,4 +1,4 @@
-import { ConsumptionListException, ConsumptionNotFoundException, ConsumptionDeleteException, ConsumptionCreateException } from '@consumption/consumption.exception';
+import { ConsumptionListException, ConsumptionNotFoundException, ConsumptionDeleteException, ConsumptionCreateException, ConsumptionListByShelveException } from '@consumption/consumption.exception';
 import { Consumption, ConsumptionCreatePayload } from '@consumption/data';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -48,10 +48,19 @@ export class ConsumptionService {
             .is_reserved(payload.is_reserved)
             .is_delivered(payload.is_delivered)
             .type(payload.type)
+            .shelve_reference(payload.shelve_reference)
             .build();
           return await this.repository.save(newProduct);
         } catch (e) {
           throw new ConsumptionCreateException();
+        }
+      }
+
+      async findByShelveId(shelveId: string): Promise<Consumption[]> {
+        try {
+          return await this.repository.find({ where: { shelve_reference : shelveId } });
+        } catch (e) {
+          throw new ConsumptionListByShelveException();
         }
       }
     

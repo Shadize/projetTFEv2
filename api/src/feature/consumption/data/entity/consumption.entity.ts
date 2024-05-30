@@ -34,7 +34,9 @@ export class Consumption {
   @JoinColumn({ name: 'credential_id_fk', referencedColumnName: 'credential_id' })
   author: Credential;
   // on stock l'emplacement sous forme de chaine de caractère
+
   shelve:string;
   // on stock l'id comme ca on peut y retourner.
+  @Column({ nullable: false })
   shelve_reference:string;
 }

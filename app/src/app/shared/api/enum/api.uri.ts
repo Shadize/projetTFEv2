@@ -23,5 +23,8 @@ export enum ApiURI {
   PRODUCT_DETAIL = 'product/detail/',
   PRODUCT_CREATE = 'product/create',
   PRODUCT_UPDATE = 'product/update',
-  PRODUCT_DELETE = 'product/delete/'
+  PRODUCT_DELETE = 'product/delete/',
+  CONSUMPTION_LIST = 'consumption/list',
+  CONSUMPTION_DELETE = 'consumption/delete/',
+  CONSUMPTION_LIST_BY_SHELVE = 'consumption/shelve/'
 }

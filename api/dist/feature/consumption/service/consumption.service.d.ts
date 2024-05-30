@@ -7,4 +7,5 @@ export declare class ConsumptionService {
     detail(id: string): Promise<Consumption>;
     delete(id: string): Promise<void>;
     create(payload: ConsumptionCreatePayload): Promise<Consumption>;
+    findByShelveId(shelveId: string): Promise<Consumption[]>;
 }

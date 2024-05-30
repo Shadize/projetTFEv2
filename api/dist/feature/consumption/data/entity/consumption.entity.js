@@ -60,6 +60,10 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'credential_id_fk', referencedColumnName: 'credential_id' }),
     __metadata("design:type", model_1.Credential)
 ], Consumption.prototype, "author", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: false }),
+    __metadata("design:type", String)
+], Consumption.prototype, "shelve_reference", void 0);
 exports.Consumption = Consumption = __decorate([
     (0, typeorm_1.Entity)()
 ], Consumption);
