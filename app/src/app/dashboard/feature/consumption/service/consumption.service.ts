@@ -49,13 +49,13 @@ export class ConsumptionService {
       })).subscribe();
   }
 
-  delete(id: string) {
-    this.api.delete(`${ApiURI.CONSUMPTION_DELETE}${id}`, true)
+  delete(id: string):Observable<ApiResponse> {
+   return this.api.delete(`${ApiURI.CONSUMPTION_DELETE}${id}`, true)
       .pipe(tap((response: ApiResponse) => {
         if (response.result) {
           this.list();
         }
-      })).subscribe();
+      }))
   }
 
 }

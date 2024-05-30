@@ -90,7 +90,11 @@ export class ShelveDetailPageComponent implements OnInit {
 
 
   private handleDelete(id: string): void {
-    this.consumptionService.delete(id);
+    this.consumptionService.delete(id).pipe(tap(() => {
+      this.stockService.list();
+
+      this.isAddingConsumption$.set(false);
+    })).subscribe();
   }
 
   private handleDeliver(id: string): void {
