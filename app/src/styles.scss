@@ -9,6 +9,8 @@ body {
   --theme-dark-clear: #d2d2d7;
   --theme-black: #2A2A2E;
   // Standard theme
+  --theme-header-background:#f8f9fa;
+  --theme-header-text: #999999;
   --theme-standard-bg: #f5f5f7;
   --theme-search-bg: #f8f8fc;
   --theme-standard-bg-hover: #fafafa;
@@ -43,7 +45,7 @@ body {
   --theme-info-middle: #5E9CEA;
   --theme-info-dark: #4B89DA;
 
-  --var-header-height: 60px;
+  --var-header-height: 80px;
   --var-side-menu-full-open: 250px;
   --var-side-menu--minimal: 60px;
 

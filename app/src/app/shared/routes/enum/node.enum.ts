@@ -22,5 +22,6 @@ export enum AppNode {
   MEMBER_ADD = 'member/add',
   MEMBER_UPDATE = 'member/update/:id',
   REDIRECT_TO_MEMBER_LIST = `${AppNode.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.MEMBER}`,
-  REDIRECT_TO_PRODUCT_LIST = `${AppNode.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.PRODUCT}`
+  REDIRECT_TO_PRODUCT_LIST = `${AppNode.AUTHENTICATED}/${AppNode.ADMIN}/${AppNode.PRODUCT}`,
+  CONSUMPTION = 'consumption'
 }

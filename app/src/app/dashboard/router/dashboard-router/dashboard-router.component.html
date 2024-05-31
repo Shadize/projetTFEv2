@@ -1,24 +1,41 @@
-<header>
-  <div class="logo"><i class="fa-light fa-cube"></i> <span class="title">Stock</span></div>
-  <div class="filler"></div>
+@if(!securityService.account$().isEmpty) {
+  <header>
+    <nav class="minimal-nav">
+      <ul>
+        <li>
+          <a routerLink="{{routes.SHELVE_LIST }}">
+            <i class="fa-solid fa-shelves"></i>
+            <span class="title">{{'header.title.shelve' | translate}}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="{{routes.PRODUCT_LIST }}">
+            <i class="fa-solid fa-grid-horizontal"></i>
+            <span class="title">{{'header.title.product' | translate}}</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="{{routes.CONSUMPTION_LIST }}">
+            <i class="fa-solid fa-person-carry-box"></i>
+            <span class="title">{{'header.title.consumption' | translate}}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="usr">
+      <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
+        <div class="circle"><i class="fa-regular fa-user"></i></div>
+        <span class="title">{{securityService.account$().username}}</span>
+      </a>
+    </div>
+  </header>
+  <section id="wrapper">
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+  <footer>
+    <span>Copyright © 2023 Institut Notre-Dame de Malmedy Tous droits réservés.</span>
+  </footer>
 
-  <nav class="minimal-nav">
-    <ul>
-      <li>
-        <a routerLink="{{routes.AUTHENTICATED }}"><i class="fa-light fa-house"></i></a>
-      </li>
-      <li>
-        <a routerLink="{{routes.ADMIN }}"><i class="fa-light fa-gear"></i></a>
-      </li>
-    </ul>
-  </nav>
-  <div class="usr"><a routerLink="{{routes.ACCOUNT_PARAMETER }}"><i class="fa-light fa-user"></i></a></div>
-</header>
-<section id="wrapper">
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
-</section>
-<footer>
-  <p>Copyright © 2023 Institut Notre-Dame de Malmedy Tous droits réservés.</p>
-</footer>
+}

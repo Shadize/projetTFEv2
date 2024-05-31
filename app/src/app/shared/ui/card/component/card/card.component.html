@@ -1,6 +1,8 @@
 <div class="card">
-  <!-- here de content will show for example:
-  <app-card> Mon contenu </app-card>
-  ng-content will be replaced by "Mon contenu" -->
-  <ng-content></ng-content>
+  @if(title) {
+    <app-card-header [title]="title"></app-card-header>
+  }
+  <div [class.card-content]="!isTransparent">
+    <ng-content></ng-content>
+  </div>
 </div>

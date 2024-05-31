@@ -1,9 +1,9 @@
-<app-card>
-
-  @if(!list$()){
+@if (!list$()) {
+  <app-card>
     <app-detail-not-found [message]="'feature.shelve-detail.not-found'"></app-detail-not-found>
-  } @else {
-    <app-card-header [title]="list$()[0].rack"></app-card-header>
-    <app-data-table [config]="shelveDataTableConfig$()"  (rowClicked)="goToDetail($event)"></app-data-table>
-  }
-</app-card>
+  </app-card>
+} @else {
+  <app-card [title]="list$()[0].rack">
+    <app-data-table [config]="shelveDataTableConfig$()" (rowClicked)="goToDetail($event)"></app-data-table>
+  </app-card>
+}

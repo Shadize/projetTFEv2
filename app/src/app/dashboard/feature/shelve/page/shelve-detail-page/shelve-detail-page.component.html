@@ -1,20 +1,22 @@
-<app-card>
+<div class="flexos">
   @if (!detail$()) {
     <app-detail-not-found [message]="'feature.shelve-detail.not-found'"></app-detail-not-found>
   } @else {
-    <app-card-header [title]="detail$().str"></app-card-header>
-    liste de produits
+    <app-card title="{{'feature.shelve-detail.title-data' | translate: detail$() }}">
     <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
 
-    <div class="band"></div>
+    </app-card>
     @if (isAddingConsumption$()) {
-      <app-card-header [title]="'feature.consumption-form'"></app-card-header>
+      <app-card [title]="'feature.consumption-form'">
       <app-form-builder [config]="consumptionFormConfig$()"
                         (cancel)="cancel()"
                         (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+      </app-card>
     } @else {
-      <app-card-header [title]="'feature.consumption-list'"></app-card-header>
+      <app-card [title]="'feature.consumption-list'">
       <app-data-table [config]="consumptionDataTableConfig$()" (actionClicked)="onActionClicked($event)"></app-data-table>
+      </app-card>
+
     }
   }
-</app-card>
+</div>

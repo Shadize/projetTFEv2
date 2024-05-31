@@ -1,0 +1,33 @@
+:host {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;align-items: center;
+  background: var(---theme-white);
+  padding:20px;
+}
+.center{
+  background:var(--theme-header-background);
+  color:var(--theme-header-text);
+  width:50%;
+  max-width:600px;
+  padding:5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;align-items: center;
+  gap:20px;
+  i{
+    font-size:60px;
+    color: var(--theme-error-dark)
+  }
+}
+
+@media (max-width:600px) {
+  :host{
+    padding:5px;
+  }
+  .center{
+    width:100%;
+    background:var(--theme-white);
+  }
+}

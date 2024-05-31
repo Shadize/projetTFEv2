@@ -193,6 +193,7 @@ export class CredentialUtilService
 
     return {
       submitTitle,
+      translateKey:'feature.credential.form.label.',
       data: credantial,
       fields,
       validators: validatorsConfig,

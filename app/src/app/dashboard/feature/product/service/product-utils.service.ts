@@ -214,9 +214,9 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     isAdmin: boolean,
     actionNeeded: boolean = true
   ): DataTableConfig {
-  
+
     let actions: CellActionDefinition[] = [];
-  
+
     if (actionNeeded) {
 
       if (isAdmin) {
@@ -230,7 +230,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         });
       }
     }
-    
+
     // Define the base cell definitions
     let cellDefinitions: { targetData: ProductKey | ''; minimalWidthVisibility: MinimalVisibilityWidth; isMinimalWidth: boolean; actions?: CellActionDefinition[] }[] = [
       {
@@ -259,7 +259,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         isMinimalWidth: false,
       },
     ];
-  
+
     // Conditionally add the action cell definition
     if (actionNeeded) {
       cellDefinitions.push({
@@ -269,14 +269,14 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         isMinimalWidth: true,
       });
     }
-  
+
     return {
       translateKey: 'admin-feature-product.table.label.',
       data: products,
       cellDefinitions,
     };
   }
-  
+
 
   public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle: string): FormConfig {
     const fields = Object.values(ProductKeyForm);
@@ -357,6 +357,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     }
     return {
       submitTitle,
+      translateKey:'feature.product.form.label.',
       data: {...this.toForm(product, shelve.shelve_id)},
       fields,
       validators: validatorsConfig,
@@ -383,7 +384,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  
+
 
 
   public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductCreatePayload {

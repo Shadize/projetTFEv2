@@ -3,6 +3,7 @@ import {Validators} from '@angular/forms';
 
 export interface FormConfig {
   submitTitle: string;
+  translateKey: string;
   data: any;
   fields: string[];
   validators: FormValidatorsConfig[];
@@ -18,7 +19,7 @@ export interface FieldTypeConfig {
   field: string;
   type: string;
   options?: FieldSelectOption[]; // Utilisé uniquement pour les champs de type 'select'
-  readOnly? : boolean;
+  readOnly?: boolean;
 }
 
 export interface FieldSelectOption {

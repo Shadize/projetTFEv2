@@ -1,11 +1,16 @@
 @if (detail.isEmpty) {
-  <div class="not-found">
-    {{ 'shelve-detail-feature.not-found' | translate }}
-  </div>
+  <app-card>
+    <div class="not-found">
+      {{ 'shelve-detail-feature.not-found' | translate }}
+    </div>
+  </app-card>
 } @else {
-  <div class="header">
-    <div class="title">{{ detail.title }}</div>
+  <div class="flexos">
+    <app-card title="{{ 'feature.stock-detail.title-plan'  | translate: detail }}" [isTransparent]="true">
+      <app-stock-plan [detail]="detail" (onRackClick)="onRackClickHandle($event)"></app-stock-plan>
+    </app-card>
+    <app-card title="{{ 'feature.stock-detail.list-data'  | translate: detail }}">
+      <app-data-table [config]="shelveDataTableConfig$()" (rowClicked)="onRowClickHandle($event)"></app-data-table>
+    </app-card>
   </div>
-  <app-stock-plan [detail]="detail" (onRackClick)="onRackClickHandle($event)"></app-stock-plan>
-  <app-data-table [config]="shelveDataTableConfig$()" (rowClicked)="onRowClickHandle($event)"></app-data-table>
 }

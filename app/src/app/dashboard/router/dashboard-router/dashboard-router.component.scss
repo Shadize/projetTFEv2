@@ -2,53 +2,48 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--theme-standard-bg);
+  background: var(---theme-white);
 }
 
 header {
   position: fixed;
   z-index: 999;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 40px;
+  left: 40px;
+  right: 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   height: var(--var-header-height);
-  background: var(--theme-primary);
+  background: var(--theme-header-background);
+  color: var(--theme-header-text);
 
-  .logo {
-    padding-left:15px;
+  /* nav */
+nav{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+}
+  nav ul {
+    width:100%;
+    max-width:600px;
     display: flex;
-    flex-direction: row;gap:9px;
-    justify-content: center;align-items: center;
-    font-size: 26px;
-    color: var(--theme-secondary);
-    .title{
-      color:var(--theme-white);
-      font-size:18px;text-transform: uppercase;
+    flex-direction: row;
+    color: var(--theme-header-text);
+    li{
+      flex:1;
     }
   }
 
-  .filler {
-    flex: 3;
-  }
-
-  /* nav */
-
-  nav ul {
-    display: flex;
-    flex-direction: row;
-  }
-
   nav a, .usr a {
-    width: var(--var-header-height);
     height: var(--var-header-height);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: var(--theme-white);
+    gap:10px;
+    color: var(--theme-header-text);
     transition: all ease .4s;
     position: relative;
     overflow: hidden;
@@ -56,13 +51,31 @@ header {
     &:hover {
       background: var(--theme-secondary);
       color: var(--theme-primary);
+      .circle{
+        background:var(--theme-primary);
+        color:var(--theme-secondary);
+        border:1px solid var(--theme-primary);
+      }
+    }
+  }
+  .usr{
+    width: var(--var-header-height);
+    height: var(--var-header-height);
+    .circle{
+      border: 1px solid var(--theme-header-text);
+      border-radius: 50%;
+      width:30px;height:30px;
+      display: flex;flex-direction: column;justify-content: center;align-items: center;
+      i{
+        font-size:12px;
+      }
     }
   }
 }
 
 #wrapper {
   flex: 3;
-  padding-top: var(--var-header-height);
+  padding-top: 150px;
 
   .content {
     padding: 1rem;
@@ -79,6 +92,7 @@ footer {
   padding: 1rem;
   height: 80px;
   color: var(--theme-label-text);
-  font-weight: 600;
   font-size: 10px;
+  background: var(--theme-header-background);
+  letter-spacing: 1.25px;
 }

@@ -2,6 +2,7 @@ import {Business} from '@core';
 import {ProductType} from '@product-feature';
 import {ConsumptionStatus} from '@consumption-feature';
 import {Credential} from '@security';
+import {ConsumptionType} from './enum/consumption-type.enum';
 
 export interface Consumption extends Business {
   order_date: Date; // readonly et contient la date du jours
@@ -15,4 +16,5 @@ export interface Consumption extends Business {
   shelve: string; // shelve.str
   shelve_reference: string; //locationReference
   productName:string;
+  consumption_type:ConsumptionType;
 }

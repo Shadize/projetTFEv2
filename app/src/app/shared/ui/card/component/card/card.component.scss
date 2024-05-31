@@ -6,7 +6,9 @@
   width: 100%;
   max-width: 1200px;
   margin: auto;
-  border: 1px solid var(--theme-eee);
-  background:var(--theme-white);
-  padding: 1rem;
+  .card-content{
+    border: 1px solid var(--theme-eee);
+    background:var(--theme-header-background);
+    padding: 1rem;
+  }
 }

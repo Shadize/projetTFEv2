@@ -3,7 +3,7 @@ import {Shelve, Stock} from '../../data';
 import {TranslateModule} from '@ngx-translate/core';
 import {StockPlanComponent} from '../stock-plan/stock-plan.component';
 import {Router} from '@angular/router';
-import {AppRoutes, DataTableComponent, DataTableConfig} from '@shared';
+import {AppRoutes, CardComponent, DataTableComponent, DataTableConfig} from '@shared';
 import {ShelveUtilsService} from '../../service';
 
 @Component({
@@ -12,7 +12,8 @@ import {ShelveUtilsService} from '../../service';
   imports: [
     TranslateModule,
     StockPlanComponent,
-    DataTableComponent
+    DataTableComponent,
+    CardComponent
   ],
   templateUrl: './stock-detail.component.html',
   styleUrl: './stock-detail.component.scss'

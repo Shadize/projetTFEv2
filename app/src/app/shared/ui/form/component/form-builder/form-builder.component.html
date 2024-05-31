@@ -1,24 +1,25 @@
 <div class="form" [formGroup]="form">
-  @for (config of config.fieldTypes; track config.field) {
+  @for (fiedlConfig of config.fieldTypes; track fiedlConfig.field) {
     <div class="form-group">
       <div class="label">
-        <label [for]="config.field">{{ config.field }}</label>
+        <label [for]="fiedlConfig.field">{{ config.translateKey + fiedlConfig.field | translate }}</label>
       </div>
       <div class="input">
-        <ng-container [ngSwitch]="config.type">
+        <ng-container [ngSwitch]="fiedlConfig.type">
           <ng-container *ngSwitchCase="'select'">
-            <select [formControlName]="config.field" [id]="config.field">
-              <option *ngFor="let option of config.options" [value]="option.value"
+            <select [formControlName]="fiedlConfig.field" [id]="fiedlConfig.field">
+              <option *ngFor="let option of fiedlConfig.options" [value]="option.value"
                       [selected]="option.selected">{{ option.label | translate }}
               </option>
             </select>
           </ng-container>
           <ng-container *ngSwitchDefault>
-            <input [formControlName]="config.field" [id]="config.field" [type]="config.type" [readonly]="config.readOnly ? true : null"/>
+            <input [formControlName]="fiedlConfig.field" [id]="fiedlConfig.field" [type]=" fiedlConfig.readOnly ? 'text': fiedlConfig.type"
+                   [readonly]="fiedlConfig.readOnly ? true : null"/>
           </ng-container>
         </ng-container>
-        <div *ngIf="form.get(config.field)?.invalid && form.get(config.field)?.touched" class="error">
-          {{ 'form.label.' + config.field }}
+        <div *ngIf="form.get(fiedlConfig.field)?.invalid && form.get(fiedlConfig.field)?.touched" class="error">
+          {{ 'form.label.' + fiedlConfig.field }}
         </div>
       </div>
     </div>

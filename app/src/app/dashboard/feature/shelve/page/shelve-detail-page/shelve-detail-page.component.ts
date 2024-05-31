@@ -10,7 +10,8 @@ import {
 } from '@shelve-feature';
 import {
   CardComponent,
-  CardHeaderComponent, CellActionDefinition,
+  CardHeaderComponent,
+  CellActionDefinition,
   DataTableComponent,
   DataTableConfig,
   DetailNotFoundComponent,
@@ -21,18 +22,13 @@ import {TranslateModule} from '@ngx-translate/core';
 import {JsonPipe} from '@angular/common';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
-import {
-  Consumption,
-  ConsumptionAction,
-  ConsumptionKey,
-  ConsumptionStatus,
-  ConsumptionUtilsService
-} from '@consumption-feature';
+import {Consumption, ConsumptionAction, ConsumptionStatus, ConsumptionUtilsService} from '@consumption-feature';
 import {ConsumptionService} from 'app/dashboard/feature/consumption/service/consumption.service';
 import {Product} from '@product-feature';
 import {SecurityService} from '@security';
 import {ProductUpdatePayload} from '../../../product/data/payload/product-update.payload';
 import {tap} from 'rxjs';
+import {ConsumptionType} from '../../../consumption/data/enum/consumption-type.enum';
 
 @Component({
   selector: 'app-shelve-detail-page',
@@ -143,6 +139,7 @@ export class ShelveDetailPageComponent implements OnInit {
       quantity: this.selectedQuantity,
       is_reserved: formValue.consumption_type === "RESERVATION" ? true : false,
       is_delivered: formValue.consumption_type === "RESERVATION" ? false : true,
+      consumption_type:formValue.consumption_type,
       type: formValue.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: this.detail$().str,

@@ -6,8 +6,7 @@ import {
   ConsumptionCreatePayload,
   ConsumptionDto,
   ConsumptionKey,
-  ConsumptionStatus,
-  ConsumptionUpdateePayload
+  ConsumptionStatus
 } from '@consumption-feature';
 import {CredentialUtilService} from '@security';
 import {Product, ProductType} from '@product-feature';
@@ -18,7 +17,7 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {Validators} from '@angular/forms';
-import {DataTableConfig, CellActionDefinition, MinimalVisibilityWidth} from '@shared';
+import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
 import {ConsumptionType} from '../data/enum/consumption-type.enum';
 import {Shelve} from '../../shelve/data';
 import {ConsumptionAction} from '../data/enum/consumption-action';
@@ -38,6 +37,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       isEmpty: false,
       is_delivered: dto.is_delivered,
       is_reserved: dto.is_reserved,
+      consumption_type: dto.is_delivered? ConsumptionType.DIRECT_REMOVE : ConsumptionType.RESERVATION,
       order_date: dto.order_date,
       quantity: dto.quantity,
       shelve: dto.shelve,
@@ -64,7 +64,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       shelve_reference: '',
       status: ConsumptionStatus.ACTIVE,
       str: 'app.common.empty',
-      type: ProductType.PANEL
+      type: ProductType.PANEL,
+      consumption_type:ConsumptionType.RESERVATION
     }
   }
 
@@ -178,7 +179,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     });
 
     const fieldTypesConfig: FieldTypeConfig[] = fields.map((field) => {
-      let fieldType = 'text';
+      let fieldType = ConsumptionKeyForm.DELIVERY_DATE ? 'date' : 'text';
       let fieldOptions: FieldSelectOption[] = [];
       let fieldReadOnly = false;
 
@@ -202,6 +203,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
 
     return {
       submitTitle,
+      translateKey: 'feature.consumption.form.label.',
       data: consumption,
       fields,
       validators: validatorsConfig,
@@ -224,7 +226,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       shelve_reference: shelve.locationReference,
       product,
       productName: product.str
-      
+
 
     };
   }
