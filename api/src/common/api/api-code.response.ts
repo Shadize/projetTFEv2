@@ -101,6 +101,8 @@ export enum ApiCodeResponse {
   CONSUMPTION_DELETE_ERROR = 'api.error.consumption-delete',
   CONSUMPTION_LIST_ERROR = 'api.error.consumption-list',
   CONSUMPTION_LIST_BY_SHELVE_ERROR = 'api.error.consumption-list-by-shelve',
+  CONSUMPTION_LIST_BY_PRODUCT_ERROR = 'api.error.consumption-list-by-product',
+  CONSUMPTION_LIST_BY_CREDENTIAL_ERROR = 'api.error.consumption-list-by-credential',
   CONSUMPTION_CREATE_ERROR = 'api.error.consumption-create',
   CONSUMPTION_UPDATE_ERROR = 'api.error.consumption-update',
 

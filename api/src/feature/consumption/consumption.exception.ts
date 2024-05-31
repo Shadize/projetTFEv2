@@ -30,3 +30,15 @@ export class ConsumptionListByShelveException extends ApiException {
   }
 }
 
+export class ConsumptionListByProductException extends ApiException {
+  constructor() {
+    super(ApiCodeResponse.CONSUMPTION_LIST_BY_PRODUCT_ERROR, 200);
+  }
+}
+
+export class ConsumptionListByCredentialException extends ApiException {
+  constructor() {
+    super(ApiCodeResponse.CONSUMPTION_LIST_BY_CREDENTIAL_ERROR, 200);
+  }
+}
+

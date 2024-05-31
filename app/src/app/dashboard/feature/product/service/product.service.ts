@@ -14,7 +14,7 @@ export class ProductService {
 
   private readonly router: Router = inject(Router);
   private readonly api: ApiService = inject(ApiService);
-  public list$: WritableSignal<Product[]> = signal([]);
+  public list$: WritableSignal<Product[] | undefined> = signal(undefined);
   private productUtilsService: ProductUtilsService = inject(ProductUtilsService);
 
   public list(): void {

@@ -38,6 +38,12 @@ let ConsumptionController = class ConsumptionController {
     getByShelveId(shelveId) {
         return this.service.findByShelveId(shelveId);
     }
+    getByProduct(productId) {
+        return this.service.findByProductById(productId);
+    }
+    getByAuthor(user) {
+        return this.service.findByCredential(user);
+    }
 };
 exports.ConsumptionController = ConsumptionController;
 __decorate([
@@ -75,6 +81,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ConsumptionController.prototype, "getByShelveId", null);
+__decorate([
+    (0, common_1.Get)('product/:productId'),
+    __param(0, (0, common_1.Param)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "getByProduct", null);
+__decorate([
+    (0, common_1.Get)('author'),
+    __param(0, (0, config_1.User)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [model_1.Credential]),
+    __metadata("design:returntype", Promise)
+], ConsumptionController.prototype, "getByAuthor", null);
 exports.ConsumptionController = ConsumptionController = __decorate([
     (0, swagger_1.ApiBearerAuth)('access-token'),
     (0, swagger_1.ApiTags)('Consumption'),

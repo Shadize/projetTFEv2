@@ -3,7 +3,9 @@ import {
   ConsumptionNotFoundException,
   ConsumptionDeleteException,
   ConsumptionCreateException,
-  ConsumptionListByShelveException
+  ConsumptionListByShelveException,
+  ConsumptionListByCredentialException,
+  ConsumptionListByProductException
 } from '@consumption/consumption.exception';
 import { Consumption, ConsumptionCreatePayload } from '@consumption/data';
 import { Injectable, Logger } from '@nestjs/common';
@@ -75,6 +77,28 @@ export class ConsumptionService {
       return await this.repository.find({ where: { shelve_reference: shelveId } });
     } catch (e) {
       throw new ConsumptionListByShelveException();
+    }
+  }
+
+  async findByProductById(productId: string): Promise<Consumption[]> {
+    try {
+      return await this.repository.createQueryBuilder('consumption')
+        .where('consumption.product.product_id = :productId', { productId })
+        .getMany();
+    } catch (e) {
+      throw new ConsumptionListByProductException();
+    }
+  }
+  
+
+  async findByCredential(credential: Credential): Promise<Consumption[]> {
+    let credential_id = credential.credential_id
+    try {
+      return await this.repository.createQueryBuilder('consumption')
+      .where('consumption.author.credential_id = :credential_id', { credential_id })
+      .getMany();
+    } catch (e) {
+      throw new ConsumptionListByCredentialException();
     }
   }
 

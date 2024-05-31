@@ -4,6 +4,7 @@ import { Credential } from '@security/model';
 import { User } from '@common/config';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ConsumptionService } from '@consumption/service';
+import { Product } from '@product/data';
 
 @ApiBearerAuth('access-token')
 @ApiTags('Consumption')
@@ -34,5 +35,15 @@ export class ConsumptionController {
   @Get('shelve/:shelveId')
   getByShelveId(@Param('shelveId') shelveId: string): Promise<Consumption[]> {
     return this.service.findByShelveId(shelveId);
+  }
+
+  @Get('product/:productId')
+  getByProduct(@Param('productId') productId: string): Promise<Consumption[]> {
+    return this.service.findByProductById(productId);
+  }
+
+  @Get('author')
+  getByAuthor(@User() user: Credential): Promise<Consumption[]> {
+    return this.service.findByCredential(user);
   }
 }

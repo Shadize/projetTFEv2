@@ -27,5 +27,7 @@ export enum ApiURI {
   CONSUMPTION_CREATE= 'consumption/create',
   CONSUMPTION_LIST = 'consumption/list',
   CONSUMPTION_DELETE = 'consumption/delete/',
-  CONSUMPTION_LIST_BY_SHELVE = 'consumption/shelve/'
+  CONSUMPTION_LIST_BY_SHELVE = 'consumption/shelve/',
+  CONSUMPTION_LIST_BY_PRODUCT = 'consumption/product/',
+  CONSUMPTION_LIST_BY_AUTHOR = 'consumption/author/'
 }

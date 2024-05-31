@@ -1,6 +1,7 @@
 import {Component, computed, inject, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import {
   Shelve,
+  ShelveService,
   ShelveUtilsService,
   Stock,
   StockDetailComponent,
@@ -54,6 +55,7 @@ export class ShelveDetailPageComponent implements OnInit {
   protected stockService: StockService = inject(StockService);
   protected stockUtils: StockUtilsService = inject(StockUtilsService);
   protected shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  protected shelveService: ShelveService = inject(ShelveService);
   protected productUtils: ProductUtilsService = inject(ProductUtilsService);
   protected productService: ProductService = inject(ProductService);
   protected consumptionUtils: ConsumptionUtilsService = inject(ConsumptionUtilsService);

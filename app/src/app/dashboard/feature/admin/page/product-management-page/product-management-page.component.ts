@@ -34,9 +34,6 @@ export class ProductManagementPageComponent implements OnInit {
   public onActionClicked(data: CellActionDefinition): void {
     const item : Product = data.data! as Product;
     switch (data.action) {
-      case ProductAction.DETAIL:
-        this.handleDetail();
-        break;
       case ProductAction.EDIT:
         this.handleEdit(item.id);
         break;
@@ -52,8 +49,8 @@ export class ProductManagementPageComponent implements OnInit {
   }
 
 
-  private genConfigs(products: Product[]): DataTableConfig {
-    return this.productUtils.getDataTableConfig(products, true);
+  private genConfigs(products: Product[] | undefined): DataTableConfig {
+    return this.productUtils.getDataTableConfig(products!, true);
   }
 
 

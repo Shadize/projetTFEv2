@@ -1,0 +1,5 @@
+<app-card>
+    <app-card-header [title]="'feature.product-list.title'"></app-card-header>
+    <app-data-table [config]="productConfig$()"
+                    (rowClicked)="onProductRowClicked($event)"></app-data-table>
+  </app-card>

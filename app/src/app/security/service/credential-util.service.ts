@@ -47,7 +47,6 @@ export class CredentialUtilService
   }
 
   fromDTO(dto: CredentialDto): Credential {
-    console.log(dto.username + ' : '+ dto);
     return {
       facebookHash: '',
       googleHash: '',

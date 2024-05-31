@@ -84,6 +84,8 @@ var ApiCodeResponse;
     ApiCodeResponse["CONSUMPTION_DELETE_ERROR"] = "api.error.consumption-delete";
     ApiCodeResponse["CONSUMPTION_LIST_ERROR"] = "api.error.consumption-list";
     ApiCodeResponse["CONSUMPTION_LIST_BY_SHELVE_ERROR"] = "api.error.consumption-list-by-shelve";
+    ApiCodeResponse["CONSUMPTION_LIST_BY_PRODUCT_ERROR"] = "api.error.consumption-list-by-product";
+    ApiCodeResponse["CONSUMPTION_LIST_BY_CREDENTIAL_ERROR"] = "api.error.consumption-list-by-credential";
     ApiCodeResponse["CONSUMPTION_CREATE_ERROR"] = "api.error.consumption-create";
     ApiCodeResponse["CONSUMPTION_UPDATE_ERROR"] = "api.error.consumption-update";
     ApiCodeResponse["CONSUMPTION_UPDATE_SUCCESS"] = "api.success.consumption-update";

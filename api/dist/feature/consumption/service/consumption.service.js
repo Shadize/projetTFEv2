@@ -81,6 +81,27 @@ let ConsumptionService = ConsumptionService_1 = class ConsumptionService {
             throw new consumption_exception_1.ConsumptionListByShelveException();
         }
     }
+    async findByProductById(productId) {
+        try {
+            return await this.repository.createQueryBuilder('consumption')
+                .where('consumption.product.product_id = :productId', { productId })
+                .getMany();
+        }
+        catch (e) {
+            throw new consumption_exception_1.ConsumptionListByProductException();
+        }
+    }
+    async findByCredential(credential) {
+        let credential_id = credential.credential_id;
+        try {
+            return await this.repository.createQueryBuilder('consumption')
+                .where('consumption.author.credential_id = :credential_id', { credential_id })
+                .getMany();
+        }
+        catch (e) {
+            throw new consumption_exception_1.ConsumptionListByCredentialException();
+        }
+    }
     async setForProduct(consumptions, product) {
         console.log('consumptions', consumptions);
         for (let consumption of consumptions) {

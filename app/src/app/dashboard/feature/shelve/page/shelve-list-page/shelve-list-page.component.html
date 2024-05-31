@@ -1,7 +1,11 @@
 <app-card>
   <app-card-header [title]="'feature.shelve-list.title'"></app-card-header>
-  <app-data-table [config]="config$()"
+  <app-data-table [config]="stockConfig$()"
                   (actionClicked)="onActionClicked($event)"
-                  (rowClicked)="onRowClicked($event)"></app-data-table>
+                  (rowClicked)="onStockRowClicked($event)"></app-data-table>
 
+  <div class="band"></div>
+  <app-product-list-page></app-product-list-page>
 </app-card>
+
+

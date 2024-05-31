@@ -9,4 +9,6 @@ export declare class ConsumptionController {
     detail(id: string): Promise<Consumption>;
     getAll(): Promise<Consumption[]>;
     getByShelveId(shelveId: string): Promise<Consumption[]>;
+    getByProduct(productId: string): Promise<Consumption[]>;
+    getByAuthor(user: Credential): Promise<Consumption[]>;
 }

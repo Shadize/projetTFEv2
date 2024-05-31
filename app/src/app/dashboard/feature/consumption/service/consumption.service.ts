@@ -49,6 +49,29 @@ export class ConsumptionService {
       })).subscribe();
   }
 
+  public listByProduct(id: string): void {
+    this.api.get(`${ApiURI.CONSUMPTION_LIST_BY_PRODUCT}${id}`)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list$.set(this.consumptionsUtilsService.fromDTOS(response.data));
+        } else {
+          this.list$.set([])
+        }
+      })).subscribe();
+  }
+
+  public listByAuthor(): void {
+    this.api.get(ApiURI.CONSUMPTION_LIST_BY_AUTHOR)
+      .pipe(tap((response: ApiResponse) => {
+        if (response.result) {
+          this.list$.set(this.consumptionsUtilsService.fromDTOS(response.data));
+        } else {
+          this.list$.set([])
+        }
+      })).subscribe();
+  }
+  
+
   delete(id: string):Observable<ApiResponse> {
    return this.api.delete(`${ApiURI.CONSUMPTION_DELETE}${id}`, true)
       .pipe(tap((response: ApiResponse) => {

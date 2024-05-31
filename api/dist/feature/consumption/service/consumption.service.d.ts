@@ -11,5 +11,7 @@ export declare class ConsumptionService {
     delete(id: string): Promise<void>;
     create(payload: ConsumptionCreatePayload, user: Credential): Promise<Consumption>;
     findByShelveId(shelveId: string): Promise<Consumption[]>;
+    findByProductById(productId: string): Promise<Consumption[]>;
+    findByCredential(credential: Credential): Promise<Consumption[]>;
     setForProduct(consumptions: Consumption[], product: Product): Promise<void>;
 }

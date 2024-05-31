@@ -109,6 +109,7 @@
 
   "feature.shelve-detail.not-found": "L'emplacement n'a pas été trouvé",
   "feature.shelve-list.title": "Liste des emplacments de stockage",
+  "feature.product-list.title": "Liste des produits",
   "feature.product.type.panel": "Panneau",
   "feature.product.type.plateau": "Plateau",
   "feature.member.isAdmin.true": "Oui",
@@ -117,7 +118,9 @@
   "feature.admin.member.title-update": "Modifier le membre",
   "feature.admin.product.title-add": "Ajouter un produit",
   "feature.admin.product.title-update": "Modifier le produit",
+  "feature.product-detail.title" : "Détail du produit",
   "feature.admin.consumption.title-add": "Ajouter une consommation",
+  "feature.product-detail.consumption-list" : "Liste des consommations liées au produit",
   "feature.consumption.isReserved.true": "Oui",
   "feature.consumption.isReserved.false": "Non",
   "feature.consumption.type.direct_remove" : "Retrait immédiat",

@@ -39,3 +39,12 @@
     width:250px;
   }
 }
+
+.band {
+  background: var(--theme-standard-bg);
+  margin: 20px -18px;
+  border-top: 1px solid var(--theme-eee);
+  border-bottom: 1px solid var(--theme-eee);
+  height: 20px;
+}
+

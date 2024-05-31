@@ -34,6 +34,8 @@ export class ProductAdminUpdatePageComponent implements OnInit {
     this.productService.detail(this.id).pipe(
       tap((detail: Product) => this.detail$.set(detail))
     ).subscribe()
+
+    
   }
 
   genFormConfigs(product: Product | null, stocks: Stock[] | undefined): FormConfig {

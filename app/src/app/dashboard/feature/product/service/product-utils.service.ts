@@ -9,11 +9,12 @@ import {
   ProductKeyForm,
   ProductType,
 } from '@product-feature';
-import {Consumption, ConsumptionDto, ConsumptionUtilsService} from '@consumption-feature';
+import { ConsumptionDto, ConsumptionUtilsService} from '@consumption-feature';
 import {
   DataTableConfig,
   CellActionDefinition,
   MinimalVisibilityWidth,
+  DetailCardConfig,
 } from '@shared';
 import {
   FieldSelectOption,
@@ -22,7 +23,7 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ShelveDto, ShelveUtilsService, Stock, StockDto} from '@shelve-feature';
+import {ShelveDto,  StockDto} from '@shelve-feature';
 import {flatten} from 'lodash';
 import {ProductUpdatePayload} from '../data/payload/product-update.payload';
 import {TranslateService} from '@ngx-translate/core';
@@ -168,52 +169,33 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     };
   }
 
-  public getDataTableConfig(
-    products: Product[],
-    isAdmin: boolean
-  ): DataTableConfig {
+  public getOneProductDataConfig(products: Product[]): DataTableConfig {
+
     let actions: CellActionDefinition[] = [
       {
-        icon: 'fa-solid fa-eye',
-        action: ProductAction.DETAIL,
+        icon: 'fa-solid fa-cart-shopping',
+        action: ProductAction.CONSUMPTION,
       },
     ];
-    if (isAdmin) {
-      actions.push({
-        icon: 'fa-solid fa-pencil',
-        action: ProductAction.EDIT,
-      });
-      actions.push({
-        icon: 'fa-solid fa-trash',
-        action: ProductAction.DELETE,
-      });
-    }
     return {
       translateKey: 'admin-feature-product.table.label.',
       data: products,
       cellDefinitions: [
         {
-          targetData: ProductKey.TITLE,
-          minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ProductKey.WIDTH,
-          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ProductKey.HEIGHT,
-          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ProductKey.THICKNESS,
-          minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ProductKey.PRICE,
+          targetData: 'quantity-choose',
+          formGroup: products.map(p => ({
+            formGroup: new FormGroup<any>({quantity: new FormControl(1)}),
+            config: {
+              field: 'quantity',
+              type: 'select',
+              options: [...Array.from({length: p.quantity + 1}).keys()].map(value => ({
+                selected: false,
+                value,
+                label: value.toString()
+              }))
+            }
+          }))
+          ,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },
@@ -226,6 +208,75 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       ],
     };
   }
+
+  public getDataTableConfig(
+    products: Product[],
+    isAdmin: boolean,
+    actionNeeded: boolean = true
+  ): DataTableConfig {
+  
+    let actions: CellActionDefinition[] = [];
+  
+    if (actionNeeded) {
+
+      if (isAdmin) {
+        actions.push({
+          icon: 'fa-solid fa-pencil',
+          action: ProductAction.EDIT,
+        });
+        actions.push({
+          icon: 'fa-solid fa-trash',
+          action: ProductAction.DELETE,
+        });
+      }
+    }
+    
+    // Define the base cell definitions
+    let cellDefinitions: { targetData: ProductKey | ''; minimalWidthVisibility: MinimalVisibilityWidth; isMinimalWidth: boolean; actions?: CellActionDefinition[] }[] = [
+      {
+        targetData: ProductKey.TITLE,
+        minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+        isMinimalWidth: false,
+      },
+      {
+        targetData: ProductKey.WIDTH,
+        minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
+        isMinimalWidth: false,
+      },
+      {
+        targetData: ProductKey.HEIGHT,
+        minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
+        isMinimalWidth: false,
+      },
+      {
+        targetData: ProductKey.THICKNESS,
+        minimalWidthVisibility: MinimalVisibilityWidth.LARGE,
+        isMinimalWidth: false,
+      },
+      {
+        targetData: ProductKey.PRICE,
+        minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+        isMinimalWidth: false,
+      },
+    ];
+  
+    // Conditionally add the action cell definition
+    if (actionNeeded) {
+      cellDefinitions.push({
+        targetData: '',
+        actions,
+        minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
+        isMinimalWidth: true,
+      });
+    }
+  
+    return {
+      translateKey: 'admin-feature-product.table.label.',
+      data: products,
+      cellDefinitions,
+    };
+  }
+  
 
   public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle: string): FormConfig {
     const fields = Object.values(ProductKeyForm);
@@ -312,6 +363,27 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       fieldTypes: fieldTypesConfig
     };
   }
+
+
+  public getDataCardConfig(product : Product) : DetailCardConfig{
+    return {
+      fields: [
+        { field: 'type', label: 'Type' },
+        { field: 'title', label: 'Title' },
+        { field: 'quantity', label: 'Quantity' },
+        { field: 'width', label: 'Width' },
+        { field: 'height', label: 'Height' },
+        { field: 'thickness', label: 'Thickness' },
+        { field: 'price', label: 'Price' },
+        { field: 'materials', label: 'Materials' },
+        { field: 'treatment', label: 'Treatment' },
+        { field: 'shelve', label: 'Shelve' }
+      ],
+      data: product
+    };
+  }
+
+  
 
 
   public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductCreatePayload {

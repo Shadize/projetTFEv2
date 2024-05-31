@@ -31,4 +31,11 @@
     <button (click)="securityService.logOut()"
             class="simple-btn-default">{{'security-feature.parameter-page.btn.log-out' | labelWithParam}}</button>
   </div>
+
+  <div class="band"></div>
+
+  <app-card-header [title]="'feature.product-detail.consumption-list'"></app-card-header>
+    <app-data-table [config]="consumptionDataTableConfig$()" (actionClicked)="onActionClicked($event)"></app-data-table>
 </app-card>
+
+<button (click)="test()"></button>

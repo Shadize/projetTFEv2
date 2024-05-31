@@ -1,0 +1,18 @@
+<app-card>
+  <app-card-header [title]="'feature.product-detail.title'"></app-card-header>
+  <app-data-card
+                [config]="config$()"></app-data-card>
+  <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
+
+  <div class="band"></div>
+
+  @if (isAddingConsumption$()) {
+    <app-card-header [title]="'feature.consumption-form'"></app-card-header>
+    <app-form-builder [config]="consumptionFormConfig$()"
+                      (cancel)="cancel()"
+                      (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+  } @else {
+    <app-card-header [title]="'feature.product-detail.consumption-list'"></app-card-header>
+    <app-data-table [config]="consumptionDataTableConfig$()" (actionClicked)="onActionClicked($event)"></app-data-table>
+  }
+</app-card>
