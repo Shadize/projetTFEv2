@@ -1,8 +1,7 @@
-<app-card [title]="'feature.shelve-list.title'">
+<app-card [title]="'feature.shelve-list.title'" [actions]="actions$()" (actionClicked)="actioncCliked($event)">
   <app-data-table [config]="stockConfig$()"
                   (actionClicked)="onActionClicked($event)"
                   (rowClicked)="onStockRowClicked($event)"></app-data-table>
-
 </app-card>
 
 

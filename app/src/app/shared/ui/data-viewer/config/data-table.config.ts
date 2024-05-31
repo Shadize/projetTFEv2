@@ -15,6 +15,7 @@ export interface CellDefinition {
   actions?: CellActionDefinition[],
   minimalWidthVisibility: MinimalVisibilityWidth;
   isMinimalWidth: boolean;
+  specialCss?:string;
 }
 export interface CellFormGroupDefinition{
   config:FieldTypeConfig,

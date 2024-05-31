@@ -3,6 +3,32 @@
   font-size:14px;
   letter-spacing: 2px;
   font-family: 'Figtree';
-  padding-bottom:15px;
+  height:40px;
+  display: flex;align-items: center;
   color:var(--theme-input-text);
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;align-items: center;
+  margin-bottom:10px;
+  .title{
+    flex:2;
+  }
+  .actions{
+    display: flex;
+    flex-direction: row;
+  }
+  .item{
+    cursor:pointer;
+    width:40px;height:40px;
+    display: flex;flex-direction: column;justify-content: center;align-items: center;
+    color:var(--theme-header-text);
+    transition: var(--transition-smooth);
+    border-radius: 50%;
+    &:hover{
+      background:var(--theme-header-background);
+      color:var(--theme-primary);
+    }
+  }
 }

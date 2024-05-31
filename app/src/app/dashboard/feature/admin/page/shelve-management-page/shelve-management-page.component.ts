@@ -49,7 +49,7 @@ export class ShelveManagementPageComponent implements OnInit {
   }
 
   private genConfigs(stocks: Stock[] | undefined): DataTableConfig {
-    return this.stockUtils.getDataTableConfig(stocks ?? [], true);
+    return this.stockUtils.getDataTableConfig(stocks ?? [], );
   }
 
   private handleDetail(id: string): void {

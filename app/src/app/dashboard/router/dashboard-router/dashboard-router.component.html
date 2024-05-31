@@ -1,38 +1,40 @@
 @if(!securityService.account$().isEmpty) {
   <header>
-    <nav class="minimal-nav">
-      <ul>
-        <li>
-          <a routerLink="{{routes.SHELVE_LIST }}">
-            <i class="fa-solid fa-shelves"></i>
-            <span class="title">{{'header.title.shelve' | translate}}</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="{{routes.PRODUCT_LIST }}">
-            <i class="fa-solid fa-grid-horizontal"></i>
-            <span class="title">{{'header.title.product' | translate}}</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="{{routes.CONSUMPTION_LIST }}">
-            <i class="fa-solid fa-person-carry-box"></i>
-            <span class="title">{{'header.title.consumption' | translate}}</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="{{routes.MEMBER_LIST }}">
-            <i class="fa-solid fa-users-gear"></i>
-            <span class="title">{{'header.title.member' | translate}}</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <div class="usr">
-      <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
-        <div class="circle"><i class="fa-regular fa-user"></i></div>
-        <span class="title">{{securityService.account$().username}}</span>
-      </a>
+    <div class="band">
+      <nav class="minimal-nav">
+        <ul>
+          <li>
+            <a routerLink="{{routes.SHELVE_LIST }}">
+              <i class="fa-solid fa-shelves"></i>
+              <span class="title">{{'header.title.shelve' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="{{routes.PRODUCT_LIST }}">
+              <i class="fa-solid fa-grid-horizontal"></i>
+              <span class="title">{{'header.title.product' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="{{routes.CONSUMPTION_LIST }}">
+              <i class="fa-solid fa-person-carry-box"></i>
+              <span class="title">{{'header.title.consumption' | translate}}</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="{{routes.MEMBER_LIST }}">
+              <i class="fa-solid fa-users-gear"></i>
+              <span class="title">{{'header.title.member' | translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="usr">
+        <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
+          <div class="circle"><i class="fa-regular fa-user"></i></div>
+          <span class="title">{{securityService.account$().username}}</span>
+        </a>
+      </div>
     </div>
   </header>
   <section id="wrapper">

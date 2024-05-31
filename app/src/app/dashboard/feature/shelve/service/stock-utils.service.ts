@@ -5,11 +5,13 @@ import {ShelveUtilsService} from './shelve-utils.service';
 import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@shared';
 import {StockAction, StockKey} from '../data';
 import {StockDoorUtilsService} from './stock-door-utils.service';
+import {SecurityService} from '@security';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
+  private securityService: SecurityService = inject(SecurityService);
   private shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
   private doorUtilsService: StockDoorUtilsService = inject(StockDoorUtilsService);
 
@@ -66,14 +68,9 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
     }
   }
 
-  public getDataTableConfig(stocks: Stock[], isAdmin: boolean): DataTableConfig {
+  public getDataTableConfig(stocks: Stock[]): DataTableConfig {
     let actions: CellActionDefinition[] = []
-    if (isAdmin) {
-      actions.push(
-        {
-          icon: 'fa-solid fa-eye',
-          action: StockAction.DETAIL
-        });
+    if (this.securityService.account$().isAdmin) {
       actions.push({
         icon: 'fa-solid fa-pencil',
         action: StockAction.EDIT
@@ -96,7 +93,8 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
           targetData: '',
           actions,
           minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
-          isMinimalWidth: true
+          isMinimalWidth: true,
+          specialCss:'action-cell'
         }
       ]
     }

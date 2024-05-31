@@ -1,7 +1,7 @@
 @if (config.data && config.data.length > 0) {
   <div class="table">
     <div class="row header">
-      <div *ngFor="let item of config.cellDefinitions" class="cell  {{item.minimalWidthVisibility}}"
+      <div *ngFor="let item of config.cellDefinitions" class="cell  {{item.minimalWidthVisibility}} {{item.specialCss}}"
            [class.is-minimal]="item.isMinimalWidth">
         <ng-container *ngIf="item.actions; else title"></ng-container>
         <ng-template #title> {{ config.translateKey + item.targetData | translate }}</ng-template>

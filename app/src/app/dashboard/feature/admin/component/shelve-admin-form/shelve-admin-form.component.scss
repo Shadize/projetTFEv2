@@ -1,3 +1,13 @@
+.flexos{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+.flexos{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
 
 
 .first-step {
@@ -55,7 +65,6 @@
     flex: 1;
     flex-direction: column;
   }
-
   .explanation {
     flex: 2;
     display: flex;
@@ -69,21 +78,6 @@
 
       button {
         flex: 1;
-      }
-    }
-
-    .data {
-      flex: 2;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-
-      .title {
-        text-transform: uppercase;
-      }
-
-      .error {
-        color: var(--theme-error-dark)
       }
     }
   }
@@ -286,10 +280,44 @@
 input {
   border: none;
 }
+.actions{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  justify-content: flex-end;align-items: flex-end;
+  button{
+    width:250px;
+  }
+}
 
+
+.data {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom:25px;
+
+  .title {
+    text-transform: uppercase;
+  }
+
+  .error {
+    color: var(--theme-error-dark)
+  }
+}
 @media (max-width: 600px) {
   .first-step {
     display: flex;
     flex-direction: column;
+  }
+}
+@media (min-width:300px) and (max-width: 600px) {
+  .actions {
+    display: flex;
+    flex-direction: column;
+    button{
+      width:100%;
+    }
   }
 }

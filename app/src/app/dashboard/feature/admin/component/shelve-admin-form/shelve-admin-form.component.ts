@@ -16,8 +16,8 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {TranslateModule} from '@ngx-translate/core';
 import {Surface, SurfaceCell, SurfaceCoordinate, SurfaceDoorCell} from '../../data';
 import {
-  AppRoutes,
-  CardHeaderComponent,
+  AppRoutes, CardActionDefinition, CardComponent,
+  CardHeaderComponent, confirmDialog,
   ConfirmDialogComponent,
   DataTableComponent,
   DataTableConfig,
@@ -45,6 +45,18 @@ import {Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {ulid} from 'ulid';
 
+interface ShelveAdminActions {
+  physical: CardActionDefinition[]
+}
+
+enum ShelveAdminAction {
+  SAVE = 'SAVE',
+  CANCEL = 'CANCEL',
+  DELETE = 'DELETE',
+  ADD_SHELVE = 'ADD_SHELVE',
+  CANCEL_ADD_SHELVE = 'CANCEL_ADD_SHELVE'
+}
+
 @Component({
   selector: 'app-shelve-admin-form',
   standalone: true,
@@ -55,6 +67,7 @@ import {ulid} from 'ulid';
     DataTableComponent,
     CardHeaderComponent,
     ConfirmDialogComponent,
+    CardComponent,
   ],
   templateUrl: './shelve-admin-form.component.html',
   styleUrl: './shelve-admin-form.component.scss'
@@ -83,6 +96,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     nbCells: 0,
     rows: []
   });
+  public actions$: WritableSignal<ShelveAdminActions> = signal(this.getActions());
   public errors$: WritableSignal<FormError[]> = signal([]);
   public shelveErrors$: WritableSignal<FormError[]> = signal([]);
   public editionMode$: WritableSignal<boolean> = signal(false);
@@ -112,8 +126,20 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     this.onResize();
   }
 
+  @confirmDialog({
+    title: 'admin-feature-shelve-cancel-form.confirm-title',
+    message: 'admin-feature-shelve-cancel-form.confirm-message'
+  })
   public cancel(): void {
-    this.router.navigate([AppRoutes.ADMIN_SHELVES]).then();
+    this.router.navigate([AppRoutes.SHELVE_LIST]).then();
+  }
+
+  @confirmDialog({
+    title: 'admin-feature-shelve-delete.confirm-title',
+    message: 'admin-feature-shelve-delete.confirm-message'
+  })
+  public delete(): void {
+    this.stockService.delete(this.stock.id);
   }
 
   public save(): void {
@@ -134,7 +160,7 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     obs.pipe(
       tap((stock: Stock) => {
         if (!stock.isEmpty) {
-          this.cancel();
+          this.router.navigate([AppRoutes.SHELVE_LIST]).then();
         }
       }))
       .subscribe();
@@ -331,6 +357,21 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public actionCardClicked(action: CardActionDefinition): void {
+    console.log('action', action);
+    switch (action.action) {
+      case ShelveAdminAction.SAVE:
+        this.save();
+        break;
+      case ShelveAdminAction.CANCEL:
+        this.cancel();
+        break;
+      case ShelveAdminAction.DELETE:
+        this.delete();
+        break;
+    }
+  }
+
   public validate(): void {
     const coordinate = this.surfaceCoordinate$();
     const minimalItem = document.getElementById(coordinate.minimalRow + '-' + coordinate.minimalCell);
@@ -507,5 +548,24 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
         wall
       }
     )));
+  }
+
+  private getActions(): ShelveAdminActions {
+    return {
+      physical: [
+        {
+          icon: 'fa-regular fa-floppy-disk',
+          action: ShelveAdminAction.SAVE
+        },
+        {
+          icon: 'fa-regular fa-arrow-rotate-left',
+          action: ShelveAdminAction.CANCEL
+        },
+        {
+          icon: 'fa-regular fa-trash',
+          action: ShelveAdminAction.DELETE
+        }
+      ]
+    }
   }
 }

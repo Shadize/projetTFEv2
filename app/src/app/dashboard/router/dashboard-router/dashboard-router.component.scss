@@ -8,31 +8,38 @@
 header {
   position: fixed;
   z-index: 999;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  height: var(--var-header-height);
-  background: var(--theme-header-background);
-  color: var(--theme-header-text);
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  background: var(--theme-white);
+
+  .band {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: var(--var-header-height);
+    background: var(--theme-header-background);
+    color: var(--theme-header-text);
+  }
 
   /* nav */
-nav{
-  width:100%;
-  display: flex;
-  flex-direction: row;
-}
+  nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
   nav ul {
-    width:100%;
-    max-width:600px;
+    width: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: row;
     color: var(--theme-header-text);
-    li{
-      flex:1;
+
+    li {
+      flex: 1;
     }
   }
 
@@ -42,7 +49,7 @@ nav{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:10px;
+    gap: 10px;
     color: var(--theme-header-text);
     transition: all ease .4s;
     position: relative;
@@ -51,23 +58,31 @@ nav{
     &:hover {
       background: var(--theme-secondary);
       color: var(--theme-primary);
-      .circle{
-        background:var(--theme-primary);
-        color:var(--theme-secondary);
-        border:1px solid var(--theme-primary);
+
+      .circle {
+        background: var(--theme-primary);
+        color: var(--theme-secondary);
+        border: 1px solid var(--theme-primary);
       }
     }
   }
-  .usr{
+
+  .usr {
     width: var(--var-header-height);
     height: var(--var-header-height);
-    .circle{
+
+    .circle {
       border: 1px solid var(--theme-header-text);
       border-radius: 50%;
-      width:30px;height:30px;
-      display: flex;flex-direction: column;justify-content: center;align-items: center;
-      i{
-        font-size:12px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        font-size: 12px;
       }
     }
   }

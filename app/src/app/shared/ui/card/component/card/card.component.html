@@ -1,6 +1,6 @@
 <div class="card">
-  @if(title) {
-    <app-card-header [title]="title"></app-card-header>
+  @if(title || actions) {
+    <app-card-header [title]="title" [actions]="actions" (actionClicked)="actionClicked.emit($event)"></app-card-header>
   }
   <div [class.card-content]="!isTransparent">
     <ng-content></ng-content>

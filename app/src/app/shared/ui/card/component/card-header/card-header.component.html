@@ -1,1 +1,14 @@
-<div class="title">{{title |translate:params}}</div>
+<div class="header">
+  @if(title){
+    <div class="title">{{title |translate:params}}</div>
+  }
+  @if (actions){
+    <div class="actions">
+      @for(action of actions;let index=$index;track index){
+        <span class="item" (click)="actionClicked.emit(action)">
+         <i class="fa-regular  {{action.icon}}"></i>
+        </span>
+      }
+    </div>
+  }
+</div>

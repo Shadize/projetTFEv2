@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
+import {CardActionDefinition} from '../../data';
 
 @Component({
   selector: 'app-card-header',
@@ -10,6 +11,8 @@ import {TranslateModule} from '@ngx-translate/core';
   styleUrls: ['./card-header.component.scss']
 })
 export class CardHeaderComponent {
-  @Input({required: true}) title!: string;
-  @Input() params: any ={};
+  @Input() title?: string;
+  @Input() actions?: CardActionDefinition[];
+  @Input() params: any = {};
+  @Output() actionClicked = new EventEmitter<CardActionDefinition>();
 }
