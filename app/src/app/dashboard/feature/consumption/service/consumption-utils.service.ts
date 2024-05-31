@@ -124,22 +124,12 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
           isMinimalWidth: false,
         },
         {
-          targetData: ConsumptionKey.TYPE,
+          targetData: ConsumptionKey.PRODUCT_NAME,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },
         {
           targetData: ConsumptionKey.STATUS,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ConsumptionKey.IS_DELIVERED,
-          minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
-          isMinimalWidth: false,
-        },
-        {
-          targetData: ConsumptionKey.IS_RESERVED,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },

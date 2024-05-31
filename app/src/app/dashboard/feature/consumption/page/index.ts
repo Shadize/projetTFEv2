@@ -1,0 +1,1 @@
+export * from './consumption-list-page/consumption-list-page.component';

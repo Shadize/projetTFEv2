@@ -1,0 +1,9 @@
+<app-card [title]="'feature.consumption-list'">
+    <app-data-table [config]="consumptionConfig$()"
+                    (actionClicked)="onActionClicked($event)"
+                    (rowClicked)="onConsumptionRowClicked($event)"></app-data-table>
+  
+  </app-card>
+  
+  
+  

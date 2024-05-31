@@ -7,6 +7,7 @@ export enum AppRoutes {
   SHELVE_LIST= `${AppRoutes.AUTHENTICATED}/${AppNode.SHELVES}/${AppNode.LIST}`,
   PRODUCT_LIST= `${AppRoutes.AUTHENTICATED}/${AppNode.PRODUCT}/${AppNode.LIST}`,
   CONSUMPTION_LIST= `${AppRoutes.AUTHENTICATED}/${AppNode.CONSUMPTION}/${AppNode.LIST}`,
+  MEMBER_LIST = `${AppRoutes.AUTHENTICATED}/${AppNode.MEMBER}/${AppNode.LIST}`,
   SHELVE_DETAIL= `${AppRoutes.AUTHENTICATED}/${AppNode.SHELVES}/${AppNode.SHELVE}-${AppNode.DETAIL}`,
   STOCK_SHELVE_DETAIL= `${AppRoutes.AUTHENTICATED}/${AppNode.SHELVES}/${AppNode.SHELVES}-${AppNode.DETAIL}`,
   STOCK_DETAIL= `${AppRoutes.AUTHENTICATED}/${AppNode.SHELVES}/${AppNode.DETAIL}`,

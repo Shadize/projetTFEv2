@@ -24,6 +24,8 @@ export class DataTableComponent {
   @Output() actionClicked = new EventEmitter<CellActionDefinition>();
   @Output() rowClicked = new EventEmitter<any>();
 
+  
+
 
   onActionClicked(item: any, action: CellActionDefinition, index: number): void {
     const config = this.config.cellDefinitions.find(cd => cd.formGroup);

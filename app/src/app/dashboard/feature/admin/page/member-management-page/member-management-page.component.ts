@@ -1,9 +1,8 @@
 import { Component, OnInit, inject, Signal, computed } from "@angular/core";
 import { Router } from "@angular/router";
 import { SecurityService, CredentialUtilService, Credential } from "@security";
-import { DataTableConfig, AppRoutes, CellActionDefinition, confirmDialog } from "@shared";
+import { DataTableConfig, AppRoutes, CellActionDefinition, confirmDialog, DataTableComponent } from "@shared";
 import { MemberAction } from "app/dashboard/feature/member/data/enum";
-import { DataTableComponent } from "../../../../../shared/ui/data-viewer/component/data-table/data-table.component";
 import { TranslateModule } from "@ngx-translate/core";
 
 

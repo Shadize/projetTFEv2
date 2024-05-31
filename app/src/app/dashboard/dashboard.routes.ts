@@ -30,6 +30,11 @@ export const dashboardRoutes: Routes = [
               .then(r => r.memberRoutes)
           },
           {
+            path: AppNode.CONSUMPTION,
+            loadChildren: () => import('./feature/consumption/consumption.routes')
+              .then(r => r.consumptionRoutes)
+          },
+          {
             path: AppNode.SHELVES,
             loadChildren: () => import('./feature/shelve/shelve.routes')
               .then(r => r.shelveRoutes)

@@ -24,7 +24,6 @@ export class ParameterPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.consumptionService.listByAuthor();
     // console.log(this.consumptionService.list$());
   }
 
@@ -38,7 +37,5 @@ onActionClicked($event: CellActionDefinition) {
   throw new Error('Method not implemented.');
   }
 
-  test(){
 
-  }
 }

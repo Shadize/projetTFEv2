@@ -9,4 +9,5 @@ export enum ConsumptionKey{
     IS_DELIVERED = 'is_delivered',
     TYPE = 'type',
     STATUS = 'status',
+    PRODUCT_NAME = 'productName'
 }
