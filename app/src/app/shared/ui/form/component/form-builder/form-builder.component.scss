@@ -13,11 +13,16 @@
       font-size:12px;
       letter-spacing: 1.25px;
       font-family: 'Figtree';
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
 
     .input {
       display: flex;
       padding: 10px;
+      flex-direction: row;
+      align-items: center;
       flex: 3;
       input,select{
         flex:1;
@@ -26,7 +31,7 @@
   }
 
   .form-group:nth-child(odd) {
-    background: var(--theme-standard-bg-hover);
+    background: var(--theme-white);
   }
 
   .actions{

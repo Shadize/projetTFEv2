@@ -46,7 +46,8 @@ import {Router} from '@angular/router';
 import {ulid} from 'ulid';
 
 interface ShelveAdminActions {
-  physical: CardActionDefinition[]
+  physical: CardActionDefinition[];
+  plan:CardActionDefinition[];
 }
 
 enum ShelveAdminAction {
@@ -96,12 +97,12 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     nbCells: 0,
     rows: []
   });
-  public actions$: WritableSignal<ShelveAdminActions> = signal(this.getActions());
   public errors$: WritableSignal<FormError[]> = signal([]);
   public shelveErrors$: WritableSignal<FormError[]> = signal([]);
   public editionMode$: WritableSignal<boolean> = signal(false);
   public wallEditionMode$: WritableSignal<boolean> = signal(false);
   public shelveAreas$: WritableSignal<Shelve[]> = signal(this.stock?.shelves ?? []);
+  public actions$: Signal<ShelveAdminActions> = computed(()=>this.getActions(this.shelveAreas$()));
   public doors$: WritableSignal<StockDoor[]> = signal(this.stock?.doors ?? []);
   public surfaceCoordinate$: WritableSignal<SurfaceCoordinate> = signal({
     maximalRow: -1,
@@ -127,16 +128,16 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   }
 
   @confirmDialog({
-    title: 'admin-feature-shelve-cancel-form.confirm-title',
-    message: 'admin-feature-shelve-cancel-form.confirm-message'
+    title: 'common.cancel-form.confirm-title',
+    message: 'common.cancel-form.confirm-message'
   })
   public cancel(): void {
     this.router.navigate([AppRoutes.SHELVE_LIST]).then();
   }
 
   @confirmDialog({
-    title: 'admin-feature-shelve-delete.confirm-title',
-    message: 'admin-feature-shelve-delete.confirm-message'
+    title: 'common.delete-form.confirm-title',
+    message: 'common.delete-form.confirm-message'
   })
   public delete(): void {
     this.stockService.delete(this.stock.id);
@@ -358,7 +359,6 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
   }
 
   public actionCardClicked(action: CardActionDefinition): void {
-    console.log('action', action);
     switch (action.action) {
       case ShelveAdminAction.SAVE:
         this.save();
@@ -550,9 +550,24 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
     )));
   }
 
-  private getActions(): ShelveAdminActions {
+  private getActions(shelves:Shelve[]): ShelveAdminActions {
+    if(!this.stock || this.stock.isEmpty){
+      return {
+        physical: [
+          {
+            icon: 'fa-regular fa-floppy-disk',
+            action: ShelveAdminAction.SAVE
+          },
+          {
+            icon: 'fa-regular fa-arrow-rotate-left',
+            action: ShelveAdminAction.CANCEL
+          }
+        ],
+        plan:[]
+      }
+    }
     return {
-      physical: [
+      physical:[
         {
           icon: 'fa-regular fa-floppy-disk',
           action: ShelveAdminAction.SAVE
@@ -565,7 +580,8 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
           icon: 'fa-regular fa-trash',
           action: ShelveAdminAction.DELETE
         }
-      ]
+      ],
+      plan:[]
     }
   }
 }

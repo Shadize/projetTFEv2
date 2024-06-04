@@ -387,7 +387,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
 
 
-  public genCreatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductCreatePayload {
+  public genCreatePayload(product: ProductForm, stocks: StockDto[]): ProductCreatePayload {
     return {
       materials: product.materials,
       treatment: product.treatment,
@@ -398,13 +398,13 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       height: product.height,
       price: product.price,
       type: product.type,
-      shelve: this.getShelve(stocks, shelveId)
+      shelve: this.getShelve(stocks, product.shelve)
     }
   }
 
-  public genUpdatePayload(product: ProductForm, stocks: StockDto[], shelveId: string): ProductUpdatePayload {
+  public genUpdatePayload(product: ProductForm, stocks: StockDto[]): ProductUpdatePayload {
     return {
-      ...this.genCreatePayload(product, stocks, shelveId),
+      ...this.genCreatePayload(product, stocks),
       product_id: product.id,
       consumptions: []
     }

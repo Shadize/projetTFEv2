@@ -1,0 +1,6 @@
+<app-card [title]="product?.isEmpty ? 'admin-feature.title.product-add':'admin-feature.title.product-update'"
+          [params]="product" [actions]="actions$()" (actionClicked)="actionCardClicked($event)">
+  <app-form-builder [config]="config$()">
+
+  </app-form-builder>
+</app-card>

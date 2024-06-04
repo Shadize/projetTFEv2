@@ -1,6 +1,7 @@
-export enum MemberAction{
-    DETAIL,
-    EDIT,
-    DELETE,
-    ADD
+export enum MemberAction {
+  DETAIL = 'DETAIL',
+  EDIT = 'EDIT',
+  DELETE = 'DELETE',
+  ADD = 'ADD',
+  LOGOUT = 'LOGOUT'
 }

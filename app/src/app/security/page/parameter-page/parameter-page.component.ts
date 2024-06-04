@@ -18,39 +18,32 @@ export class ParameterPageComponent implements OnInit {
 
   private router: Router = inject(Router);
   readonly securityService:SecurityService = inject(SecurityService);
-  protected consumptionUtils: ConsumptionUtilsService = inject(ConsumptionUtilsService);
-  protected consumptionService: ConsumptionService = inject(ConsumptionService);
-  protected readonly Object = Object;
-  protected readonly String = String;
-  protected consumptionDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConsumptionTableConfig(this.consumptionService.list$()!));
   protected actions$: WritableSignal<CardActionDefinition[]> = signal(this.getAction());
 
 
   ngOnInit(): void {
-
-    // console.log(this.consumptionService.list$());
   }
 
-  genConsumptionTableConfig(consumption: Consumption[]): DataTableConfig {
-    return this.consumptionUtils.getDataTableConfig(consumption, true);
-    
-
-
-  }
-onActionClicked($event: CellActionDefinition) {
-  throw new Error('Method not implemented.');
-  }
-
-
-  public actioncCliked(data: any): void {
-    this.router.navigate([AppRoutes.ADMIN_MEMBER_UPDATE.replace(':id',data.id)]).then();
+  public actioncCliked(data: CardActionDefinition): void {
+    switch(data.action){
+      case MemberAction.LOGOUT:
+        this.securityService.logOut();
+        break;
+      case MemberAction.EDIT:
+        this.router.navigate([AppRoutes.ADMIN_MEMBER_UPDATE.replace(':id',data.data.id)]).then();
+        break;
+    }
   }
 
   private getAction(): CardActionDefinition[] {
     return [
       {
-        icon: 'fa-solid- fa-pencil',
+        icon: 'fa-pencil',
         action: MemberAction.EDIT
+      },
+      {
+        icon: 'fa-arrow-up-left-from-circle',
+        action: MemberAction.LOGOUT
       }
     ]
   }

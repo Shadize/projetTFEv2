@@ -81,8 +81,8 @@ export class ShelveListPageComponent {
   }
 
   @confirmDialog({
-    title: 'admin-feature-shelve-delete.confirm-title',
-    message: 'admin-feature-shelve-delete.confirm-message'
+    title: 'common.delete-form.confirm-title',
+    message: 'common.delete-form.confirm-message'
   })
   private handleDelete(id: string): void {
     this.stockService.delete(id);

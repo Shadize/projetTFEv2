@@ -1,6 +1,1 @@
-<app-card [title]="'feature.admin.product.title-add'">
-    <app-form-builder [config]="config$()"
-    (cancel)="cancel()"
-    (formSubmitted)="onFormSubmitted($event)"></app-form-builder>    
-</app-card>
-
+<app-product-admin-form [product]="productUtils.getEmpty()"></app-product-admin-form>

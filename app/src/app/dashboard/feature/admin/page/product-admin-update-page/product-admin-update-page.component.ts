@@ -1,20 +1,21 @@
 import {Component, Input, OnInit, Signal, WritableSignal, computed, inject, signal} from '@angular/core';
 import {Product} from '@product-feature';
-import {AppRoutes, CardComponent, FormBuilderComponent} from '@shared';
+import {AppRoutes, CardActionDefinition, CardComponent, FormBuilderComponent} from '@shared';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {tap} from 'rxjs';
 import {JsonPipe} from '@angular/common';
 import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
 import {Router} from '@angular/router';
+import {FormAction} from '@admin-feature';
 
 
 @Component({
-    selector: 'app-product-admin-update-page',
-    standalone: true,
-    templateUrl: './product-admin-update-page.component.html',
-    styleUrl: './product-admin-update-page.component.scss',
-    imports: [FormBuilderComponent, JsonPipe, CardComponent]
+  selector: 'app-product-admin-update-page',
+  standalone: true,
+  templateUrl: './product-admin-update-page.component.html',
+  styleUrl: './product-admin-update-page.component.scss',
+  imports: [FormBuilderComponent, JsonPipe, CardComponent]
 })
 export class ProductAdminUpdatePageComponent implements OnInit {
 
@@ -27,7 +28,7 @@ export class ProductAdminUpdatePageComponent implements OnInit {
   private router: Router = inject(Router);
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.detail$(), this.stockService.list$()));
   public detail$: WritableSignal<Product | null> = signal(null);
-
+  public actions$: WritableSignal<CardActionDefinition[]> = signal(this.getActions());
 
   ngOnInit(): void {
     this.stockService.list();
@@ -35,7 +36,7 @@ export class ProductAdminUpdatePageComponent implements OnInit {
       tap((detail: Product) => this.detail$.set(detail))
     ).subscribe()
 
-    
+
   }
 
   genFormConfigs(product: Product | null, stocks: Stock[] | undefined): FormConfig {
@@ -51,9 +52,28 @@ export class ProductAdminUpdatePageComponent implements OnInit {
 
   onFormSubmitted(formValue: any): void {
     console.log('shelve', formValue.shelve);
-    this.productService.update(this.productUtils.genUpdatePayload({
+    this.productService.update(
+      this.productUtils.genUpdatePayload({
       id: this.detail$()!.id,
       ...formValue
-    }, this.stockUtils.toDTOS(this.stockService.list$()!), formValue.shelve)).subscribe();
+    }, this.stockUtils.toDTOS(this.stockService.list$()!))).subscribe();
+  }
+
+  private getActions(): CardActionDefinition[] {
+
+    return [
+      {
+        icon: 'fa-regular fa-floppy-disk',
+        action: FormAction.SAVE
+      },
+      {
+        icon: 'fa-regular fa-arrow-rotate-left',
+        action: FormAction.CANCEL
+      },
+      {
+        icon: 'fa-regular fa-trash',
+        action: FormAction.DELETE
+      }
+    ]
   }
 }

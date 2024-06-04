@@ -43,7 +43,7 @@
 
   </app-card>
   @if (data$().rows.length || !stock.isEmpty) {
-    <app-card [isTransparent]="true">
+    <app-card [isTransparent]="true" [actions]="actions$().plan">
       <div class="plan" (window:resize)="onResize()">
         @for (door of doors$(); let index = $index; track index) {
           <div class="door"

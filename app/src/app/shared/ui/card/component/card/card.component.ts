@@ -15,5 +15,6 @@ export class CardComponent {
   @Input() title?: string;
   @Input() actions? :CardActionDefinition[];
   @Input() isTransparent: boolean = false;
+  @Input() params: any = {};
   @Output() actionClicked = new EventEmitter<CardActionDefinition>();
 }
