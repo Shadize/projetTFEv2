@@ -1,15 +1,15 @@
 import {Component, OnInit, Signal, computed, inject} from '@angular/core';
 import {Credential, CredentialUtilService, SecurityService} from '@security';
-import {AppRoutes, FormBuilderComponent} from '@shared';
+import {AppRoutes, CardComponent, FormBuilderComponent} from '@shared';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-member-admin-add-page',
-  standalone: true,
-  templateUrl: './member-admin-add-page.component.html',
-  styleUrl: './member-admin-add-page.component.scss',
-  imports: [FormBuilderComponent]
+    selector: 'app-member-admin-add-page',
+    standalone: true,
+    templateUrl: './member-admin-add-page.component.html',
+    styleUrl: './member-admin-add-page.component.scss',
+    imports: [FormBuilderComponent, CardComponent]
 })
 export class MemberAdminAddPageComponent implements OnInit {
   private securityService: SecurityService = inject(SecurityService);

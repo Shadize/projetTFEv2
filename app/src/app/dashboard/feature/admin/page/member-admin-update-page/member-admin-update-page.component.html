@@ -1,5 +1,9 @@
-@if (detail$()) {
-    <app-form-builder [config]="config$()"
-                      (cancel)="cancel()"
-                      (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
-  }
+
+<app-card [title]="'feature.admin.member.title-update'">
+    @if (detail$()) {
+        <app-form-builder [config]="config$()"
+                          (cancel)="cancel()"
+                          (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+      }
+</app-card>
+

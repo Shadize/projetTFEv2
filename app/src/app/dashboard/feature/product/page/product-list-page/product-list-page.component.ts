@@ -1,7 +1,7 @@
-import { Component, OnInit, Signal, computed, inject } from '@angular/core';
+import { Component, OnInit, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataTableConfig, AppRoutes, CardHeaderComponent, DataTableComponent, CardComponent } from '@shared';
-import { Product } from '../../data';
+import { DataTableConfig, AppRoutes, CardHeaderComponent, DataTableComponent, CardComponent, CardActionDefinition, CellActionDefinition, confirmDialog } from '@shared';
+import { Product, ProductAction } from '../../data';
 import { ProductService, ProductUtilsService } from '../../service';
 
 @Component({
@@ -17,6 +17,7 @@ export class ProductListPageComponent implements OnInit {
   private productService: ProductService = inject(ProductService);
   private productUtils: ProductUtilsService = inject(ProductUtilsService);
   protected productConfig$: Signal<DataTableConfig> = computed(() => this.genProductConfigs(this.productService.list$()));
+  protected actions$: WritableSignal<CardActionDefinition[]> = signal(this.getAction());
 
 
 
@@ -32,6 +33,44 @@ export class ProductListPageComponent implements OnInit {
 
   private genProductConfigs(products: Product[] | undefined): DataTableConfig {
 
-    return this.productUtils.getDataTableConfig(products ?? [], false, false);
+    return this.productUtils.getDataTableConfig(products ?? [], true, true);
+  }
+
+  public actioncCliked(data: CardActionDefinition): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT_CREATE]).then();
+  }
+
+  public onActionClicked(data: CellActionDefinition): void {
+    const item : Product = data.data! as Product;
+    switch (data.action) {
+      case ProductAction.EDIT:
+        this.handleEdit(item.id);
+        break;
+      case ProductAction.DELETE:
+        this.handleDelete(item.id);
+        break;
+
+    }
+  }
+
+  private handleEdit(id : string): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT_UPDATE.replace(':id',id)]).then();
+
+  }
+
+  @confirmDialog({
+    title: 'admin-feature-product-delete.confirm-title',
+    message: 'admin-feature-product-delete.confirm-message'
+  })
+  private handleDelete(id: string): void {
+    this.productService.delete(id);  }
+  
+  private getAction(): CardActionDefinition[] {
+    return [
+      {
+        icon: 'fa-plus',
+        action: ProductAction.CREATE
+      }
+    ]
   }
 }

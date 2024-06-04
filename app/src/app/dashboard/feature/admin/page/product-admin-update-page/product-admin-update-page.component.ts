@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Signal, WritableSignal, computed, inject, signal} from '@angular/core';
 import {Product} from '@product-feature';
-import {AppRoutes, FormBuilderComponent} from '@shared';
+import {AppRoutes, CardComponent, FormBuilderComponent} from '@shared';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {tap} from 'rxjs';
@@ -10,11 +10,11 @@ import {Router} from '@angular/router';
 
 
 @Component({
-  selector: 'app-product-admin-update-page',
-  standalone: true,
-  templateUrl: './product-admin-update-page.component.html',
-  styleUrl: './product-admin-update-page.component.scss',
-  imports: [FormBuilderComponent, JsonPipe]
+    selector: 'app-product-admin-update-page',
+    standalone: true,
+    templateUrl: './product-admin-update-page.component.html',
+    styleUrl: './product-admin-update-page.component.scss',
+    imports: [FormBuilderComponent, JsonPipe, CardComponent]
 })
 export class ProductAdminUpdatePageComponent implements OnInit {
 

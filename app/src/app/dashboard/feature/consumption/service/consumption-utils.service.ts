@@ -23,10 +23,14 @@ import {Shelve} from '../../shelve/data';
 import {ConsumptionAction} from '../data/enum/consumption-action';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ConsumptionUtilsService implements BusinessUtils<Consumption, ConsumptionDto> {
-  private credentialUtils: CredentialUtilService = inject(CredentialUtilService);
+export class ConsumptionUtilsService
+  implements BusinessUtils<Consumption, ConsumptionDto>
+{
+  private credentialUtils: CredentialUtilService = inject(
+    CredentialUtilService
+  );
 
   fromDTO(dto: ConsumptionDto): Consumption {
     const author = this.credentialUtils.fromDTO(dto.author);
@@ -37,7 +41,9 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       isEmpty: false,
       is_delivered: dto.is_delivered,
       is_reserved: dto.is_reserved,
-      consumption_type: dto.is_delivered? ConsumptionType.DIRECT_REMOVE : ConsumptionType.RESERVATION,
+      consumption_type: dto.is_delivered
+        ? ConsumptionType.DIRECT_REMOVE
+        : ConsumptionType.RESERVATION,
       order_date: dto.order_date,
       quantity: dto.quantity,
       shelve: dto.shelve,
@@ -45,8 +51,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       status: dto.status,
       str: `${author.username} - ${dto.type}`,
       type: dto.type,
-      productName: dto.productName
-    }
+      productName: dto.productName,
+    };
   }
 
   getEmpty(): Consumption {
@@ -58,15 +64,15 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       isEmpty: true,
       is_delivered: false,
       is_reserved: false,
-      order_date: new Date(),
+      order_date: this.formatDate(new Date()),
       quantity: 0,
       shelve: '',
       shelve_reference: '',
       status: ConsumptionStatus.ACTIVE,
       str: 'app.common.empty',
       type: ProductType.PANEL,
-      consumption_type:ConsumptionType.RESERVATION
-    }
+      consumption_type: ConsumptionType.RESERVATION,
+    };
   }
 
   toDTO(business: Consumption): ConsumptionDto {
@@ -82,18 +88,17 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       shelve_reference: business.shelve_reference,
       status: business.status,
       type: business.type,
-      productName: business.productName
-    }
+      productName: business.productName,
+    };
   }
 
   fromDTOS(dtos: ConsumptionDto[]): Consumption[] {
-    return dtos.map(d => this.fromDTO(d));
+    return dtos.map((d) => this.fromDTO(d));
   }
 
   toDTOS(business: Consumption[]): ConsumptionDto[] {
-    return business.map(b => this.toDTO(b));
+    return business.map((b) => this.toDTO(b));
   }
-
 
   public getDataTableConfig(
     consumptions: Consumption[],
@@ -143,8 +148,10 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     };
   }
 
-
-  public getDataFormConfig(consumption: Consumption, submitTitle: string): FormConfig {
+  public getDataFormConfig(
+    consumption: Consumption,
+    submitTitle: string
+  ): FormConfig {
     const fields = Object.values(ConsumptionKeyForm);
 
     const validatorsConfig: FormValidatorsConfig[] = fields.map((field) => {
@@ -165,7 +172,7 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
           break;
       }
 
-      return {field, validators: fieldValidators};
+      return { field, validators: fieldValidators };
     });
 
     const fieldTypesConfig: FieldTypeConfig[] = fields.map((field) => {
@@ -176,7 +183,8 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
       if (field === ConsumptionKeyForm.CONSUMPTION_TYPE) {
         fieldType = 'select';
         fieldOptions = Object.values(ConsumptionType).map((o) => ({
-          selected: (consumption.is_delivered && o === ConsumptionType.DIRECT_REMOVE) ||
+          selected:
+            (consumption.is_delivered && o === ConsumptionType.DIRECT_REMOVE) ||
             (!consumption.is_delivered && o === ConsumptionType.RESERVATION),
           value: o,
           label: `feature.consumption.type.${o.toLowerCase()}`,
@@ -187,8 +195,12 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
         fieldReadOnly = consumption.is_delivered;
       }
 
-
-      return {field, type: fieldType, options: fieldOptions, readOnly: fieldReadOnly};
+      return {
+        field,
+        type: fieldType,
+        options: fieldOptions,
+        readOnly: fieldReadOnly,
+      };
     });
 
     return {
@@ -201,23 +213,24 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
     };
   }
 
-  genCreatePayload(formValue: any, quantity: number, shelve: Shelve, product: Product): ConsumptionCreatePayload {
-
-
+  genCreatePayload(
+    formValue: any,
+    quantity: number,
+    shelve: Shelve,
+    product: Product
+  ): ConsumptionCreatePayload {
     return {
       order_date: formValue.order_date,
       delivery_date: formValue.delivery_date,
       quantity: quantity,
-      is_reserved: formValue.consumption_type === "RESERVATION" ? true : false,
-      is_delivered: formValue.consumption_type === "RESERVATION" ? false : true,
+      is_reserved: formValue.consumption_type === 'RESERVATION' ? true : false,
+      is_delivered: formValue.consumption_type === 'RESERVATION' ? false : true,
       type: formValue.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: shelve.str,
       shelve_reference: shelve.locationReference,
       product,
-      productName: product.str
-
-
+      productName: product.str,
     };
   }
 
@@ -232,5 +245,15 @@ export class ConsumptionUtilsService implements BusinessUtils<Consumption, Consu
   */
   stringToBoolean(value: string): boolean {
     return value.toLowerCase() === 'true';
+  }
+
+  private formatDate(date: Date): Date {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${day}-${month}-${year}`;
+
+    const [d, m, y] = formattedDate.split('-').map((num) => parseInt(num, 10));
+    return new Date(y, m - 1, d);
   }
 }

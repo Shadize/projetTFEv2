@@ -2,15 +2,15 @@ import {Component, Input, Signal, WritableSignal, computed, inject, signal, OnIn
 import {Credential, CredentialUtilService, SecurityService} from '@security';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {tap} from 'rxjs';
-import {AppRoutes, FormBuilderComponent} from '@shared';
+import {AppRoutes, CardComponent, FormBuilderComponent} from '@shared';
 import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-member-admin-update-page',
-  standalone: true,
-  templateUrl: './member-admin-update-page.component.html',
-  styleUrl: './member-admin-update-page.component.scss',
-  imports: [FormBuilderComponent]
+    selector: 'app-member-admin-update-page',
+    standalone: true,
+    templateUrl: './member-admin-update-page.component.html',
+    styleUrl: './member-admin-update-page.component.scss',
+    imports: [FormBuilderComponent, CardComponent]
 })
 export class MemberAdminUpdatePageComponent implements OnInit {
   @Input() id!: string;

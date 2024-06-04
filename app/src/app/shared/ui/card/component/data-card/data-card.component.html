@@ -2,10 +2,10 @@
     @for(field of fieldsToDisplay; track field){
         <div class="detail-group">
             <div class="label">
-              {{ field.label }}
+              {{ field.label | translate }}
             </div>
             <div class="value">
-              {{ field.value }}
+              {{ field.value | translate }}
             </div>
           </div>
     } 

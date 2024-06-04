@@ -70,6 +70,7 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
 
   public getDataTableConfig(stocks: Stock[]): DataTableConfig {
     let actions: CellActionDefinition[] = []
+    /* 
     if (this.securityService.account$().isAdmin) {
       actions.push({
         icon: 'fa-solid fa-pencil',
@@ -80,6 +81,15 @@ export class StockUtilsService implements BusinessUtils<Stock, StockDto> {
         action: StockAction.DELETE
       });
     }
+    */
+    actions.push({
+      icon: 'fa-solid fa-pencil',
+      action: StockAction.EDIT
+    });
+    actions.push({
+      icon: 'fa-solid fa-trash',
+      action: StockAction.DELETE
+    });
     return {
       translateKey: 'admin-feature-shelve.table.label.',
       data: stocks,

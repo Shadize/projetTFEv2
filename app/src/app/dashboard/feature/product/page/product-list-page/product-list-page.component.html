@@ -1,5 +1,7 @@
 
-<app-card [title]="'feature.product-list.title'">
+<app-card [title]="'feature.product-list.title'" [actions]="actions$()" (actionClicked)="actioncCliked($event)">
   <app-data-table [config]="productConfig$()"
+                  (actionClicked)="onActionClicked($event)"
+
                   (rowClicked)="onProductRowClicked($event)"></app-data-table>
 </app-card>

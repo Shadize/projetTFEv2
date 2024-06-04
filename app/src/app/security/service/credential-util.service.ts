@@ -87,10 +87,6 @@ export class CredentialUtilService
     isAdmin: boolean
   ): DataTableConfig {
     let actions: CellActionDefinition[] = [
-      {
-        icon: 'fa-solid fa-eye',
-        action: MemberAction.DETAIL,
-      },
     ];
     if (isAdmin) {
       actions.push({

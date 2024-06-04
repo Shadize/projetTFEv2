@@ -1,4 +1,4 @@
-<app-card>
+<app-card [actions]="actions$()" (actionClicked)="actioncCliked($event)">
   <app-card-header [title]="'security-feature.parameter-page.title'"
                    [params]="securityService.account$()"></app-card-header>
   <!-- start table of user data content -->

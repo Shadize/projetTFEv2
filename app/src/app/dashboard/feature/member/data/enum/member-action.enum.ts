@@ -1,5 +1,6 @@
 export enum MemberAction{
     DETAIL,
     EDIT,
-    DELETE
+    DELETE,
+    ADD
 }

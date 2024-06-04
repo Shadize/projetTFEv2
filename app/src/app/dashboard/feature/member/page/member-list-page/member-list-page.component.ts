@@ -1,18 +1,20 @@
-import { Component, OnInit, inject, Signal, computed } from "@angular/core";
+import { Component, OnInit, inject, Signal, computed, WritableSignal, signal } from "@angular/core";
 import { Router } from "@angular/router";
 import { SecurityService, CredentialUtilService, Credential } from "@security";
-import { DataTableConfig, AppRoutes, CellActionDefinition, confirmDialog, DataTableComponent } from "@shared";
+import { DataTableConfig, AppRoutes, CellActionDefinition, confirmDialog, DataTableComponent, CardComponent, CardActionDefinition } from "@shared";
 import { MemberAction } from "app/dashboard/feature/member/data/enum";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
-  selector: 'app-member-list-page',
-  standalone: true,
-  imports: [
-    DataTableComponent,
-    TranslateModule],
-  templateUrl: './member-list-page.component.html',
-  styleUrl: './member-list-page.component.scss'
+    selector: 'app-member-list-page',
+    standalone: true,
+    templateUrl: './member-list-page.component.html',
+    styleUrl: './member-list-page.component.scss',
+    imports: [
+        DataTableComponent,
+        TranslateModule,
+        CardComponent
+    ]
 })
 export class MemberListPageComponent implements OnInit {
 
@@ -20,6 +22,7 @@ export class MemberListPageComponent implements OnInit {
   private securityService: SecurityService = inject(SecurityService);
   private credentialUtils: CredentialUtilService = inject(CredentialUtilService);
   protected config$: Signal<DataTableConfig> = computed(() => this.genConfigs(this.securityService.list$()));
+  protected actions$: WritableSignal<CardActionDefinition[]> = signal(this.getAction());
 
 
   ngOnInit(): void {
@@ -32,13 +35,13 @@ export class MemberListPageComponent implements OnInit {
     this.router.navigate([AppRoutes.ADMIN_MEMBER_CREATE]).then();
     }
 
+  public actioncCliked(data: CardActionDefinition): void {
+    this.router.navigate([AppRoutes.ADMIN_MEMBER_CREATE]).then();
+  }
 
-  public onActionClicked(data: CellActionDefinition): void {
+  public onActionsClicked(data: CellActionDefinition): void {
     const item : Credential = data.data! as Credential;
     switch (data.action) {
-      case MemberAction.DETAIL:
-        this.handleDetail();
-        break;
       case MemberAction.EDIT:
         this.handleEdit(item.id);
         break;
@@ -75,5 +78,14 @@ export class MemberListPageComponent implements OnInit {
   })
   private handleDelete(id: string): void {
     this.securityService.delete(id);
+    }
+
+    private getAction(): CardActionDefinition[] {
+      return [
+        {
+          icon: 'fa-plus',
+          action: MemberAction.ADD
+        }
+      ]
     }
 }
