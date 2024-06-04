@@ -1,4 +1,4 @@
-import {Component, computed, inject, Input, Signal, signal, WritableSignal} from '@angular/core';
+import {Component, computed, inject, Input, input, OnInit, Signal} from '@angular/core';
 import {Product, ProductForm, ProductService, ProductUtilsService} from '@product-feature';
 import {AppRoutes, CardActionDefinition, CardComponent, confirmDialog, FormBuilderComponent} from '@shared';
 import {Router} from '@angular/router';
@@ -6,6 +6,7 @@ import {FormAction} from '@admin-feature';
 import {Observable, tap} from 'rxjs';
 import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
 import {FormConfig} from '../../../../../shared/ui/form/data';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-product-admin-form',
@@ -17,18 +18,29 @@ import {FormConfig} from '../../../../../shared/ui/form/data';
   templateUrl: './product-admin-form.component.html',
   styleUrl: './product-admin-form.component.scss'
 })
-export class ProductAdminFormComponent {
-  @Input({required: true}) product!: Product;
+export class ProductAdminFormComponent implements OnInit{
+  @Input({required:true}) product!:Product;
   public formValue?: ProductForm;
 
-  protected actions$: WritableSignal<CardActionDefinition[]> = signal(this.getActions());
-  protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.stockService.list$()));
+  protected actions$: Signal<CardActionDefinition[]> = computed(() => this.getActions(this.product));
+  protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.stockService.list$(), this.product));
   private router: Router = inject(Router);
   private productService: ProductService = inject(ProductService);
   private productUtils: ProductUtilsService = inject(ProductUtilsService);
   private stockUtils: StockUtilsService = inject(StockUtilsService);
   private stockService: StockService = inject(StockService);
   private shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  private canSave: boolean = false;
+  ngOnInit() {
+
+    this.stockService.list();
+  }
+
+  public dataChange(formGroup: FormGroup): void {
+    this.formValue = formGroup.value;
+    this.canSave = formGroup.valid;
+    this.getActions(this.product);
+  }
 
   public actionCardClicked(action: CardActionDefinition): void {
     switch (action.action) {
@@ -43,26 +55,33 @@ export class ProductAdminFormComponent {
         break;
     }
   }
-  private genFormConfigs(list: Stock[] | undefined): FormConfig {
-    let product: Product = this.product ?? this.productUtils.getEmpty();
-    return this.productUtils.getDataFormConfig(product, this.stockUtils.toDTOS(list),
-      this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), false, 'feature.admin.product.title-add');
+
+  private genFormConfigs(list: Stock[] | undefined, product: Product): FormConfig {
+    const config = this.productUtils.getDataFormConfig(product, this.stockUtils.toDTOS(list),
+      this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), !this.product.isEmpty, 'feature.admin.product.title-add');
+    console.log('product',product);
+    console.log('config',config);
+    return config;
   }
-  private getActions(): CardActionDefinition[] {
+
+  private getActions(product: Product): CardActionDefinition[] {
     const actions: CardActionDefinition[] = [
       {
         icon: 'fa-regular fa-floppy-disk',
-        action: FormAction.SAVE
+        action: FormAction.SAVE,
+        isDisabled: !this.canSave
       },
       {
         icon: 'fa-regular fa-arrow-rotate-left',
-        action: FormAction.CANCEL
+        action: FormAction.CANCEL,
+        isDisabled: false
       }
     ];
-    if (!!this.product?.isEmpty) {
+    if (!product.isEmpty) {
       actions.push({
         icon: 'fa-regular fa-trash',
-        action: FormAction.DELETE
+        action: FormAction.DELETE,
+        isDisabled: false
       });
     }
     return actions;
@@ -100,7 +119,7 @@ export class ProductAdminFormComponent {
     message: 'common.cancel-form.confirm-message'
   })
   private cancel(): void {
-    this.router.navigate([AppRoutes.ADMIN_PRODUCT]).then();
+    this.router.navigate([AppRoutes.PRODUCT_LIST]).then();
   }
 
   @confirmDialog({

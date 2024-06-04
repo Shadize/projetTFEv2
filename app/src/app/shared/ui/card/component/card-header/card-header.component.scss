@@ -26,9 +26,13 @@
     color:var(--theme-header-text);
     transition: var(--transition-smooth);
     border-radius: 50%;
-    &:hover{
+    &:hover:not(.disabled){
       background:var(--theme-header-background);
       color:var(--theme-primary);
     }
+  }
+  .disabled{
+    cursor:default;
+    color:var(--theme-ccc)
   }
 }

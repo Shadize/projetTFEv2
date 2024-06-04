@@ -39,11 +39,13 @@ export class ParameterPageComponent implements OnInit {
     return [
       {
         icon: 'fa-pencil',
-        action: MemberAction.EDIT
+        action: MemberAction.EDIT,
+        isDisabled:false
       },
       {
         icon: 'fa-arrow-up-left-from-circle',
-        action: MemberAction.LOGOUT
+        action: MemberAction.LOGOUT,
+        isDisabled:false
       }
     ]
   }

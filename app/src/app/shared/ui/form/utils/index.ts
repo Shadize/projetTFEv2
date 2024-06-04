@@ -23,13 +23,13 @@ export const handleFormError: HandleFormErrorFn = (form: FormGroup, signal: Writ
       tap((errors: FormError[]) => signal.set(errors)))
     .subscribe();
 }
-export const handleFormChange: HandleValueChangeFn = (form: FormGroup, callback: Function, destroyRef?: DestroyRef): void => {
+export const handleFormChange: HandleValueChangeFn = (form: FormGroup, callback: Function, me:any, destroyRef?: DestroyRef): void => {
   form.valueChanges
     .pipe(
       // that's mean kill this observer when component is destroyed
       takeUntilDestroyed(destroyRef),
       // send signal with new errors
-      tap((errors: FormError[]) => callback(form.value)))
+      tap((errors: FormError[]) => callback(form.value,me)))
     .subscribe();
 }
 

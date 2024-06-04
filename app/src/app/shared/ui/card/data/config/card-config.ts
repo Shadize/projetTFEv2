@@ -12,4 +12,5 @@ export interface CardActionDefinition {
   label?:string;
   action: any;
   data?:any;
+  isDisabled:boolean
 }

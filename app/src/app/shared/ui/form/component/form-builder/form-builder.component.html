@@ -24,10 +24,4 @@
       </div>
     </div>
   }
-  <div class="actions">
-    <button (click)="onSubmit()" [class.disabled]="form.invalid"
-            [disabled]="form.invalid">{{ config.submitTitle | translate }}
-    </button>
-    <button class="btn-error" (click)="onCancel()">{{ 'common.confirm.cancel'| translate }}</button>
-  </div>
 </div>

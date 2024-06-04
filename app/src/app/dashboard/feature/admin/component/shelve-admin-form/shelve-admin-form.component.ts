@@ -556,11 +556,13 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
         physical: [
           {
             icon: 'fa-regular fa-floppy-disk',
-            action: ShelveAdminAction.SAVE
+            action: ShelveAdminAction.SAVE,
+            isDisabled:false
           },
           {
             icon: 'fa-regular fa-arrow-rotate-left',
-            action: ShelveAdminAction.CANCEL
+            action: ShelveAdminAction.CANCEL,
+            isDisabled:false
           }
         ],
         plan:[]
@@ -570,15 +572,18 @@ export class ShelveAdminFormComponent implements OnInit, AfterViewInit {
       physical:[
         {
           icon: 'fa-regular fa-floppy-disk',
-          action: ShelveAdminAction.SAVE
+          action: ShelveAdminAction.SAVE,
+          isDisabled:false
         },
         {
           icon: 'fa-regular fa-arrow-rotate-left',
-          action: ShelveAdminAction.CANCEL
+          action: ShelveAdminAction.CANCEL,
+          isDisabled:false
         },
         {
           icon: 'fa-regular fa-trash',
-          action: ShelveAdminAction.DELETE
+          action: ShelveAdminAction.DELETE,
+          isDisabled:false
         }
       ],
       plan:[]

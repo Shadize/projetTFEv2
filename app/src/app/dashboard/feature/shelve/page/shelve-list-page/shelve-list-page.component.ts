@@ -92,7 +92,8 @@ export class ShelveListPageComponent {
     return [
       {
         icon: 'fa-plus',
-        action: ShelveListAction.ADD
+        action: ShelveListAction.ADD,
+        isDisabled:false
       }
     ]
   }

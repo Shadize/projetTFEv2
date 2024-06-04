@@ -20,6 +20,6 @@ export interface FormError {
   error: string;
 }
 export type HandleFormErrorFn = (form: FormGroup, signal: WritableSignal<FormError[]>, destroyRef?: DestroyRef) => void;
-export type HandleValueChangeFn = (form: FormGroup, callback:Function, destroyRef?: DestroyRef) => void;
+export type HandleValueChangeFn = (form: FormGroup, callback:Function,me:any, destroyRef?: DestroyRef) => void;
 export type GetAllFormErrorsFn = (form: FormGroup) => FormError[];
 export type ConfigToFormGroupFn = (config: FormControlSimpleConfig[]) => FormGroup;

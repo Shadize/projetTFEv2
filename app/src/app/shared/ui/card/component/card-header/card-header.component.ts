@@ -15,4 +15,10 @@ export class CardHeaderComponent {
   @Input() actions?: CardActionDefinition[];
   @Input() params: any = {};
   @Output() actionClicked = new EventEmitter<CardActionDefinition>();
+
+  onClick(action: CardActionDefinition) {
+    if(!action.isDisabled){
+      this.actionClicked.emit(action)
+    }
+  }
 }

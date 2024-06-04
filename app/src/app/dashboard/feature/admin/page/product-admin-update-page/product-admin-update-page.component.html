@@ -1,8 +1,3 @@
-<app-card [title]="'feature.admin.product.title-update'">
   @if (detail$()) {
-    <app-form-builder [config]="config$()"
-                      (cancel)="cancel()"
-                      (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
+    <app-product-admin-form [product]="detail$()!"></app-product-admin-form>
   }
-</app-card>
-

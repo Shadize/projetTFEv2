@@ -64,12 +64,13 @@ export class ProductListPageComponent implements OnInit {
   })
   private handleDelete(id: string): void {
     this.productService.delete(id);  }
-  
+
   private getAction(): CardActionDefinition[] {
     return [
       {
         icon: 'fa-plus',
-        action: ProductAction.CREATE
+        action: ProductAction.CREATE,
+        isDisabled:false
       }
     ]
   }

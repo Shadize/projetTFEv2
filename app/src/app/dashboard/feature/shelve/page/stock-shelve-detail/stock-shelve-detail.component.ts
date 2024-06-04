@@ -44,7 +44,6 @@ export class StockShelveDetailComponent implements OnInit {
     if (stocks) {
       const shelves = flatten(stocks.map(s => s.shelves));
       const detail = shelves.find(s => s.id === this.id);
-      console.log('detail', detail);
       return detail ? shelves.filter(s => s.locationReference === detail.locationReference) : [];
     }
     this.stockService.list();

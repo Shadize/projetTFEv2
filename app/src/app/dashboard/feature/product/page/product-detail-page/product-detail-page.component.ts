@@ -60,7 +60,7 @@ export class ProductDetailPageComponent implements OnInit {
   protected config$: Signal<DetailCardConfig> = computed(() => this.genCardConfigs(this.detail$()));
   public consumptionFormConfig$: Signal<FormConfig> = computed(() => this.genConsumptionFormConfigs());
   protected consumptionDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConsumptionTableConfig(this.detail$()!));
-  public detail$: WritableSignal<Product | null> = signal(null);
+  public detail$: WritableSignal<Product> = signal(this.productUtils.getEmpty());
   public shelveDetail$: Signal<Shelve> = computed(() => this.getShelveDetail(this.stockService.list$()));
   public isAddingConsumption$: WritableSignal<boolean> = signal(false);
   public productConsume$: WritableSignal<Product | null> = signal(null);
@@ -96,6 +96,7 @@ export class ProductDetailPageComponent implements OnInit {
   }
 
   genProductConfig(product: Product): DataTableConfig {
+    console.log('product', product);
     return this.productUtils.getOneProductDataConfig([product]);
   }
 

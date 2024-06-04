@@ -50,7 +50,7 @@ export class MemberListPageComponent implements OnInit {
         break;
 
     }
-  
+
   }
 
   public onRowClicked(data: any): void {
@@ -84,7 +84,8 @@ export class MemberListPageComponent implements OnInit {
       return [
         {
           icon: 'fa-plus',
-          action: MemberAction.ADD
+          action: MemberAction.ADD,
+          isDisabled:false
         }
       ]
     }

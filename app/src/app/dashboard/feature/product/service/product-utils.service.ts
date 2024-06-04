@@ -351,8 +351,10 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     });
     let shelve: ShelveDto = emptyShelve;
     if (isUpdate && stocks) {
+
       const shelves = flatten(stocks
         .map(s => s.shelves));
+      console.log('my shelve', shelves);
       shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
     return {

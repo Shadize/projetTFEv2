@@ -5,7 +5,7 @@
   @if (actions){
     <div class="actions">
       @for(action of actions;let index=$index;track index){
-        <span class="item" (click)="actionClicked.emit(action)">
+        <span class="item"  [class.disabled]="action.isDisabled" (click)="onClick(action)">
          <i class="fa-regular  {{action.icon}}"></i>
         </span>
       }
