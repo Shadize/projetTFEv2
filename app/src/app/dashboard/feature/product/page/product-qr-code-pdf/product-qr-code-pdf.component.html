@@ -1,7 +1,7 @@
 
 <div id="qrcodes" #qrcodes>
   <div class="actions"><button (click)="getPdf()">imprimer</button></div>
-  @for (page of products; let index = $index; track index) {
+  @for (page of pages(); let index = $index; track index) {
     <div class="page" [id]="page.id">
       @for (product of page.products; let paIndex = $index; track paIndex) {
         <div class="item">
@@ -10,15 +10,15 @@
           <div class="data">
             <div class="line">
               <div class="label">Type</div>
-              <div class="content">Panneau</div>
+              <div class="content">{{ 'feature.product.type.' + product.type.toLowerCase() | translate }}</div>
             </div>
             <div class="line">
               <div class="label">Dimension</div>
-              <div class="content">100*100*50</div>
+              <div class="content">{{ product.str }}</div>
             </div>
             <div class="line">
               <div class="label">Matériel</div>
-              <div class="content">le matos</div>
+              <div class="content">{{ product.materials }}</div>
             </div>
           </div>
         </div>

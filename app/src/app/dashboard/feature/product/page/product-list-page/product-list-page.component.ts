@@ -37,7 +37,15 @@ export class ProductListPageComponent implements OnInit {
   }
 
   public actioncCliked(data: CardActionDefinition): void {
-    this.router.navigate([AppRoutes.ADMIN_PRODUCT_CREATE]).then();
+    switch(data.action){
+      case ProductAction.CREATE:
+        this.router.navigate([AppRoutes.ADMIN_PRODUCT_CREATE]).then();
+        break;
+      case ProductAction.QR:
+        this.router.navigate([AppRoutes.PRODUCT_QR]).then();
+        break;
+
+    }
   }
 
   public onActionClicked(data: CellActionDefinition): void {
@@ -67,6 +75,11 @@ export class ProductListPageComponent implements OnInit {
 
   private getAction(): CardActionDefinition[] {
     return [
+      {
+        icon: 'fa-qrcode',
+        action: ProductAction.QR,
+        isDisabled:false
+      },
       {
         icon: 'fa-plus',
         action: ProductAction.CREATE,
