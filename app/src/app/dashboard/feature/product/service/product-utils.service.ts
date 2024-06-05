@@ -44,6 +44,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       id: dto.product_id,
       isEmpty: false,
       materials: dto.materials,
+      real_price :dto.width * dto.height*dto.thickness * dto.price /1000000000,
       price: dto.price,
       title: dto.title,
       quantity: dto.quantity,
@@ -84,6 +85,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
     return {
       consumptions: [],
       height: 0,
+      real_price:0,
       id: '',
       title: '',
       isEmpty: true,
@@ -137,7 +139,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
           isMinimalWidth: false,
         },
         {
-          targetData: ProductKey.PRICE,
+          targetData: ProductKey.REAL_PRICE,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },
@@ -242,6 +244,11 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       },
       {
         targetData: ProductKey.PRICE,
+        minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
+        isMinimalWidth: false,
+      },
+      {
+        targetData: ProductKey.REAL_PRICE,
         minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
         isMinimalWidth: false,
       },

@@ -12,6 +12,7 @@ export interface Product extends Business{
   width: number;
   height: number;
   price: number;
+  real_price:number;
   shelve?: Shelve;
   type: ProductType;
   consumptions: Consumption[];
