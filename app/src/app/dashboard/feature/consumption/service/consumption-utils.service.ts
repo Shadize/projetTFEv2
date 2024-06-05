@@ -4,7 +4,7 @@ import {BusinessUtils} from '@core';
 import {
   Consumption,
   ConsumptionCreatePayload,
-  ConsumptionDto,
+  ConsumptionDto, ConsumptionForm,
   ConsumptionKey,
   ConsumptionStatus
 } from '@consumption-feature';
@@ -21,13 +21,14 @@ import {CellActionDefinition, DataTableConfig, MinimalVisibilityWidth} from '@sh
 import {ConsumptionType} from '../data/enum/consumption-type.enum';
 import {Shelve} from '../../shelve/data';
 import {ConsumptionAction} from '../data/enum/consumption-action';
+import {format} from 'date-fns';
+import {formatDate} from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConsumptionUtilsService
-  implements BusinessUtils<Consumption, ConsumptionDto>
-{
+  implements BusinessUtils<Consumption, ConsumptionDto> {
   private credentialUtils: CredentialUtilService = inject(
     CredentialUtilService
   );
@@ -54,7 +55,12 @@ export class ConsumptionUtilsService
       productName: dto.productName,
     };
   }
+  getEmptyFormData():ConsumptionForm{
+    return {
+      consumption_type: ConsumptionType.RESERVATION, delivery_date: '', is_delivered: false, order_date: format(new Date(), 'dd-MM-yyyy'), qty: 1
 
+    }
+  }
   getEmpty(): Consumption {
     return {
       author: this.credentialUtils.getEmpty(),
@@ -149,7 +155,7 @@ export class ConsumptionUtilsService
   }
 
   public getDataFormConfig(
-    consumption: Consumption,
+    consumption: ConsumptionForm,
     submitTitle: string
   ): FormConfig {
     const fields = Object.values(ConsumptionKeyForm);
@@ -172,14 +178,34 @@ export class ConsumptionUtilsService
           break;
       }
 
-      return { field, validators: fieldValidators };
+      return {field, validators: fieldValidators};
     });
 
     const fieldTypesConfig: FieldTypeConfig[] = fields.map((field) => {
       let fieldType = ConsumptionKeyForm.DELIVERY_DATE ? 'date' : 'text';
       let fieldOptions: FieldSelectOption[] = [];
       let fieldReadOnly = false;
-
+      switch (field) {
+        case ConsumptionKeyForm.CONSUMPTION_TYPE:
+          fieldType = 'select';
+          fieldOptions = Object.values(ConsumptionType).map((o) => ({
+            selected:
+              (consumption.is_delivered && o === ConsumptionType.DIRECT_REMOVE) ||
+              (!consumption.is_delivered && o === ConsumptionType.RESERVATION),
+            value: o,
+            label: `feature.consumption.type.${o.toLowerCase()}`,
+          }));
+          break;
+        case ConsumptionKeyForm.ORDER_DATE:
+          fieldReadOnly = true;
+          break;
+        case ConsumptionKeyForm.DELIVERY_DATE:
+          fieldReadOnly = consumption.is_delivered;
+          break;
+        case ConsumptionKeyForm.QUANTITY:
+          fieldType = 'number';
+          break;
+      }
       if (field === ConsumptionKeyForm.CONSUMPTION_TYPE) {
         fieldType = 'select';
         fieldOptions = Object.values(ConsumptionType).map((o) => ({

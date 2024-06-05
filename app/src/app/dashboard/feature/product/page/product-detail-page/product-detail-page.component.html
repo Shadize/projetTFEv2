@@ -1,18 +1,24 @@
 <div class="flexos">
-  <app-card [title]="'feature.product-detail.title'">
+  <app-card [title]="'feature.product-detail.title'" [params]="detail$()" [actions]="actions$()" (actionClicked)="actionCardClicked($event)">
     <app-data-card
       [config]="config$()"></app-data-card>
-    <app-data-table [config]="productDataTableConfig()" (actionClicked)="consume($event)"></app-data-table>
   </app-card>
 
   @if (isAddingConsumption$()) {
-    <app-card [title]="'feature.consumption-form'">
+    <app-card [title]="'feature.consumption-form'"  [actions]="consumptionActions$()" (actionClicked)="actionCardClicked($event)">      @if (errors$().length > 0) {
+      <div class="error-card-pan">
+        @for (error of errors$(); let index = $index; track index) {
+          <span> {{ 'admin-feature.product-form.' + error.control + '.' + error.error | translate }}</span>
+        }
+      </div>
+    }
       <app-form-builder [config]="consumptionFormConfig$()"
                         (cancel)="cancel()"
+                        (formGroupSet)="setFormGroup($event)"
                         (formSubmitted)="onFormSubmitted($event)"></app-form-builder>
     </app-card>
   } @else {
-    <app-card [title]="'feature.product-detail.consumption-list'">
+    <app-card [title]="'feature.product-detail.consumption-list'" [actions]="consumptionActions$()" (actionClicked)="actionCardClicked($event)">
       <app-data-table [config]="consumptionDataTableConfig$()" (actionClicked)="onActionClicked($event)"></app-data-table>
     </app-card>
   }

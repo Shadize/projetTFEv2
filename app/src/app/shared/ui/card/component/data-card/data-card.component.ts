@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { DetailCardConfig } from '../../data/config/card-config';
+import {Component, Input, OnChanges} from '@angular/core';
+import {DetailCardConfig} from '../../data/config/card-config';
 import {TranslateModule} from '@ngx-translate/core';
 
 
@@ -10,10 +10,8 @@ import {TranslateModule} from '@ngx-translate/core';
   templateUrl: './data-card.component.html',
   styleUrl: './data-card.component.scss'
 })
-export class DataCardComponent {
-  @Input({ required: true }) config!: DetailCardConfig;
-
-
+export class DataCardComponent implements OnChanges {
+  @Input({required: true}) config!: DetailCardConfig;
   fieldsToDisplay: any[] = [];
 
   ngOnChanges(): void {

@@ -1,4 +1,12 @@
 <app-card [title]="product.isEmpty ? 'admin-feature.title.product-add':'admin-feature.title.product-update'"
           [params]="product" [actions]="actions$()" (actionClicked)="actionCardClicked($event)">
-  <app-form-builder [config]="config$()" (dataChange)="dataChange($event)"></app-form-builder>
+
+  @if (errors$().length > 0) {
+    <div class="error-card-pan">
+      @for (error of errors$(); let index = $index; track index) {
+        <span> {{ 'admin-feature.product-form.' + error.control + '.' + error.error | translate }}</span>
+      }
+    </div>
+  }
+  <app-form-builder [config]="config$()" (formGroupSet)="setFormGroup($event)"></app-form-builder>
 </app-card>

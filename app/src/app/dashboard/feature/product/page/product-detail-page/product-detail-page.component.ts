@@ -1,38 +1,38 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Signal,
-  WritableSignal,
-  computed,
-  inject,
-  signal,
-} from '@angular/core';
+import {Component, computed, inject, Input, OnInit, Signal, signal, WritableSignal,} from '@angular/core';
 import {ProductService, ProductUtilsService} from '../../service';
 import {Product} from '../../data';
 import {tap} from 'rxjs';
-import {DetailCardConfig} from 'app/shared/ui/card/data/config/card-config';
+import {CardActionDefinition, DetailCardConfig} from 'app/shared/ui/card/data/config/card-config';
 import {
+  AppRoutes,
   CardComponent,
   CardHeaderComponent,
   CellActionDefinition,
+  confirmDialog,
   DataTableComponent,
   DataTableConfig,
   FormBuilderComponent,
+  FormError,
 } from '@shared';
 import {DataCardComponent} from 'app/shared/ui/card/component/data-card/data-card.component';
 import {FormConfig} from 'app/shared/ui/form/data';
 import {
   Consumption,
   ConsumptionAction,
+  ConsumptionForm,
   ConsumptionService,
   ConsumptionStatus,
   ConsumptionUtilsService
 } from '@consumption-feature';
-import {flatten} from 'lodash';
 import {ProductUpdatePayload} from '../../data/payload/product-update.payload';
 import {Shelve, ShelveDto, ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
 import {SecurityService} from '@security';
+import {FormAction} from '@admin-feature';
+import {Router} from '@angular/router';
+import {parse} from 'date-fns';
+import {ConsumptionType} from '../../../consumption/data/enum/consumption-type.enum';
+import {FormGroup} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -45,28 +45,32 @@ import {SecurityService} from '@security';
     CardHeaderComponent,
     DataTableComponent,
     FormBuilderComponent,
+    TranslateModule,
   ],
 })
 export class ProductDetailPageComponent implements OnInit {
   @Input() id!: string;
-  protected productService: ProductService = inject(ProductService);
-  protected productUtils: ProductUtilsService = inject(ProductUtilsService);
-  protected consumptionUtils: ConsumptionUtilsService = inject(ConsumptionUtilsService);
-  protected consumptionService: ConsumptionService = inject(ConsumptionService);
-  protected stockService: StockService = inject(StockService);
-  protected stockUtils: StockUtilsService = inject(StockUtilsService);
-  protected shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
-  public securityService: SecurityService = inject(SecurityService);
-  protected config$: Signal<DetailCardConfig> = computed(() => this.genCardConfigs(this.detail$()));
-  public consumptionFormConfig$: Signal<FormConfig> = computed(() => this.genConsumptionFormConfigs());
+  private readonly productService: ProductService = inject(ProductService);
+  private readonly productUtils: ProductUtilsService = inject(ProductUtilsService);
+  private readonly consumptionUtils: ConsumptionUtilsService = inject(ConsumptionUtilsService);
+  private readonly consumptionService: ConsumptionService = inject(ConsumptionService);
+  private readonly stockService: StockService = inject(StockService);
+  private readonly stockUtils: StockUtilsService = inject(StockUtilsService);
+  private readonly shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
+  private readonly securityService: SecurityService = inject(SecurityService);
+  private readonly router: Router = inject(Router);
+  private formGroup!: FormGroup;
+  private selectedQuantity!: number;
+  protected config$: Signal<DetailCardConfig> = computed(() => this.genCardConfigs(this.detail$(), this.shelveDetail$()));
+  protected actions$: Signal<CardActionDefinition[]> = computed(() => this.getActions(this.detail$()));
+  protected consumptionActions$: Signal<CardActionDefinition[]> = computed(() => this.getConsumptionActions(this.isAddingConsumption$()));
+  protected consumptionFormConfig$: Signal<FormConfig> = computed(() => this.genConsumptionFormConfigs());
   protected consumptionDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConsumptionTableConfig(this.detail$()!));
-  public detail$: WritableSignal<Product> = signal(this.productUtils.getEmpty());
-  public shelveDetail$: Signal<Shelve> = computed(() => this.getShelveDetail(this.stockService.list$()));
-  public isAddingConsumption$: WritableSignal<boolean> = signal(false);
-  public productConsume$: WritableSignal<Product | null> = signal(null);
-  public productDataTableConfig: Signal<DataTableConfig> = computed(() => this.genProductConfig(this.detail$()!));
-
-  selectedQuantity!: number;
+  protected detail$: WritableSignal<Product> = signal(this.productUtils.getEmpty());
+  protected shelveDetail$: Signal<Shelve> = computed(() => this.getShelveDetail(this.stockService.list$(), this.detail$()));
+  protected isAddingConsumption$: WritableSignal<boolean> = signal(false);
+  protected productConsume$: WritableSignal<Product | null> = signal(null);
+  protected errors$: WritableSignal<FormError[]> = signal([]);
 
   ngOnInit(): void {
     this.loadProductDetails();
@@ -79,8 +83,8 @@ export class ProductDetailPageComponent implements OnInit {
     ).subscribe();
   }
 
-  genCardConfigs(product: Product | null): DetailCardConfig {
-    return this.productUtils.getDataCardConfig(product!);
+  genCardConfigs(product: Product, shelve: Shelve): DetailCardConfig {
+    return this.productUtils.getDataCardConfig(product!, shelve);
   }
 
   onActionClicked(data: CellActionDefinition): void {
@@ -95,22 +99,65 @@ export class ProductDetailPageComponent implements OnInit {
     }
   }
 
-  genProductConfig(product: Product): DataTableConfig {
-    console.log('product', product);
-    return this.productUtils.getOneProductDataConfig([product]);
-  }
-
   genConsumptionTableConfig(product: Product): DataTableConfig {
     return this.consumptionUtils.getDataTableConfig(product.consumptions, true);
   }
 
   genConsumptionFormConfigs(): FormConfig {
-    const consumption: Consumption = this.consumptionUtils.getEmpty();
-    return this.consumptionUtils.getDataFormConfig(consumption, 'feature.admin.consumption.title-add');
+    return this.consumptionUtils.getDataFormConfig(this.consumptionUtils.getEmptyFormData(), 'feature.admin.consumption.title-add');
   }
 
+  @confirmDialog({
+    title: 'common.cancel-form.confirm-title',
+    message: 'common.cancel-form.confirm-message'
+  })
   cancel(): void {
     this.isAddingConsumption$.set(false);
+  }
+
+  public add(): void {
+    this.productConsume$.set(this.detail$());
+    this.selectedQuantity = 1;
+    this.isAddingConsumption$.set(true);
+  }
+
+  public actionCardClicked(action: CardActionDefinition): void {
+    switch (action.action) {
+      case FormAction.SAVE:
+        this.onFormSubmitted(this.formGroup.value);
+        break;
+      case FormAction.UPDATE:
+        this.update();
+        break;
+      case FormAction.ADD:
+        this.add();
+        break;
+      case FormAction.DELETE:
+        this.delete();
+        break;
+    }
+  }
+
+  public getShelveDetail(stocks: Stock[] | undefined, product: Product | null): Shelve {
+    if (!stocks) {
+      this.stockService.list();
+      return this.shelveUtils.getEmpty();
+    }
+    return this.shelveUtils.getShelveForProduct(stocks, product);
+  }
+
+  public onFormSubmitted(formValue: ConsumptionForm): void {
+    if (formValue.consumption_type === ConsumptionType.RESERVATION && formValue.delivery_date.length === 0) {
+      this.errors$.set([{control: 'delivery_date', error: 'needed', value: true}])
+      return;
+    }
+    const shelve:Shelve = this.shelveUtils.getShelveForProduct(this.stockService.list$()!, this.detail$());
+    const consumption: Consumption = this.createConsumption(formValue, shelve, this.detail$());
+    this.updateProductAndConsumption(this.detail$(), consumption, shelve);
+  }
+
+  public setFormGroup(formGroup: FormGroup): void {
+    this.formGroup = formGroup;
   }
 
   private handleConsumptionDelete(id: string): void {
@@ -123,54 +170,40 @@ export class ProductDetailPageComponent implements OnInit {
     // Implementation here if needed
   }
 
-  public consume(data: CellActionDefinition): void {
-    const qty: number = data.data.config.formGroup[data.data.index].formGroup.get('quantity').value;
-    this.productConsume$.set(data.data.item);
-    this.selectedQuantity = qty;
-    this.isAddingConsumption$.set(true);
-  }
-
-  onFormSubmitted(formValue: any): void {
-    const shelveDto: ShelveDto = this.getShelveDto();
-    const product: Product = this.productConsume$()!;
-    const consumption: Consumption = this.createConsumption(formValue, shelveDto, product);
-    this.updateProductAndConsumption(product, consumption, shelveDto);
-  }
-
-  private getShelveDto(): ShelveDto {
-    const shelves = flatten(this.stockUtils.toDTOS(this.stockService.list$()!).map(s => s.shelves));
-    return shelves.find(s => s.products.some(p => p.product_id === this.detail$()!.id)) ?? this.shelveUtils.toDTO(this.shelveUtils.getEmpty());
-  }
-
-  private createConsumption(formValue: any, shelveDto: ShelveDto, product: Product): Consumption {
-    const shelve = this.shelveUtils.fromDTO(shelveDto);
-    return {
-      order_date: formValue.order_date,
-      delivery_date: formValue.delivery_date,
+  private createConsumption(formValue: ConsumptionForm, shelve: Shelve, product: Product): Consumption {
+    const consumption: Consumption = {
+      order_date: parse(formValue.order_date, 'dd-MM-yyyy', new Date()),
       quantity: this.selectedQuantity,
       is_reserved: formValue.consumption_type === "RESERVATION",
       is_delivered: formValue.consumption_type !== "RESERVATION",
       consumption_type: formValue.consumption_type,
-      type: formValue.type,
+      type: product.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: shelve.str,
       shelve_reference: shelve.id,
       author: this.securityService.account$(),
-      productName: product.str,
+      productName: `${product.title} ${product.str}`,
       id: '',
       str: '',
       isEmpty: false
     };
+    if (formValue.consumption_type === ConsumptionType.RESERVATION) {
+      consumption.delivery_date = parse(formValue.delivery_date, 'yyyy-MM-dd', new Date());
+    } else {
+      consumption.delivery_date = new Date();
+    }
+    console.log('consumption', consumption);
+    return consumption;
   }
 
-  private updateProductAndConsumption(product: Product, consumption: Consumption, shelveDto: ShelveDto): void {
+  private updateProductAndConsumption(product: Product, consumption: Consumption, shelve: Shelve): void {
     product.quantity -= this.selectedQuantity;
     product.consumptions.push(consumption);
 
     const productUpdatePayload: ProductUpdatePayload = this.productUtils.toUpdatePayload(
       product,
       this.stockUtils.toDTOS(this.stockService.list$()),
-      shelveDto.shelve_id,
+      shelve.id,
       this.consumptionUtils.toDTOS(product.consumptions)
     );
 
@@ -184,13 +217,53 @@ export class ProductDetailPageComponent implements OnInit {
     });
   }
 
-  getShelveDetail(stocks: Stock[] | undefined): Shelve {
-    if (!stocks) {
-      this.stockService.list();
-      return this.shelveUtils.getEmpty();
-    }
-    const shelves = flatten(stocks.map(s => s.shelves));
-    return shelves.find(s => s.id === this.id) ?? this.shelveUtils.getEmpty();
+  private getActions(product: Product): CardActionDefinition[] {
+    return [
+      {
+        icon: 'fa-regular fa-pencil',
+        action: FormAction.UPDATE,
+        isDisabled: false,
+      }, {
+        icon: 'fa-regular fa-trash',
+        action: FormAction.DELETE,
+        isDisabled: false
+      }
+    ];
   }
 
+  @confirmDialog({
+    title: 'common.delete-form.confirm-title',
+    message: 'common.delete-form.confirm-message'
+  })
+  private delete(): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT]).then();
+  }
+
+  private update(): void {
+    this.router.navigate([AppRoutes.ADMIN_PRODUCT_UPDATE]).then();
+  }
+
+  private getConsumptionActions(isAddinConsumption: boolean): CardActionDefinition[] {
+    if (isAddinConsumption) {
+      return [
+        {
+          icon: 'fa-regular fa-floppy-disk',
+          action: FormAction.SAVE,
+          isDisabled: false
+        },
+        {
+          icon: 'fa-regular fa-arrow-rotate-left',
+          action: FormAction.CANCEL,
+          isDisabled: false
+        }
+      ];
+    }
+    return [
+      {
+        icon: 'fa-regular fa-plus',
+        action: FormAction.ADD,
+        isDisabled: false,
+      }
+    ];
+  }
 }

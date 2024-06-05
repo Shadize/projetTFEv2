@@ -90,6 +90,8 @@
   "admin-feature-product.table.label.thickness": "Epaisseur en mm",
   "admin-feature-product.table.label.title": "Titre",
   "admin-feature-product.table.label.quantity-choose": "Choisir une quantité",
+  "admin-feature-product.table.label.quantity": "Quantité",
+  "admin-feature-product.table.label.shelve": "Emplacement",
   "admin-feature-product.table.label.str": "Dimension",
   "admin-feature-product.table.label.width": "Longueur en cm",
   "admin-feature-product.table.label.height": "Largeur en cm",
@@ -137,7 +139,7 @@
   "feature.credential.form.label.firstname" : "Prénom",
   "feature.credential.form.label.lastname" : "Nom",
   "feature.credential.form.label.section" : "Section",
-  "feature.product-detail.title": "Détail du produit",
+  "feature.product-detail.title": "Détail de {title}",
   "feature.admin.consumption.title-add": "Ajouter une consommation",
   "feature.product-detail.consumption-list": "Liste des consommations liées au produit",
   "feature.consumption.isReserved.true": "Oui",
@@ -149,6 +151,7 @@
   "feature.consumption.form.label.order_date": "Date de commande",
   "feature.consumption.form.label.consumption_type": "Type",
   "feature.consumption.form.label.delivery_date": "Date de retrait",
+  "feature.consumption.form.label.qty": "Choisir une quantité",
   "feature.product.form.label.type" : "Type de produit",
   "feature.product.form.label.title" : "Nom du produit",
   "feature.product.form.label.quantity" : "Quantité",
@@ -184,5 +187,10 @@
   "api.error.stock-delete": "ERREUR: Echec de la suppression du stock",
   "api.success.stock-create": "Création du stock réussie !",
   "api.success.stock-update": "Modification du stock réussie !",
-  "api.success.stock-delete": "Suppression du stock réussie !"
+  "api.success.stock-delete": "Suppression du stock réussie !",
+  "admin-feature.product-form.all.common": "Veuillez remplir l'ensemble des valeurs",
+  "admin-feature.product-form.title.required":"Le nom du produit ne peut être vide",
+  "admin-feature.product-form.quantity.required":"La quantité doit être fournie",
+  "admin-feature.product-form.shelve.required": "Vous devez choisir un emplacement",
+  "admin-feature.product-form.delivery_date.needed": "Vous devez fournir une date de retrait"
 }

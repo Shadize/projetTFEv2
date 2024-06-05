@@ -1,28 +1,41 @@
-import {Component, computed, inject, Input, input, OnInit, Signal} from '@angular/core';
-import {Product, ProductForm, ProductService, ProductUtilsService} from '@product-feature';
-import {AppRoutes, CardActionDefinition, CardComponent, confirmDialog, FormBuilderComponent} from '@shared';
+import {Component, computed, DestroyRef, inject, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
+import {Product, ProductService, ProductUtilsService} from '@product-feature';
+import {
+  AppRoutes,
+  CardActionDefinition,
+  CardComponent,
+  confirmDialog,
+  FormBuilderComponent,
+  FormConfig,
+  FormError,
+  handleFormError
+} from '@shared';
 import {Router} from '@angular/router';
 import {FormAction} from '@admin-feature';
 import {Observable, tap} from 'rxjs';
 import {ShelveUtilsService, Stock, StockService, StockUtilsService} from '@shelve-feature';
-import {FormConfig} from '../../../../../shared/ui/form/data';
 import {FormGroup} from '@angular/forms';
+import {JsonPipe} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-admin-form',
   standalone: true,
   imports: [
     CardComponent,
-    FormBuilderComponent
+    FormBuilderComponent,
+    JsonPipe,
+    TranslateModule
   ],
   templateUrl: './product-admin-form.component.html',
   styleUrl: './product-admin-form.component.scss'
 })
-export class ProductAdminFormComponent implements OnInit{
-  @Input({required:true}) product!:Product;
-  public formValue?: ProductForm;
+export class ProductAdminFormComponent implements OnInit {
+  @Input({required: true}) product!: Product;
+  public formGroup?: FormGroup<any>;
 
-  protected actions$: Signal<CardActionDefinition[]> = computed(() => this.getActions(this.product));
+  protected errors$: WritableSignal<FormError[]> = signal([{ control: 'all', error: 'common', value: true },]);
+  protected actions$: Signal<CardActionDefinition[]> = computed(() => this.getActions(this.product, this.errors$()));
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.stockService.list$(), this.product));
   private router: Router = inject(Router);
   private productService: ProductService = inject(ProductService);
@@ -30,16 +43,16 @@ export class ProductAdminFormComponent implements OnInit{
   private stockUtils: StockUtilsService = inject(StockUtilsService);
   private stockService: StockService = inject(StockService);
   private shelveUtils: ShelveUtilsService = inject(ShelveUtilsService);
-  private canSave: boolean = false;
+  private destroyRef = inject(DestroyRef);
+
   ngOnInit() {
 
     this.stockService.list();
   }
 
-  public dataChange(formGroup: FormGroup): void {
-    this.formValue = formGroup.value;
-    this.canSave = formGroup.valid;
-    this.getActions(this.product);
+  public setFormGroup(formGroup: FormGroup): void {
+    this.formGroup = formGroup;
+    handleFormError(this.formGroup, this.errors$, this.destroyRef);
   }
 
   public actionCardClicked(action: CardActionDefinition): void {
@@ -59,17 +72,15 @@ export class ProductAdminFormComponent implements OnInit{
   private genFormConfigs(list: Stock[] | undefined, product: Product): FormConfig {
     const config = this.productUtils.getDataFormConfig(product, this.stockUtils.toDTOS(list),
       this.shelveUtils.toDTO(this.shelveUtils.getEmpty()), !this.product.isEmpty, 'feature.admin.product.title-add');
-    console.log('product',product);
-    console.log('config',config);
     return config;
   }
 
-  private getActions(product: Product): CardActionDefinition[] {
+  private getActions(product: Product, errors: FormError[]): CardActionDefinition[] {
     const actions: CardActionDefinition[] = [
       {
         icon: 'fa-regular fa-floppy-disk',
         action: FormAction.SAVE,
-        isDisabled: !this.canSave
+        isDisabled: errors.length > 0
       },
       {
         icon: 'fa-regular fa-arrow-rotate-left',
@@ -89,17 +100,17 @@ export class ProductAdminFormComponent implements OnInit{
 
   // Actions area
   private save(): void {
-    if (this.formValue) {
+    if (this.formGroup?.valid && this.formGroup?.value) {
       let obs: Observable<Product>;
       if (this.product.isEmpty) {
         obs = this.productService.create(
-          this.productUtils.genCreatePayload(this.formValue,
+          this.productUtils.genCreatePayload(this.formGroup?.value,
             this.stockUtils.toDTOS(this.stockService.list$()!))
         )
       } else {
         obs = this.productService.update(
           this.productUtils.genUpdatePayload({
-            ...this.formValue,
+            ...this.formGroup?.value,
             id: this.product.id,
           }, this.stockUtils.toDTOS(this.stockService.list$()!))
         );

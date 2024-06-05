@@ -23,7 +23,7 @@ import {
   FormValidatorsConfig
 } from 'app/shared/ui/form/data/config/form.config';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ShelveDto,  StockDto} from '@shelve-feature';
+import {Shelve, ShelveDto, StockDto} from '@shelve-feature';
 import {flatten} from 'lodash';
 import {ProductUpdatePayload} from '../data/payload/product-update.payload';
 import {TranslateService} from '@ngx-translate/core';
@@ -368,21 +368,21 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
   }
 
 
-  public getDataCardConfig(product : Product) : DetailCardConfig{
+  public getDataCardConfig(product : Product, shelve:Shelve) : DetailCardConfig{
     return {
       fields: [
-        { field: 'type', label: 'Type' },
-        { field: 'title', label: 'Title' },
-        { field: 'quantity', label: 'Quantity' },
-        { field: 'width', label: 'Width' },
-        { field: 'height', label: 'Height' },
-        { field: 'thickness', label: 'Thickness' },
-        { field: 'price', label: 'Price' },
-        { field: 'materials', label: 'Materials' },
-        { field: 'treatment', label: 'Treatment' },
-        { field: 'shelve', label: 'Shelve' }
+        { field: 'type', label: 'admin-feature-product.table.label.type' },
+        { field: 'title', label: 'admin-feature-product.table.label.title' },
+        { field: 'quantity', label: 'admin-feature-product.table.label.quantity' },
+        { field: 'width', label: 'admin-feature-product.table.label.width' },
+        { field: 'height', label: 'admin-feature-product.table.label.height' },
+        { field: 'thickness', label: 'admin-feature-product.table.label.thickness' },
+        { field: 'price', label: 'admin-feature-product.table.label.price' },
+        { field: 'materials', label: 'admin-feature-product.table.label.materials' },
+        { field: 'treatment', label: 'admin-feature-product.table.label.treatment' },
+        { field: 'shelve', label: 'admin-feature-product.table.label.shelve' }
       ],
-      data: product
+      data: {...product, type:`feature.product.type.${product.type.toLowerCase()}`, shelve: shelve.str}
     };
   }
 

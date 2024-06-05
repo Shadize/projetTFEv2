@@ -19,9 +19,8 @@ export class FormBuilderComponent implements OnChanges {
   @Input({required: true}) config!: FormConfig;
   @Output() formSubmitted = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
-  @Output() public dataChange = new EventEmitter<any>();
+  @Output() public formGroupSet = new EventEmitter<FormGroup>();
   public form!: FormGroup;
-  private destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -37,13 +36,7 @@ export class FormBuilderComponent implements OnChanges {
       const validators = fieldConfig ? fieldConfig.validators : [];
       this.addFormControl(field, validators);
     });
-    this.form.valueChanges
-      .pipe(
-        // that's mean kill this observer when component is destroyed
-        takeUntilDestroyed(this.destroyRef),
-        // send signal with new errors
-        tap((errors: FormError[]) => this.dataChange.emit(this.form)))
-      .subscribe();
+    this.formGroupSet.emit(this.form);
   }
 
   private addFormControl(fieldName: any, validators: any[] = []): void {

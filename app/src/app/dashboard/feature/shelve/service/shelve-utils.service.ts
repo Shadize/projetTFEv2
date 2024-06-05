@@ -1,10 +1,11 @@
 import {inject, Injectable} from '@angular/core';
 import {BusinessUtils, Section} from '@core';
-import {Shelve, ShelveDto} from '@shelve-feature';
+import {Shelve, ShelveDto, Stock} from '@shelve-feature';
 import {ProductUtilsService} from '../../product/service';
 import {Product} from '@product-feature';
 import {DataTableConfig, FormControlSimpleConfig, MinimalVisibilityWidth} from '@shared';
 import {TranslateService} from '@ngx-translate/core';
+import {flatten} from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -140,5 +141,25 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
 
   public getCreateFormConfig(): FormControlSimpleConfig[] {
     return []
+  }
+
+  getShelveForProduct(stocks: Stock[], product: Product | null) {
+    if (!product) {
+      return this.getEmpty();
+    }
+    const shelve = flatten(stocks.map(s => s.shelves))
+      .find(s => s.products.filter(p => p.id === product.id).length > 0) ?? this.getEmpty();
+    if (shelve.isEmpty) {
+      return shelve;
+    }
+    const stock = stocks.find(s => s.shelves.filter(sh => sh.id === shelve.id));
+    console.log(stock);
+    if(stock){
+      return {
+        ...shelve,
+        str: `${stock.str} ${shelve.str}`
+      }
+    }
+    return shelve;
   }
 }

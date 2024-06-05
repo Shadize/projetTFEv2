@@ -28,7 +28,7 @@ body {
   --theme-error-clear: #F76D82;
   --theme-error-clear-opacity: rgba(247, 109, 130, 0.5);
   --theme-error-middle: #EC5564;
-  --theme-error-dark: #D94452;
+  --theme-error-dark: #801722;
 
   //success color
   --theme-success-clear: #62DDBD;
@@ -59,4 +59,15 @@ body {
 }
 .transition{
   transition: all ease .3s;
+}
+.error-card-pan{
+  display: flex;
+  flex-direction: column;
+  margin-bottom:20px;
+  background:var(--theme-error-clear-opacity);
+  border-radius: 2px;
+  gap:5px;
+  letter-spacing: 1.25px;
+  padding:10px;
+  color:var(--theme-error-dark)
 }

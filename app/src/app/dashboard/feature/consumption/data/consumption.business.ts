@@ -6,7 +6,7 @@ import {ConsumptionType} from './enum/consumption-type.enum';
 
 export interface Consumption extends Business {
   order_date: Date; // readonly et contient la date du jours
-  delivery_date: Date; // si retrait directe on met la date du jours et le champ n'apparait ou en readonly
+  delivery_date?: Date; // si retrait directe on met la date du jours et le champ n'apparait ou en readonly
   quantity: number; // provient de la méthode consume
   is_reserved: boolean;
   is_delivered: boolean; // Faire un selectbox avec genre ConsumptionType.RESERVATION , ConsumpTionType.DIRECT_REMOVE
@@ -17,4 +17,12 @@ export interface Consumption extends Business {
   shelve_reference: string; //locationReference
   productName:string;
   consumption_type:ConsumptionType;
+}
+
+export interface ConsumptionForm{
+  order_date:string;
+  consumption_type:ConsumptionType;
+  qty:number;
+  delivery_date: string;
+  is_delivered: boolean;
 }

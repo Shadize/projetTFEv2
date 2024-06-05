@@ -28,7 +28,6 @@ import {Product} from '@product-feature';
 import {SecurityService} from '@security';
 import {ProductUpdatePayload} from '../../../product/data/payload/product-update.payload';
 import {tap} from 'rxjs';
-import {ConsumptionType} from '../../../consumption/data/enum/consumption-type.enum';
 
 @Component({
   selector: 'app-shelve-detail-page',
@@ -102,7 +101,8 @@ export class ShelveDetailPageComponent implements OnInit {
   genFormConfigs(): FormConfig {
 
     let consumption: Consumption = this.consumptionUtils.getEmpty();
-    return this.consumptionUtils.getDataFormConfig(consumption, 'feature.admin.consumption.title-add');
+    return this.consumptionUtils.getDataFormConfig(this.consumptionUtils.getEmptyFormData()
+      , 'feature.admin.consumption.title-add');
   }
 
   genConfig(shelve: Shelve): DataTableConfig {
@@ -139,7 +139,7 @@ export class ShelveDetailPageComponent implements OnInit {
       quantity: this.selectedQuantity,
       is_reserved: formValue.consumption_type === "RESERVATION" ? true : false,
       is_delivered: formValue.consumption_type === "RESERVATION" ? false : true,
-      consumption_type:formValue.consumption_type,
+      consumption_type: formValue.consumption_type,
       type: formValue.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: this.detail$().str,
