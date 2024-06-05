@@ -4,6 +4,7 @@ export enum ProductKey{
     IS_EMPTY = 'isEmpty',
     MATERIALS ='materials',
     TREATMENT = 'treatment',
+    QUANTITY='quantity',
     TITLE ='title',
     WIDTH='width',
     HEIGHT ='height',

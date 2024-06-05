@@ -142,20 +142,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
           isMinimalWidth: false,
         },
         {
-          targetData: 'quantity-choose',
-          formGroup: products.map(p => ({
-            formGroup: new FormGroup<any>({quantity: new FormControl(1)}),
-            config: {
-              field: 'quantity',
-              type: 'select',
-              options: [...Array.from({length: p.quantity + 1}).keys()].map(value => ({
-                selected: false,
-                value,
-                label: value.toString()
-              }))
-            }
-          }))
-          ,
+          targetData: ProductKey.QUANTITY,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },

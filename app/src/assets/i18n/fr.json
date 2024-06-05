@@ -113,6 +113,8 @@
   "admin-feature-shelve.table.label.productQuantity": "Quantité",
   "admin-feature-consumption.table.label.order_date": "Date de commande",
   "admin-feature-consumption.table.label.delivery_date": "Date de livraison",
+  "admin-feature-consumption.table.label.order_date_str": "Date de commande",
+  "admin-feature-consumption.table.label.delivery_date_str": "Date de livraison",
   "admin-feature-consumption.table.label.type": "Type du produit",
   "admin-feature-consumption.table.label.is_delivered": "A été livré",
   "admin-feature-consumption.table.label.is_reserved": "Est réservé",
@@ -192,5 +194,6 @@
   "admin-feature.product-form.title.required":"Le nom du produit ne peut être vide",
   "admin-feature.product-form.quantity.required":"La quantité doit être fournie",
   "admin-feature.product-form.shelve.required": "Vous devez choisir un emplacement",
-  "admin-feature.product-form.delivery_date.needed": "Vous devez fournir une date de retrait"
+  "admin-feature.product-form.delivery_date.needed": "Vous devez fournir une date de retrait",
+  "admin-feature.product-form.quantity.min": "Il faut une quantité minimum"
 }

@@ -38,6 +38,8 @@ export class ConsumptionUtilsService
     return {
       author,
       delivery_date: dto.delivery_date,
+      order_date_str: format(dto.order_date, 'dd-MM-yyyy'),
+      delivery_date_str: dto.delivery_date ? format(dto.order_date, 'dd-MM-yyyy') : '-',
       id: dto.consumption_id,
       isEmpty: false,
       is_delivered: dto.is_delivered,
@@ -55,15 +57,23 @@ export class ConsumptionUtilsService
       productName: dto.productName,
     };
   }
-  getEmptyFormData():ConsumptionForm{
+
+  getEmptyFormData(): ConsumptionForm {
     return {
-      consumption_type: ConsumptionType.RESERVATION, delivery_date: '', is_delivered: false, order_date: format(new Date(), 'dd-MM-yyyy'), qty: 1
+      consumption_type: ConsumptionType.RESERVATION,
+      delivery_date: '',
+      is_delivered: false,
+      order_date: format(new Date(), 'dd-MM-yyyy'),
+      qty: 1
 
     }
   }
+
   getEmpty(): Consumption {
     return {
       author: this.credentialUtils.getEmpty(),
+      delivery_date_str: '',
+      order_date_str: '',
       delivery_date: new Date(),
       id: '',
       productName: '',
@@ -125,12 +135,12 @@ export class ConsumptionUtilsService
       data: consumptions,
       cellDefinitions: [
         {
-          targetData: ConsumptionKey.ORDER_DATE,
+          targetData: ConsumptionKey.ORDER_DATE_STR,
           minimalWidthVisibility: MinimalVisibilityWidth.SMALL,
           isMinimalWidth: false,
         },
         {
-          targetData: ConsumptionKey.DELIVERY_DATE,
+          targetData: ConsumptionKey.DELIVERY_DATE_STR,
           minimalWidthVisibility: MinimalVisibilityWidth.MEDIUM,
           isMinimalWidth: false,
         },

@@ -5,7 +5,8 @@
   </app-card>
 
   @if (isAddingConsumption$()) {
-    <app-card [title]="'feature.consumption-form'"  [actions]="consumptionActions$()" (actionClicked)="actionCardClicked($event)">      @if (errors$().length > 0) {
+    <app-card [title]="'feature.consumption-form'"  [actions]="consumptionActions$()" (actionClicked)="actionCardClicked($event)">
+      @if (errors$().length > 0) {
       <div class="error-card-pan">
         @for (error of errors$(); let index = $index; track index) {
           <span> {{ 'admin-feature.product-form.' + error.control + '.' + error.error | translate }}</span>

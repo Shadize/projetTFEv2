@@ -162,4 +162,21 @@ export class ShelveUtilsService implements BusinessUtils<Shelve, ShelveDto> {
     }
     return shelve;
   }
+  getShelveDetailFromStock(stocks: Stock[],id:string):Shelve {
+    if (!stocks) {
+      return this.getEmpty();
+    }
+    const shelve = flatten(stocks.map(s => s.shelves)).find(s => s.id === id) ?? this.getEmpty();
+    if (shelve.isEmpty) {
+      return shelve;
+    }
+    const stock = stocks.find(s => s.shelves.filter(sh => sh.id === shelve.id));
+    if(stock){
+      return {
+        ...shelve,
+        str: `${stock.str} ${shelve.str}`
+      }
+    }
+    return shelve;
+  }
 }

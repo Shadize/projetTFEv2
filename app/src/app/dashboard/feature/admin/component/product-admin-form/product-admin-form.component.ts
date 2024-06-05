@@ -7,7 +7,7 @@ import {
   confirmDialog,
   FormBuilderComponent,
   FormConfig,
-  FormError,
+  FormError, getFormValidationErrors,
   handleFormError
 } from '@shared';
 import {Router} from '@angular/router';
@@ -34,7 +34,7 @@ export class ProductAdminFormComponent implements OnInit {
   @Input({required: true}) product!: Product;
   public formGroup?: FormGroup<any>;
 
-  protected errors$: WritableSignal<FormError[]> = signal([{ control: 'all', error: 'common', value: true },]);
+  protected errors$: WritableSignal<FormError[]> = signal([]);
   protected actions$: Signal<CardActionDefinition[]> = computed(() => this.getActions(this.product, this.errors$()));
   protected config$: Signal<FormConfig> = computed(() => this.genFormConfigs(this.stockService.list$(), this.product));
   private router: Router = inject(Router);
@@ -80,7 +80,7 @@ export class ProductAdminFormComponent implements OnInit {
       {
         icon: 'fa-regular fa-floppy-disk',
         action: FormAction.SAVE,
-        isDisabled: errors.length > 0
+        isDisabled: false
       },
       {
         icon: 'fa-regular fa-arrow-rotate-left',
@@ -122,6 +122,9 @@ export class ProductAdminFormComponent implements OnInit {
           }
         }))
         .subscribe();
+    }
+    if (this.formGroup?.invalid) {
+      this.errors$.set(getFormValidationErrors(this.formGroup));
     }
   }
 

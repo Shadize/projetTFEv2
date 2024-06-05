@@ -177,6 +177,8 @@ export class ProductDetailPageComponent implements OnInit {
       is_reserved: formValue.consumption_type === "RESERVATION",
       is_delivered: formValue.consumption_type !== "RESERVATION",
       consumption_type: formValue.consumption_type,
+      order_date_str:'',
+      delivery_date_str:'',
       type: product.type,
       status: ConsumptionStatus.ACTIVE,
       shelve: shelve.str,
@@ -192,7 +194,6 @@ export class ProductDetailPageComponent implements OnInit {
     } else {
       consumption.delivery_date = new Date();
     }
-    console.log('consumption', consumption);
     return consumption;
   }
 

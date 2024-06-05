@@ -9,25 +9,36 @@ import {
   StockUtilsService
 } from '@shelve-feature';
 import {
+  CardActionDefinition,
   CardComponent,
   CardHeaderComponent,
-  CellActionDefinition,
+  CellActionDefinition, confirmDialog,
   DataTableComponent,
   DataTableConfig,
   DetailNotFoundComponent,
-  FormBuilderComponent
+  FormBuilderComponent, FormError
 } from '@shared';
 import {flatten} from 'lodash';
 import {TranslateModule} from '@ngx-translate/core';
 import {JsonPipe} from '@angular/common';
 import {FormConfig} from 'app/shared/ui/form/data/config/form.config';
 import {ProductService, ProductUtilsService} from 'app/dashboard/feature/product/service';
-import {Consumption, ConsumptionAction, ConsumptionStatus, ConsumptionUtilsService} from '@consumption-feature';
+import {
+  Consumption,
+  ConsumptionAction,
+  ConsumptionForm,
+  ConsumptionStatus,
+  ConsumptionUtilsService
+} from '@consumption-feature';
 import {ConsumptionService} from 'app/dashboard/feature/consumption/service/consumption.service';
 import {Product} from '@product-feature';
 import {SecurityService} from '@security';
 import {ProductUpdatePayload} from '../../../product/data/payload/product-update.payload';
 import {tap} from 'rxjs';
+import {FormAction} from '@admin-feature';
+import {FormGroup} from '@angular/forms';
+import {ConsumptionType} from '../../../consumption/data/enum/consumption-type.enum';
+import {parse} from 'date-fns';
 
 @Component({
   selector: 'app-shelve-detail-page',
@@ -62,9 +73,11 @@ export class ShelveDetailPageComponent implements OnInit {
   public consumptionFormConfig$: Signal<FormConfig> = computed(() => this.genFormConfigs());
   public isAddingConsumption$: WritableSignal<boolean> = signal(false);
   protected consumptionDataTableConfig$: Signal<DataTableConfig> = computed(() => this.genConsumptionTableConfig(this.detail$()));
+  protected errors$: WritableSignal<FormError[]> = signal([]);
+  protected consumptionActions$: Signal<CardActionDefinition[]> = computed(() => this.getConsumptionActions(this.isAddingConsumption$()));
 
-
-  selectedQuantity!: number;
+  private formGroup!: FormGroup;
+  private selectedQuantity!: number;
 
   ngOnInit() {
     this.consumptionService.listByShelve(this.id);
@@ -115,8 +128,8 @@ export class ShelveDetailPageComponent implements OnInit {
 
   getShelveDetail(stocks: Stock[] | undefined): Shelve {
     if (stocks) {
-      const shelves = flatten(stocks.map(s => s.shelves));
-      return shelves.find(s => s.id === this.id) ?? this.shelveUtils.getEmpty();
+
+      return this.shelveUtils.getShelveDetailFromStock(stocks, this.id);
     }
     this.stockService.list();
     return this.shelveUtils.getEmpty();
@@ -124,47 +137,115 @@ export class ShelveDetailPageComponent implements OnInit {
   }
 
   public consume(data: CellActionDefinition): void {
-    const qty: number = data.data.config.formGroup[data.data.index].formGroup.get('quantity').value;
-    this.productConsume$.set(data.data.item);
-    this.selectedQuantity = qty;
+    this.productConsume$.set(data.data);
+    this.selectedQuantity = 1;
     this.isAddingConsumption$.set(true);
 
   }
 
   onFormSubmitted(formValue: any): void {
+
+    if (formValue.consumption_type === ConsumptionType.RESERVATION && formValue.delivery_date.length === 0) {
+      this.errors$.set([{control: 'delivery_date', error: 'needed', value: true}])
+      return;
+    }
     const product: Product = this.productConsume$()!;
-    const comsumption: Consumption = {
-      order_date: formValue.order_date,
-      delivery_date: formValue.delivery_date,
+    const shelve: Shelve = this.shelveUtils.getShelveForProduct(this.stockService.list$()!, product);
+    const consumption: Consumption = this.createConsumption(formValue, shelve, product);
+    this.updateProductAndConsumption(product, consumption, shelve);
+  }
+
+  public setFormGroup(formGroup: FormGroup): void {
+    this.formGroup = formGroup;
+  }
+
+  @confirmDialog({
+    title: 'common.cancel-form.confirm-title',
+    message: 'common.cancel-form.confirm-message'
+  })
+  cancel(): void {
+    this.isAddingConsumption$.set(false);
+  }
+
+  public actionCardClicked(action: CardActionDefinition): void {
+    switch (action.action) {
+      case FormAction.SAVE:
+        this.onFormSubmitted(this.formGroup.value);
+        break;
+      case FormAction.CANCEL:
+        this.cancel();
+        break;
+    }
+  }
+
+  private getConsumptionActions(isAddinConsumption: boolean): CardActionDefinition[] {
+    if (isAddinConsumption) {
+      return [
+        {
+          icon: 'fa-regular fa-floppy-disk',
+          action: FormAction.SAVE,
+          isDisabled: false
+        },
+        {
+          icon: 'fa-regular fa-arrow-rotate-left',
+          action: FormAction.CANCEL,
+          isDisabled: false
+        }
+      ];
+    }
+    return [
+      {
+        icon: 'fa-regular fa-plus',
+        action: FormAction.ADD,
+        isDisabled: false,
+      }
+    ];
+  }
+
+  private createConsumption(formValue: ConsumptionForm, shelve: Shelve, product: Product): Consumption {
+    console.log('product', product);
+    const consumption: Consumption = {
+      order_date: parse(formValue.order_date, 'dd-MM-yyyy', new Date()),
+      order_date_str:'',
+      delivery_date_str:'',
       quantity: this.selectedQuantity,
-      is_reserved: formValue.consumption_type === "RESERVATION" ? true : false,
-      is_delivered: formValue.consumption_type === "RESERVATION" ? false : true,
+      is_reserved: formValue.consumption_type === "RESERVATION",
+      is_delivered: formValue.consumption_type !== "RESERVATION",
       consumption_type: formValue.consumption_type,
-      type: formValue.type,
+      type: product.type,
       status: ConsumptionStatus.ACTIVE,
-      shelve: this.detail$().str,
-      shelve_reference: this.detail$().locationReference,
+      shelve: shelve.str,
+      shelve_reference: shelve.id,
       author: this.securityService.account$(),
-      productName: this.productConsume$()!.str,
+      productName: `${product.title} ${product.str}`,
       id: '',
       str: '',
       isEmpty: false
+    };
+    if (formValue.consumption_type === ConsumptionType.RESERVATION) {
+      consumption.delivery_date = parse(formValue.delivery_date, 'yyyy-MM-dd', new Date());
+    } else {
+      consumption.delivery_date = new Date();
     }
-    product.quantity = product.quantity - this.selectedQuantity;
-    product.consumptions = product.consumptions.concat(comsumption);
-    console.log(product);
-    const productUpdatePayload: ProductUpdatePayload = this.productUtils.toUpdatePayload(product,
-      this.stockUtils.toDTOS(this.stockService.list$()), this.detail$().id,
-      this.consumptionUtils.toDTOS(product.consumptions))
-    this.productService.update(productUpdatePayload, false)
-      .pipe(tap(() => {
-        this.stockService.list();
-
-        this.isAddingConsumption$.set(false);
-      })).subscribe();
+    return consumption;
   }
 
-  cancel(): void {
-    this.isAddingConsumption$.set(false);
+  private updateProductAndConsumption(product: Product, consumption: Consumption, shelve: Shelve): void {
+    product.quantity -= this.selectedQuantity;
+    product.consumptions.push(consumption);
+
+    const productUpdatePayload: ProductUpdatePayload = this.productUtils.toUpdatePayload(
+      product,
+      this.stockUtils.toDTOS(this.stockService.list$()),
+      shelve.id,
+      this.consumptionUtils.toDTOS(product.consumptions)
+    );
+
+    this.productService.update(productUpdatePayload, false).pipe(
+      tap(() => this.stockService.list())
+    ).subscribe(() => {
+      this.isAddingConsumption$.set(false);
+      this.stockService.list();
+    });
   }
 }
