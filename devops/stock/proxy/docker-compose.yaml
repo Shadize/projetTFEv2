@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  ysiyouAPI:
+  indApi:
     image: ind-api:latest
     container_name: indApi
     hostname: indApi
@@ -9,7 +9,7 @@ services:
     ports:
       - 4970:2023
       - 2480:2480
-  ysiyouApp:
+  indApp:
     image: ind-app:latest
     container_name: indApp
     hostname: indApp
