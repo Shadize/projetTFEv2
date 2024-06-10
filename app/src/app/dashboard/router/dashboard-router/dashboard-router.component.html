@@ -1,49 +1,52 @@
 @if(!securityService.account$().isEmpty) {
-  <header>
-    <div class="band">
-      <nav class="minimal-nav">
-        <ul>
-          <li>
-            <a routerLink="{{routes.SHELVE_LIST }}">
-              <i class="fa-solid fa-shelves"></i>
-              <span class="title">{{'header.title.shelve' | translate}}</span>
+  <div id="mobile">
+    <div id="mobile-nav">
+      <ul>
+        @for (item of menu;let index =$index;track index){
+          <li >
+            <a routerLink="{{item.link }}" (click)="showMobileMenu=false">
+              <i class="fa-regular {{item.icon}}"></i>
             </a>
           </li>
-          <li>
-            <a routerLink="{{routes.PRODUCT_LIST }}">
-              <i class="fa-solid fa-grid-horizontal"></i>
-              <span class="title">{{'header.title.product' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="{{routes.CONSUMPTION_LIST }}">
-              <i class="fa-solid fa-person-carry-box"></i>
-              <span class="title">{{'header.title.consumption' | translate}}</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="{{routes.MEMBER_LIST }}">
-              <i class="fa-solid fa-users-gear"></i>
-              <span class="title">{{'header.title.member' | translate}}</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div class="usr">
-        <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
-          <div class="circle"><i class="fa-regular fa-user"></i></div>
-          <span class="title">{{securityService.account$().username}}</span>
-        </a>
+        }
+        <li>
+          <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
+            <div class="m-circle"><i class="fa-regular fa-user"></i></div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+    <header id="desktop">
+      <div class="band">
+        <nav class="minimal-nav">
+          <ul>
+            @for (item of menu;let index =$index;track index){
+              <li >
+                <a routerLink="{{item.link }}">
+                  <i class="fa-solid {{item.icon}}"></i>
+                  <span class="title">{{item.label | translate}}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        </nav>
+        <div class="usr">
+          <a routerLink="{{routes.ACCOUNT_PARAMETER }}">
+            <div class="circle"><i class="fa-regular fa-user"></i></div>
+            <span class="title">{{securityService.account$().username}}</span>
+          </a>
+        </div>
       </div>
-    </div>
-  </header>
-  <section id="wrapper">
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
-  </section>
-  <footer>
-    <span>Copyright © 2023 Institut Notre-Dame de Malmedy Tous droits réservés.</span>
-  </footer>
+    </header>
+    <section id="wrapper" >
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+    <footer >
+      <span>Copyright © 2023 Institut Notre-Dame de Malmedy Tous droits réservés.</span>
+    </footer>
+
 
 }
