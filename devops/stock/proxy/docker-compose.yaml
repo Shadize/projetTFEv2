@@ -8,7 +8,6 @@ services:
     restart: always
     ports:
       - 4970:2023
-      - 2480:2480
   indApp:
     image: ind-app:latest
     container_name: indApp
