@@ -44,7 +44,7 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
       id: dto.product_id,
       isEmpty: false,
       materials: dto.materials,
-      real_price :dto.width * dto.height*dto.thickness * dto.price /1000000000,
+      real_price: parseFloat((dto.width * dto.height * dto.thickness * dto.price / 1000000000).toFixed(2)),
       price: dto.price,
       title: dto.title,
       quantity: dto.quantity,
@@ -274,10 +274,10 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
 
   public getDataFormConfig(product: Product, stocks: StockDto[], emptyShelve: ShelveDto, isUpdate: boolean = false, submitTitle: string): FormConfig {
     const fields = Object.values(ProductKeyForm);
-
+  
     const validatorsConfig: FormValidatorsConfig[] = fields.map(field => {
       let fieldValidators = [];
-
+  
       switch (field) {
         case ProductKeyForm.TITLE:
           fieldValidators.push(Validators.required, Validators.minLength(3));
@@ -310,17 +310,16 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
           fieldValidators.push(Validators.required);
           break;
         default:
-          // Add default validators if needed
           break;
       }
-
-      return {field, validators: fieldValidators};
+  
+      return { field, validators: fieldValidators };
     });
-
+  
     const fieldTypesConfig: FieldTypeConfig[] = fields.map(field => {
       let fieldType = 'text';
       let fieldOptions: FieldSelectOption[] = [];
-
+  
       if (field === ProductKeyForm.TYPE) {
         fieldType = 'select';
         fieldOptions = Object.values(ProductType).map(
@@ -332,34 +331,36 @@ export class ProductUtilsService implements BusinessUtils<Product, ProductDto> {
         );
       } else if (field === ProductKeyForm.SHELVE) {
         fieldType = 'select';
-        fieldOptions = flatten(stocks?.map(s => s.shelves)).map(
-          o => ({
+        fieldOptions = flatten(stocks?.map(stock => stock.shelves.map(shelve => {
+          return {
             selected: false,
-            value: o.shelve_id,
-            label: this.translateService.instant('feature.product.rack-title', o)
-          })
-        );
+            value: shelve.shelve_id,
+            label: `${stock.title} ${this.translateService.instant('feature.product.rack-title', shelve)}`
+          };
+        })));
       }
 
-      return {field, type: fieldType, options: fieldOptions};
+      
+  
+      return { field, type: fieldType, options: fieldOptions };
     });
+  
     let shelve: ShelveDto = emptyShelve;
     if (isUpdate && stocks) {
-
-      const shelves = flatten(stocks
-        .map(s => s.shelves));
-      console.log('my shelve', shelves);
+      const shelves = flatten(stocks.map(s => s.shelves));
       shelve = shelves.find(s => s.products.filter(p => p.product_id === product.id).length > 0) || emptyShelve;
     }
+  
     return {
       submitTitle,
-      translateKey:'feature.product.form.label.',
-      data: {...this.toForm(product, shelve.shelve_id)},
+      translateKey: 'feature.product.form.label.',
+      data: { ...this.toForm(product, shelve.shelve_id) },
       fields,
       validators: validatorsConfig,
       fieldTypes: fieldTypesConfig
     };
   }
+  
 
 
   public getDataCardConfig(product : Product, shelve:Shelve) : DetailCardConfig{
