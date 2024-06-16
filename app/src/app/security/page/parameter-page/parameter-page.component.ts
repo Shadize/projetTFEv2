@@ -30,7 +30,7 @@ export class ParameterPageComponent implements OnInit {
         this.securityService.logOut();
         break;
       case MemberAction.EDIT:
-        this.router.navigate([AppRoutes.ADMIN_MEMBER_UPDATE.replace(':id',data.data.id)]).then();
+        this.router.navigate([AppRoutes.ADMIN_MEMBER_UPDATE.replace(':id',this.securityService.account$().id)]).then();
         break;
     }
   }
