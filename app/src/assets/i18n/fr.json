@@ -44,6 +44,8 @@
   "admin-feature.title.product-add": "Ajouter un produit",
   "admin-feature.title.product-update": "Modifier un produit",
   "admin-feature.title.member": "Gestion des membres",
+  "admin-feature.title.member-add": "Ajouter un membre",
+  "admin-feature.title.member-update": "Modifier un membre",
   "admin-feature.title.shelves": "Gestion des zones de stockage",
   "admin-feature.title.shelves-detail": "Détail de la zone de stockage",
   "admin-feature.title.shelves-add": "Ajouter une zone de stockage",
@@ -197,5 +199,12 @@
   "admin-feature.product-form.quantity.required":"La quantité doit être fournie",
   "admin-feature.product-form.shelve.required": "Vous devez choisir un emplacement",
   "admin-feature.product-form.delivery_date.needed": "Vous devez fournir une date de retrait",
-  "admin-feature.product-form.quantity.min": "Il faut une quantité minimum"
+  "admin-feature.product-form.quantity.min": "Il faut une quantité minimum",
+  "admin-feature.member-form.all.common": "Veuillez remplir l'ensemble des valeurs",
+  "admin-feature.member-form.username.required":"Le nom d'utilisateur ne peut être vide",
+  "admin-feature.member-form.username.minlength":"Le nom d'utilisateur doit contenir au moins 3 caractères",
+  "admin-feature.member-form.password.required":"Le mot de passe ne peut être vide",
+  "admin-feature.member-form.mail.required": "L'adresse mail ne peut être vide",
+  "admin-feature.member-form.firstname.required": "Le prénom ne peut être vide",
+  "admin-feature.member-form.lastname.required": "Le nom ne peut être vide"
 }

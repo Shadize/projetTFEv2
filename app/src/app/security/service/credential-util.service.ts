@@ -82,6 +82,10 @@ export class CredentialUtilService
     };
   }
 
+  public toDTOS(business : Credential[]) : CredentialDto[]{
+    return business.map((d) => this.toDTO(d));
+  }
+
   public getDataTableConfig(
     credentials: Credential[],
     isAdmin: boolean

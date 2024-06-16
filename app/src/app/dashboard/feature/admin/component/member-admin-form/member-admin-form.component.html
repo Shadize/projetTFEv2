@@ -1,0 +1,12 @@
+<app-card [title]="user.isEmpty ? 'admin-feature.title.member-add':'admin-feature.title.member-update'"
+          [params]="user" [actions]="actions$()" (actionClicked)="actionCardClicked($event)">
+
+  @if (errors$().length > 0) {
+    <div class="error-card-pan">
+      @for (error of errors$(); let index = $index; track index) {
+        <span> {{ 'admin-feature.member-form.' + error.control + '.' + error.error | translate }}</span>
+      }
+    </div>
+  }
+  <app-form-builder [config]="config$()" (formGroupSet)="setFormGroup($event)"></app-form-builder>
+</app-card>

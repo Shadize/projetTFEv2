@@ -48,7 +48,6 @@ export class SecurityService {
     return this.api.post(ApiURI.MEMBER_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.router.navigate([AppNode.REDIRECT_TO_MEMBER_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.credentialUtil.fromDTO(response.data) : this.credentialUtil.getEmpty())

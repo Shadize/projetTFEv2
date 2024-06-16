@@ -44,7 +44,6 @@ export class ProductService {
     return this.api.post(ApiURI.PRODUCT_CREATE, payload, true).pipe(
       tap((response: ApiResponse) => {
         if (response.result) {
-          this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
@@ -57,7 +56,6 @@ export class ProductService {
     return this.api.put(ApiURI.PRODUCT_UPDATE, payload,true).pipe(
       tap((response: ApiResponse) => {
         if (needRedirect && response.result) {
-          this.router.navigate([AppNode.REDIRECT_TO_PRODUCT_LIST]).then();
         }
       }),
       map((response: ApiResponse) => response.result ? this.productUtilsService.fromDTO(response.data) : this.productUtilsService.getEmpty())
