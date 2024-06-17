@@ -5,8 +5,10 @@
     <div class="page" [id]="page.id">
       @for (product of page.products; let paIndex = $index; track paIndex) {
         <div class="item">
-          <qrcode [qrdata]="'https://ind-stock-app.stud-rd.io/dashboard/product/order/'+product" [width]="100"
-                  [errorCorrectionLevel]="'M'"></qrcode>
+         <div class="qr">
+           <qrcode [qrdata]="'https://ind-stock-app.stud-rd.io/dashboard/product/order/'+product" [width]="100"
+                   [errorCorrectionLevel]="'M'"></qrcode>
+         </div>
           <div class="data">
             <div class="line">
               <div class="label">Type</div>
