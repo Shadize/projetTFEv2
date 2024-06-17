@@ -15,6 +15,7 @@ export enum AppNode {
   PRODUCT = 'product',
   FALL_BACK = '**',
   SIGN_UP = 'signup',
+  ORDER='order',
   SHELVE_ADD = 'shelves/add',
   SHELVE_UPDATE = 'shelves/update/:id',
   PRODUCT_ADD = 'product/add',

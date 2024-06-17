@@ -17,4 +17,9 @@ export const productRoutes: Routes = [
     loadComponent: () => import('./page/')
       .then(c => c.ProductListPageComponent)
   },
+  {
+    path: `${AppNode.ORDER}`,
+    loadComponent: () => import('./page/')
+      .then(c => c.ProductCommandComponent)
+  }
 ]
