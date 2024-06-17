@@ -49,11 +49,10 @@ export class MemberManagementPageComponent implements OnInit {
         break;
 
     }
-  
+
   }
 
   public onRowClicked(data: any): void {
-    console.log('onRowClicked', data);
   }
 
 
@@ -63,7 +62,6 @@ export class MemberManagementPageComponent implements OnInit {
 
 
   private handleDetail(): void {
-    console.log('show detail');
   }
 
   private handleEdit(id: string): void {

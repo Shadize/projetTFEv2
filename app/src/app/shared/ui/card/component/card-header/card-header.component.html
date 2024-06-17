@@ -1,6 +1,11 @@
 <div class="header">
   @if(title){
-    <div class="title">{{title |translate:params}}</div>
+    <div class="title">
+      {{title |translate:params}}
+      @if(subTitle){
+        <span class="subtitle">{{subTitle}}</span>
+      }
+    </div>
   }
   @if (actions){
     <div class="actions">

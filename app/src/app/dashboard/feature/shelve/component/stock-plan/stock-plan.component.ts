@@ -39,7 +39,6 @@ export class StockPlanComponent implements OnInit, AfterViewInit {
     rows: []
   });
   ngOnInit() {
-    console.log(this.detail);
     this.generateSurface();
   }
 
@@ -126,8 +125,6 @@ export class StockPlanComponent implements OnInit, AfterViewInit {
       let style = item.wall === StockDoorPosition.TOP || item.type === StockDoorType.VERTICAL ? `top:${top};` : `bottom:${top};`;
       style += item.wall === StockDoorPosition.LEFT || item.type === StockDoorType.HORIZONTAL ? `left:${left};` : `right:${left};`;
       style += `width:${width};height:${height}`;
-      console.log('nbCell', nbCell);
-      console.log('height', height);
       return {
         ...item,
         style

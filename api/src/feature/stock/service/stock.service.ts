@@ -54,7 +54,6 @@ export class StockService {
 
   async create(user: Credential, payload: StockCreatePayload): Promise<Stock> {
     try {
-      console.log(user);
       const newStock: Stock = Builder<Stock>()
         .stock_id(ulid())
         .section(user.section)

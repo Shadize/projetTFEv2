@@ -206,5 +206,11 @@
   "admin-feature.member-form.password.required":"Le mot de passe ne peut être vide",
   "admin-feature.member-form.mail.required": "L'adresse mail ne peut être vide",
   "admin-feature.member-form.firstname.required": "Le prénom ne peut être vide",
-  "admin-feature.member-form.lastname.required": "Le nom ne peut être vide"
+  "admin-feature.member-form.lastname.required": "Le nom ne peut être vide",
+  "feature.product.order.big-title": "Retrait de produit",
+  "feature.product.order.big-message": "Ce produit ne contient plus de stock",
+  "feature.product.order.big-title-qty": "Quantité voulue",
+  "feature.product.order.big-title-date": "Date de retrait",
+  "feature.product.order.order-now": "Valider",
+  "feature.product.order.order-later": "Commander"
 }

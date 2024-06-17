@@ -45,17 +45,11 @@ export class ProductManagementPageComponent implements OnInit {
   }
 
   public onRowClicked(data: any): void {
-    console.log('onRowClicked', data);
   }
 
 
   private genConfigs(products: Product[] | undefined): DataTableConfig {
     return this.productUtils.getDataTableConfig(products!, true);
-  }
-
-
-  private handleDetail(): void {
-    console.log('show detail');
   }
 
   private handleEdit(id : string): void {

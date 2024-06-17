@@ -13,6 +13,7 @@ import {CardActionDefinition} from '../../data';
 })
 export class CardComponent {
   @Input() title?: string;
+  @Input() subTitle?: string;
   @Input() actions? :CardActionDefinition[];
   @Input() isTransparent: boolean = false;
   @Input() params: any = {};

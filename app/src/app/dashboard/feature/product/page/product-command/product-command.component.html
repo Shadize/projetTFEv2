@@ -1,1 +1,55 @@
-<p>product-command works!</p>
+@if (showMessage$()) {
+  <div class="center success-center">
+    <i class="fa-duotone fa-cloud-check"></i>
+    <div class="msg">
+      Opération effectuée <br/><br/>
+    </div>
+  </div>
+} @else if (detail$().isEmpty) {
+    <div class="center">
+      <i class="fa-duotone fa-cloud-exclamation"></i>
+      <div class="msg">
+        Le produit demandé n'existe pas ! <br/><br/>
+      </div>
+    </div>
+
+  } @else if (detail$().quantity === 0) {
+    <div class="center">
+      <i class="fa-duotone fa-cart-circle-exclamation"></i>
+      <div class="msg">
+        <div class="title">{{ detail$().title }}</div>
+        {{ 'feature.product.order.big-message' | translate }}
+      </div>
+    </div>
+  } @else {
+    <div [formGroup]="formGroup">
+      <div class="big-title">
+        {{ 'feature.product.order.big-title' | translate }}
+      </div>
+      <div class="border">
+        <div class="title"> {{ detail$().title }}</div>
+        <div class="data">
+          <div class="line">{{ detail$().str }}</div>
+          <div class="line">{{ detail$().real_price }} €</div>
+          <div class="line">{{ shelveDetail$().str }}</div>
+        </div>
+      </div>
+      <div class="title">
+        {{ 'feature.product.order.big-title-qty' | translate }}
+      </div>
+      <select [formControl]="qtyCtrl">
+        @for (value of options; track value) {
+          <option [value]="value">{{ value }}</option>
+        }
+      </select>
+
+      <div class="title">
+        {{ 'feature.product.order.big-title-date' | translate }}
+      </div>
+      <input type="date" [min]="todayStr$()" [formControl]="orderCtrl">
+
+      <button (click)="getNow()">
+        {{ 'feature.product.order.order-now' | translate }}
+      </button>
+    </div>
+  }

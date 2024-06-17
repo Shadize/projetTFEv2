@@ -203,7 +203,6 @@ export class ShelveDetailPageComponent implements OnInit {
   }
 
   private createConsumption(formValue: ConsumptionForm, shelve: Shelve, product: Product): Consumption {
-    console.log('product', product);
     const consumption: Consumption = {
       order_date: parse(formValue.order_date, 'dd-MM-yyyy', new Date()),
       order_date_str:'',

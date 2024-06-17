@@ -45,7 +45,6 @@ export class ShelveManagementPageComponent implements OnInit {
   }
 
   public onRowClicked(data: any): void {
-    console.log('onRowClicked', data);
   }
 
   private genConfigs(stocks: Stock[] | undefined): DataTableConfig {

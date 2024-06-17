@@ -4,8 +4,15 @@
   letter-spacing: 2px;
   font-family: 'Figtree';
   height:40px;
-  display: flex;align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   color:var(--theme-input-text);
+  gap:7px;
+  .subtitle{
+    font-size:11px;
+    letter-spacing: 1.2px;
+  }
 }
 .header{
   display: flex;

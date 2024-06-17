@@ -12,6 +12,7 @@ import {CardActionDefinition} from '../../data';
 })
 export class CardHeaderComponent {
   @Input() title?: string;
+  @Input() subTitle?: string;
   @Input() actions?: CardActionDefinition[];
   @Input() params: any = {};
   @Output() actionClicked = new EventEmitter<CardActionDefinition>();
